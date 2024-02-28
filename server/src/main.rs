@@ -30,7 +30,7 @@ impl Add<Coord<i8>> for Coord<u32>{
     }
 }
 
-impl Add<Coord<i8>> for & Coord<u32>{
+impl Add<Coord<i8>> for & Coord<u32>{ //TODO: make generic
     type Output = Coord<u32>;
 
     fn add(self, rhs: Coord<i8>)-> Self::Output {

@@ -1,4 +1,4 @@
-from data import stream, parse_data
+import state
 import time
 import math
 from threading  import Thread
@@ -15,7 +15,8 @@ if False:
         while True:
             l = out.readline().rstrip()
             try:
-                stream.append(int(l))
+                # append a float from -1->1, depending on whether angled left/right
+                stream.append(l)
             except Exception:
                 continue
 
@@ -26,8 +27,7 @@ else:
         i = 0
         while True:
             l = math.sin(i)
-            stream.append(l)
-            Thread(target=parse_data).run()
+            state.state = state.State(l, False, False)
             i+=0.01
             time.sleep(0.01)
 

@@ -9,8 +9,6 @@ use std::net::SocketAddr;
 use std::sync::{Arc, RwLock};
 use std::thread;
 
-// std::Vec();
-
 fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GameState>>) {
     let addr = stream.peer_addr().unwrap();
     {
@@ -21,10 +19,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GameState>>) {
     }
     loop {
         let mut buf = [0; 24];
-        let r = stream.read_exact(&mut buf);
-        if r.is_err() {
-            break;
-        }
+        if let Err(_) = stream.read_exact(&mut buf){ break; }
 
         let reader = serialize::read_message(buf.as_slice(), ReaderOptions::new()).unwrap();
         let tx = reader.get_root::<schema_capnp::tx::Reader>().unwrap();
@@ -34,11 +29,27 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GameState>>) {
         handle.unwrap().in_angle = tx.get_angle();
 
         // Serialize and send
+        let mut message = ::capnp::message::Builder::new_default();
+        let mut rx = message.init_root::<schema_capnp::rx::Builder>();
+        rx.set_lives(3);
+        let mut entities = rx.init_entities(1);
+        println!("here");
+        let mut tmp = entities.reborrow().get(0);
+        tmp.set_x(1f32);
+        tmp.set_y(0f32);
+        tmp.set_x_vel(0f32);
+        tmp.set_y_vel(0f32);
+        tmp.set_rotation(0f32);
+        tmp.set_type(schema_capnp::entity::EntityType::MyPlayer);
+
+        // if let Err(_) = serialize::write_message(&mut stream, &message) {break;} // changed to avoid buffering, not ideal
+        let mut out:Vec<u8> = Vec::new();
+        capnp::serialize::write_message(&mut out, &message).unwrap();
+        stream.write_all(out.as_slice()).unwrap();
 
     }
-
     let mut w = data.write().unwrap();
-    w.players.remove(&stream.peer_addr().unwrap());
+    w.players.remove(&addr);
 }
 
 fn net_thread(data: Arc<RwLock<GameState>>) {
@@ -46,15 +57,12 @@ fn net_thread(data: Arc<RwLock<GameState>>) {
 
     for stream in l.incoming() {
         let stream = stream.unwrap();
-        let _ = stream.peer_addr().unwrap();
         let data = Arc::clone(&data);
         thread::spawn(move || {
             handle_conn(stream, data);
         });
     }
 }
-
-// use std::sync::mpsc::{channel, Sender};
 
 #[derive(Default)]
 struct Player {

@@ -6,5 +6,8 @@ class State:
     shooting: bool
     accelerating: bool
 
-state = State(rotation_amount=0, shooting=False, accelerating=False)
+input = State(rotation_amount=0, shooting=False, accelerating=False)
 
+rx = None
+
+rtt = None

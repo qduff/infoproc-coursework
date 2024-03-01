@@ -22,7 +22,7 @@ if False:
 
     t = Thread(target=collect, args=[proc.stdout])
 
-else:
+if False:
     def collect():
         i = 0
         while True:
@@ -33,5 +33,7 @@ else:
 
     fpga_thread = Thread(target=collect)
 
+if True:
+    fpga_thread = Thread(target=None)
 
 fpga_thread.daemon = True

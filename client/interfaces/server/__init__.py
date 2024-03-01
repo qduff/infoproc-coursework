@@ -21,21 +21,30 @@ class ServerInterface:
     def run(self):
         try:
             self.sock.connect((HOST,PORT))
+            while True:
+                print("[tick]")
+                self.tick()
+                time.sleep(TICKRATE)
         except Exception as e:
             print("[ServerThread]", e)
             os._exit(-1)
-        while True:
-            # print("[tick]")
-            self.tick()
-            time.sleep(TICKRATE)
+
 
     def tick(self):
+        start = time.time()
         tx = schema_capnp.Tx.new_message()
-        # print(state.state)
-        tx.angle = state.state.rotation_amount
-        tx.propulsion = state.state.accelerating
-        tx.shoot = state.state.shooting
-        self.sock.sendall(tx.to_bytes())
+        tx.angle = state.input.rotation_amount
+        tx.propulsion = state.input.accelerating
+        tx.shoot = state.input.shooting
+        tx.write(self.sock)
+
+        # read
+        rx = self.sock.recv(2048)
+        with schema_capnp.Rx.from_bytes(rx) as rx:
+            state.rx = rx
+        stop = time.time()
+        state.rtt = stop - start
+
 
 serverinterface = ServerInterface()
 server_thread = Thread(target=serverinterface.run)

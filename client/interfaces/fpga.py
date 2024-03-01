@@ -27,7 +27,7 @@ else:
         i = 0
         while True:
             l = math.sin(i)
-            state.state = state.State(l, False, False)
+            state.state = state.State(l, l<-0.7, l>0.7) # generate arb values
             i+=0.01
             time.sleep(0.01)
 

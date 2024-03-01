@@ -25,22 +25,33 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GameState>>) {
         let tx = reader.get_root::<schema_capnp::tx::Reader>().unwrap();
 
         let mut writer = data.write().unwrap();
-        let handle = writer.players.get_mut(&addr);
-        handle.unwrap().in_angle = tx.get_angle();
+        let handle = writer.players.get_mut(&addr).unwrap();
+        handle.in_angle = tx.get_angle();
+        handle.in_propulsion = tx.get_propulsion();
+        handle.in_shoot = tx.get_shoot();
 
         // Serialize and send
         let mut message = ::capnp::message::Builder::new_default();
         let mut rx = message.init_root::<schema_capnp::rx::Builder>();
         rx.set_lives(3);
-        let mut entities = rx.init_entities(1);
+        let mut entities = rx.init_entities(writer.players.len() as u32);
         println!("here");
-        let mut tmp = entities.reborrow().get(0);
-        tmp.set_x(1f32);
-        tmp.set_y(0f32);
-        tmp.set_x_vel(0f32);
-        tmp.set_y_vel(0f32);
-        tmp.set_rotation(0f32);
-        tmp.set_type(schema_capnp::entity::EntityType::MyPlayer);
+        for (i, player) in writer.players.iter().enumerate(){
+            let mut tmp = entities.reborrow().get(i as u32);
+            tmp.set_x(player.1.x);
+            tmp.set_y(player.1.y);
+            tmp.set_x_vel(player.1.x_vel);
+            tmp.set_y_vel(player.1.y_vel);
+            tmp.set_rotation(player.1.rotation);
+            if player.0 == &addr{
+                tmp.set_type(schema_capnp::entity::EntityType::MyPlayer);
+
+            } else{
+                tmp.set_type(schema_capnp::entity::EntityType::Player);
+            }
+        }
+
+        thread::sleep(std::time::Duration::from_millis(20)); // simulate latency
 
         // if let Err(_) = serialize::write_message(&mut stream, &message) {break;} // changed to avoid buffering, not ideal
         let mut out:Vec<u8> = Vec::new();
@@ -74,6 +85,7 @@ struct Player {
     y: f32,
     x_vel: f32,
     y_vel: f32,
+    rotation: f32
 }
 
 #[derive(Default)]

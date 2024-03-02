@@ -10,10 +10,15 @@ use game_params::GameParams as GameParams;
 #[derive(Debug, Copy, Clone)]
 struct Bullet{
     pos: Coord,
+    velocity: Coord,
     lifetime: u8,
 }
 
 impl Bullet{
+
+    fn calculate_motion(&mut self, settings: &GameParams){
+        self.pos.mod_add(self.velocity,settings.size)
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -74,10 +79,20 @@ impl Player{
 
     fn calculate_motion(&mut self, settings: &GameParams){
         
-        // update movement
+        // update player
         self.angle = self.angle.wrapping_add(self.angular_velocity as u8);
         self.update_velocity();
         self.pos.mod_add(self.velocity, settings.size);
+
+        // remove dead bullets
+        while self.bullets.len() > 0 && self.bullets[0].lifetime == 0{
+            self.bullets.pop_front();
+        }
+
+        // update bullet position
+        for b in &mut self.bullets{
+            b.calculate_motion(settings);
+        }
     }
 }
 

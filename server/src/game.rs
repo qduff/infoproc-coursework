@@ -15,7 +15,7 @@ struct Bullet{
 impl Bullet{
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Clone)]
 struct Player{
     pos: Coord,
     angle: u8, // on a 0 255 scale
@@ -61,7 +61,7 @@ impl Player{
             lives: config.player_start_lives,
             accel: false,
 
-            bullets: VecDeque<Bullet>::new(),
+            bullets: VecDeque::new(),
 
             max_lives: config.player_start_lives,
             accel_scale: config.player_accel_scale,

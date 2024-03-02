@@ -16,9 +16,16 @@ struct Bullet{
 
 impl Bullet{
 
+    fn new(pos: Coord, v: Coord, lifetime: u8) -> Self{
+        Bullet{
+            pos: pos,
+            velocity: v,
+            lifetime: lifetime,
+        }
+    }
     fn calculate_motion(&mut self, settings: &GameParams){
         self.pos.mod_add(self.velocity,settings.size)
-    }
+    } 
 }
 
 #[derive(Debug, Clone)]
@@ -29,6 +36,7 @@ struct Player{
     angular_velocity: i8,
     lives: u8,
     accel: bool,
+    shoot: bool,
 
     bullets: VecDeque<Bullet>,
 
@@ -66,6 +74,7 @@ impl Player{
             angular_velocity: 0,
             lives: config.player_start_lives,
             accel: false,
+            shoot: false,
 
             bullets: VecDeque::new(),
 
@@ -89,6 +98,20 @@ impl Player{
             self.bullets.pop_front();
         }
 
+        if self.shoot{
+            self.shoot = false;
+
+            let v: Coord = Coord{
+                x: settings.bullet_speed_scale * u8_to_degrees(self.angle).sin() as i64,
+                y: settings.bullet_speed_scale * u8_to_degrees(self.angle).cos() as i64, 
+            };
+
+            self.bullets.push_back(Bullet::new( // TODO: dont shoot from centre
+                self.pos,
+                v,
+                settings.bullet_lifetime_scale));
+        }
+
         // update bullet position
         for b in &mut self.bullets{
             b.calculate_motion(settings);
@@ -102,23 +125,23 @@ impl Player{
         //apply drag
         //TODO verify my physics is correct (trying to modle nutonian)
         let mut tmp:f64 = self.velocity.x as f64;
-        tmp.powf(self.decay_exp);
+        tmp = tmp.powf(self.decay_exp);
         tmp *= self.decay_mul as f64;
         self.velocity.x += tmp as i64;
 
         let mut tmp:f64 = self.velocity.y as f64;
-        tmp.powf(self.decay_exp);
+        tmp = tmp.powf(self.decay_exp);
         tmp *= self.decay_mul as f64;
         self.velocity.y += tmp as i64;
 
         //apply acceleration TODO: apply direction
         if self.accel{
  
-            self.velocity.x *= self.accel_scale * self.accel as i64
-                            * u8_to_degrees(self.angle).cos() as i64;
-
-            self.velocity.y *= self.accel_scale * self.accel as i64
+            self.velocity.x *= self.accel_scale 
                             * u8_to_degrees(self.angle).sin() as i64;
+
+            self.velocity.y *= self.accel_scale 
+                            * u8_to_degrees(self.angle).cos() as i64;
         }
     }
 
@@ -154,7 +177,7 @@ pub struct Game{
 
 impl Game{
     // setup
-    fn new() -> Game {
+    pub fn new() -> Game {
         Game{
             players: vec![],
             astroids: vec![],
@@ -162,14 +185,14 @@ impl Game{
         }
     }
 
-    fn add_player(&mut self) -> i8 { // returns player number
+    pub fn add_player(&mut self) -> i8 { // returns player number
         self.players.push(Player::new(&self.settings));
         self.players.len() as i8 - 1
     }
 
     // interface
 
-    fn step(&mut self){
+    pub fn step(&mut self){
         self.step_motion();
         self.collisions(); // IDK if this not taking motion into account when calculating collisions is a good idea
     }
@@ -187,15 +210,17 @@ impl Game{
 
     }
 
-    fn set_player_inputs(&mut self, player_no: u8, booster: bool, yaw: f32){
+    pub fn set_player_inputs(&mut self, player_no: u8, booster: bool, yaw: f32, shoot: bool){
             if (yaw.abs() > 1.0 // rotation on scale -1 to 1
                 || player_no >= self.players.len() as u8) {
                 return; 
             }
             self.players[player_no as usize].angular_velocity = (yaw * self.settings.player_yaw_scale as f32) as i8;
-        }
+            self.players[player_no as usize].accel = booster; 
+            self.players[player_no as usize].accel = shoot; 
+    }
 
-    fn get_serialized(&mut self){
+    pub fn get_serialized(&mut self){
         //TODO
     }
 }

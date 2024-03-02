@@ -19,7 +19,7 @@ const PLAYER_DECAY_MUL: i64 = -1; // negative because deceleration
 const PLAYER_DECAY_EXP: f64 = 2.; // think inverse square law
 const PLAYER_SIZE_SCALE: i64 = 10;
 
-const BULLET_SPEED_MUL: i64 = 5;
+const BULLET_SPEED_SCALE: i64 = 5;
 const BULLET_LIFETIME_SCALE: f64 = 1.0;
 
 const PLAYER_LIVES: u8 = 3;
@@ -41,7 +41,7 @@ pub struct GameParams{ // stores game parameters such as tick rate, // TODO para
     pub player_decay_exp: f64,
     pub player_size_scale: i64,
 
-    pub bullet_speed_mul: i64,
+    pub bullet_speed_scale: i64,
     pub bullet_lifetime_scale: u8,
 
     pub player_start_lives: u8,
@@ -64,7 +64,7 @@ impl GameParams{
             player_decay_exp: PLAYER_DECAY_EXP * EXP_SCALE,
             player_size_scale: SIZE_SCALE * PLAYER_SIZE_SCALE,
             
-            bullet_speed_mul: ADJUSTED_SPEED * BULLET_SPEED_MUL,
+            bullet_speed_scale: ADJUSTED_SPEED * BULLET_SPEED_SCALE,
             bullet_lifetime_scale: (ADJUSTED_SPEED / TICK_RATE) as u8,
 
             player_start_lives: PLAYER_LIVES,

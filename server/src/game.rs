@@ -5,6 +5,7 @@ use lib::Coord as Coord;
 use lib::u8_to_degrees as u8_to_degrees;
 
 mod game_params;
+use game_params::GameParams as GameParams;
 
 #[derive(Debug, Copy, Clone)]
 struct Bullet{
@@ -71,12 +72,12 @@ impl Player{
         }
     }
 
-    fn calculate_motion(&mut self){
+    fn calculate_motion(&mut self, settings: &GameParams){
         
         // update movement
         self.angle = self.angle.wrapping_add(self.angular_velocity as u8);
         self.update_velocity();
-        self.pos.add(self.velocity);
+        self.pos.mod_add(self.velocity, settings.size);
     }
 }
 
@@ -121,8 +122,12 @@ impl Astroid{
         }
     }
 
-    fn calculate_motion(&mut self){
-        self.pos.add(self.velocity);
+    fn get_size(&self) -> i64{
+        self.lives as i64 * self.size_mul
+    }
+
+    fn calculate_motion(&mut self, settings: &GameParams){
+        self.pos.mod_add(self.velocity, settings.size);
     }
 }
 
@@ -156,10 +161,10 @@ impl Game{
 
     fn step_motion(&mut self){
         for player in &mut self.players{
-            player.calculate_motion();
+            player.calculate_motion(& self.settings);
         }
         for astroid in &mut self.astroids{
-            astroid.calculate_motion();
+            astroid.calculate_motion(& self.settings);
         }
     }
 

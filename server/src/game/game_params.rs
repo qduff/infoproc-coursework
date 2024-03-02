@@ -8,7 +8,7 @@ const SIZE: Coord = Coord{ // for higher precision, set these large and downscal
 
 const TICK_RATE: i64= 20; // 20 default
 const SPEED: i64 = 5;
-const SIZE_SCALE: i64 = 1;
+const SIZE_SCALE: i64 = 1; // independant on SIZE above
 
 const ASTROID_SPEED_MUL: i64 = 1; 
 const ASTROID_SIZE_MUL: i64 = 1;

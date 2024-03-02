@@ -7,9 +7,9 @@ pub struct Coord{
 
 impl Coord{
 
-    pub fn add(&mut self,rhs: Self){
-        self.x = self.x + rhs.x;
-        self.y = self.y + rhs.y;
+    pub fn mod_add(&mut self,rhs: Self,max: Self){
+        self.x = (self.x + rhs.x) % max.x;
+        self.y = (self.y + rhs.y) % max.y;
     }
 
     pub fn mul(&mut self,rhs: i64){

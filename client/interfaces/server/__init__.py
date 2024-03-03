@@ -6,7 +6,7 @@ import time
 import socket
 import state
 
-TICKRATE = 1/10
+POLLRATE = 50 #ms - determines max rate of polling, will increase if server to slow!
 HOST = "127.0.0.1"
 PORT = 5000
 
@@ -22,16 +22,19 @@ class ServerInterface:
         try:
             self.sock.connect((HOST,PORT))
             while True:
+                start = time.time()
                 print("[tick]")
                 self.tick()
-                time.sleep(TICKRATE)
+                state.rtt = time.time() - start
+                time.sleep(abs(state.rtt - POLLRATE/1000 ))
+                state.pollrate = time.time() - start
+
         except Exception as e:
             print("[ServerThread]", e)
             os._exit(-1)
 
 
     def tick(self):
-        start = time.time()
         tx = schema_capnp.Tx.new_message()
         tx.angle = state.input.rotation_amount
         tx.propulsion = state.input.accelerating
@@ -42,8 +45,6 @@ class ServerInterface:
         rx = self.sock.recv(2048)
         with schema_capnp.Rx.from_bytes(rx) as rx:
             state.rx = rx
-        stop = time.time()
-        state.rtt = stop - start
 
 
 serverinterface = ServerInterface()

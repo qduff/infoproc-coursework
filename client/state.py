@@ -10,3 +10,4 @@ input = State(rotation_amount=0, shooting=False, accelerating=False)
 
 rx = None
 rtt = None
+pollrate = None

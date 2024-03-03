@@ -31,7 +31,7 @@ impl Coord {
     }
 
     pub fn apply_propulsion(&mut self, propel: bool, rotation: f32) {
-        let prop_factor = propel as u8 as f32 * 0.0002;
+        let prop_factor = propel as u8 as f32 * 0.0005;
         self.x += prop_factor * rotation.sin();
         self.y += -prop_factor * rotation.cos();
         self.x -= 5f32 * self.x.powi(2) * self.x.signum();

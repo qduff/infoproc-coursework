@@ -2,7 +2,7 @@ from raylibpy import *
 import math
 import copy
 import state
-from interfaces.server import TICKRATE as servertickrate, schema_capnp
+from interfaces.server import schema_capnp, POLLRATE as pollrate
 
 ARROW = [[-.015, .025],
          [.015, .025],
@@ -44,9 +44,11 @@ def run():
         begin_drawing()
 
         clear_background(BLACK)
-        draw_text(f"Latency: {state.rtt*1000:.2f}ms ", 10, 10, 20, LIGHTGRAY)
         draw_text(
-            f"Pollrate: {servertickrate*1000 + state.rtt*1000:.2f}ms ", 10, 30, 20, LIGHTGRAY)
+            f"rtt: {state.rtt*1000:.2f}ms ", 10, 10, 20, LIGHTGRAY)
+        draw_text(
+            f"pollrate: t:{pollrate}ms r:{state.pollrate*1000:.2f}ms ", 10, 30, 20, LIGHTGRAY)
+
         draw_text(
             f'Frametime{": vsync" if VSYNC_EN else ""}: {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
 

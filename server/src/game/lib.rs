@@ -8,8 +8,20 @@ pub struct Coord {
 
 impl Coord {
     pub fn add_modulo(&mut self, rhs: &Coord) {
-        self.x = (self.x + rhs.x) % 1f32;
-        self.y = (self.y + rhs.y) % 1f32;
+        self.x = self.x + rhs.x;
+        if self.x <= 0f32 {
+            self.x += 1f32
+        }
+        // modulo with f32 does not do what you want
+        else if self.x > 1f32 {
+            self.x -= 1f32
+        }
+        self.y = self.y + rhs.y;
+        if self.y <= 0f32 {
+            self.y += 1f32
+        } else if self.y > 1f32 {
+            self.y -= 1f32
+        }
     }
 
     pub fn distance_to(&self, point2: &Coord) -> f32 {
@@ -19,10 +31,11 @@ impl Coord {
     }
 
     pub fn apply_propulsion(&mut self, propel: bool, rotation: f32) {
-        self.x += propel as u8 as f32 * 0.005 * rotation.sin();
-        self.y += -(propel as u8 as f32) * 0.005 * rotation.cos();
-        self.x -=  5f32 * self.x.powi(2) * self.x.signum();
-        self.y -=  5f32 * self.y.powi(2) * self.y.signum();
+        let prop_factor = propel as u8 as f32 * 0.0002;
+        self.x += prop_factor * rotation.sin();
+        self.y += -prop_factor * rotation.cos();
+        self.x -= 5f32 * self.x.powi(2) * self.x.signum();
+        self.y -= 5f32 * self.y.powi(2) * self.y.signum();
     }
 
     //TODO implement more advanced movement

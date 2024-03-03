@@ -4,9 +4,9 @@ import copy
 import state
 from interfaces.server import TICKRATE as servertickrate, schema_capnp
 
-ARROW = [[-.03, .05],
-         [.03, .05],
-         [.00, -.05]]
+ARROW = [[-.015, .025],
+         [.015, .025],
+         [.00, -.025]]
 
 ASTEROID = [[-10, 20],
             [0, 30],
@@ -23,8 +23,8 @@ HEIGHT = 800
 
 def draw_shape(shape, offset: list[float, float], angle: float = 0,  scale: int = 1, color: Color = WHITE) -> None:
     l = len(shape)
-    transformed = [[((row[0]*math.cos(angle) - row[1]*math.sin(angle))*scale + offset[0] + 1)*WIDTH/2,
-                    ((row[1]*math.cos(angle) + row[0]*math.sin(angle))*scale + offset[1] + 1)*HEIGHT/2]
+    transformed = [[((row[0]*math.cos(angle) - row[1]*math.sin(angle))*scale + offset[0])*WIDTH,
+                    ((row[1]*math.cos(angle) + row[0]*math.sin(angle))*scale + offset[1] )*HEIGHT]
                    for row in shape]
     for i in range(l):
         draw_line(transformed[i][0], transformed[i][1], transformed[(

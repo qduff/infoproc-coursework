@@ -53,7 +53,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
         }
 
 
-        // thread::sleep(std::time::Duration::from_millis(20)); // simulate latency
+        thread::sleep(std::time::Duration::from_millis(20)); // simulate latency
 
         // if let Err(_) = serialize::write_message(&mut stream, &message) {break;} // changed to avoid buffering, not ideal
         let mut out: Vec<u8> = Vec::new();

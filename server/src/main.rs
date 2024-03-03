@@ -35,7 +35,7 @@ fn main() {
             )
         }
         gamestate.write().unwrap().tick();
-        thread::sleep(std::time::Duration::from_millis(100));
+        thread::sleep(std::time::Duration::from_millis(15));
         println!("tick [{}ms]", start.elapsed().as_millis());
     }
 }

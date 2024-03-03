@@ -44,15 +44,15 @@ impl Player {
     pub fn new() -> Player {
         Player {
             lives: 3,
+            position: Coord { x: 0.5, y: 0.5 },
             ..Default::default()
         }
     }
 
     pub fn calculate_motion(&mut self) {
         // calculate motion
-        self.rotation += self.in_angle / 3f32;
-        self.velocity
-            .apply_propulsion(self.in_propulsion, self.rotation);
+        self.rotation += self.in_angle / 15f32;
+        self.velocity.apply_propulsion(self.in_propulsion, self.rotation);
         self.position.add_modulo(&self.velocity);
 
         //TODO emit bullets

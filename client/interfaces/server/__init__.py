@@ -26,7 +26,7 @@ class ServerInterface:
                 print("[tick]")
                 self.tick()
                 state.rtt = time.time() - start
-                time.sleep(abs(state.rtt - POLLRATE/1000 ))
+                time.sleep(max(0, POLLRATE/1000 - state.rtt ))
                 state.pollrate = time.time() - start
 
         except Exception as e:

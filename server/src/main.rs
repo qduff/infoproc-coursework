@@ -28,14 +28,8 @@ fn main() {
 
     loop {
         let start = std::time::Instant::now();
-        for (addr, player) in &gamestate.read().unwrap().players {
-            println!(
-                "{:?} -> {} {} {}",
-                addr, player.in_angle, player.in_shoot, player.in_propulsion
-            )
-        }
         gamestate.write().unwrap().tick();
         thread::sleep(std::time::Duration::from_millis(15));
-        println!("tick [{}ms]", start.elapsed().as_millis());
+        println!("tick [{}ms] - {} players", start.elapsed().as_millis(),  &gamestate.read().unwrap().players.len());
     }
 }

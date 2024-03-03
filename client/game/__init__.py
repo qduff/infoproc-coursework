@@ -52,6 +52,7 @@ def run():
         draw_text(
             f'Frametime{": vsync" if VSYNC_EN else ""}: {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
 
+        if state.rx == None: continue
         for entity in state.rx.entities:
             if entity.type == schema_capnp.Entity.EntityType.myPlayer:
                 draw_shape(ARROW, [entity.x, entity.y], entity.rotation, 1, GREEN)

@@ -53,6 +53,8 @@ def run():
         for entity in state.rx.entities:
             if entity.type == schema_capnp.Entity.EntityType.myPlayer:
                 draw_shape(ARROW, [entity.x, entity.y], entity.rotation, 1, GREEN)
+                draw_text(f"Lives: {entity.lives} ", 10, 70, 20, RED)
+
             if entity.type == schema_capnp.Entity.EntityType.player:
                 draw_shape(ARROW, [entity.x, entity.y], entity.rotation, 1, WHITE)
 

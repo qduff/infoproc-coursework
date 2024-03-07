@@ -15,15 +15,22 @@ PROPEL = [[-.007, .025],
 
 
 
-def generate_asteroid(radius, rad_deviation, points, arg_deviation):
+def generate_asteroid(radius, rad_deviation, rad_large_prob, points, arg_deviation):
     asteroid = []
+    
     for p in range(points):
+        if (random.random() < rad_large_prob):
+            rad_large_prob *= 0.5
+            delta_rad = random.uniform(-rad_deviation * 3,-rad_deviation* 2)   
+        else:
+            delta_rad = random.uniform(-rad_deviation, rad_deviation) 
+
         arg = (p * math.pi * 2 / points) + random.uniform(- arg_deviation, arg_deviation)
-        rad = radius + random.uniform(- rad_deviation, rad_deviation)
+        rad = radius + delta_rad
         asteroid.append([rad*math.cos(arg),rad*math.sin(arg)])
     return asteroid
 
-ASTEROIDS = [generate_asteroid(0.015, 0.008, 11, 0.1) for i in range(100)] # i doubt we will ever have over 100 ASTEROIDS
+ASTEROIDS = [generate_asteroid(0.015, 0.004,0.2, 12, 0.05) for i in range(100)] # i doubt we will ever have over 100 ASTEROIDS
 
 '''
 ASTEROID = [[-.010, .020],

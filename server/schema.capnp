@@ -7,22 +7,30 @@ struct Tx {
 }
 
 struct Rx {
-    entities @0 :List(Entity);
+    players @0 :List(Player);
+    asteroids @1 :List(Asteroid);
 }
 
-struct Entity {
+struct Player {
     x @0 :Float32;
     y @1 :Float32;
     xVel @2 :Float32;
     yVel @3 :Float32;
     rotation @4 :Float32;
-    type @5 :EntityType;
+    type @5 :PlayerType;
     lives @6 :UInt8 = 0;
 
-    enum EntityType {
+    enum PlayerType {
         player @0;
         myPlayer @1;
-        asteroid @2;
-        bullet @3;
     }
+}
+
+struct Asteroid {
+    x @0 :Float32;
+    y @1 :Float32;
+    xVel @2 :Float32;
+    yVel @3 :Float32;
+    rotation @4 :Float32;
+    size @5 :UInt8;
 }

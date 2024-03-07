@@ -1,3 +1,4 @@
+import time
 from raylibpy import *
 import math
 import copy
@@ -8,20 +9,39 @@ ARROW = [[-.015, .025],
          [.015, .025],
          [.00, -.025]]
 
-ASTEROID = [[-10, 20],
-            [0, 30],
-            [20, 20],
-            [10, 10],
-            [20, -10],
-            [0, -30],
-            [-10, -10],
-            [-40, 0]]
+ASTEROID = [[-.010, .020],
+            [0, .030],
+            [.020, .020],
+            [.010, .010],
+            [.020, -.010],
+            [.00, -.030],
+            [-.010, -.010],
+            [-.040, 0]]
 
 WIDTH = 800
 HEIGHT = 800
 
-
 def draw_shape(shape, offset: list[float, float], angle: float = 0,  scale: int = 1, color: Color = WHITE) -> None:
+    draw_shape_single(shape, offset, angle, scale, color)
+    if offset[0] < 0.3:
+        draw_shape_single(shape, [offset[0]+1, offset[1]], angle, scale, color)
+        draw_shape_single(shape, [offset[0]+1, offset[1]+1], angle, scale, color)
+        draw_shape_single(shape, [offset[0]+1, offset[1]-1], angle, scale, color)
+    if offset[0] > 0.7:
+        draw_shape_single(shape, [offset[0]-1, offset[1]], angle, scale, color)
+        draw_shape_single(shape, [offset[0]-1, offset[1]+1], angle, scale, color)
+        draw_shape_single(shape, [offset[0]-1, offset[1]-1], angle, scale, color)
+    if offset[1] < 0.3:
+        draw_shape_single(shape, [offset[0], offset[1]+1], angle, scale, color)
+        draw_shape_single(shape, [offset[0]+1, offset[1]+1], angle, scale, color)
+        draw_shape_single(shape, [offset[0]-1, offset[1]+1], angle, scale, color)
+    if offset[1] > 0.7:
+        draw_shape_single(shape, [offset[0], offset[1]-1], angle, scale, color)
+        draw_shape_single(shape, [offset[0]+1, offset[1]-1], angle, scale, color)
+        draw_shape_single(shape, [offset[0]-1, offset[1]-1], angle, scale, color)
+
+
+def draw_shape_single(shape, offset: list[float, float], angle: float = 0,  scale: int = 1, color: Color = WHITE) -> None:
     l = len(shape)
     transformed = [[((row[0]*math.cos(angle) - row[1]*math.sin(angle))*scale + offset[0])*WIDTH,
                     ((row[1]*math.cos(angle) + row[0]*math.sin(angle))*scale + offset[1] )*HEIGHT]
@@ -32,6 +52,9 @@ def draw_shape(shape, offset: list[float, float], angle: float = 0,  scale: int 
 
 
 def run():
+
+    # while state.rx == None: time.sleep(5); print("Waiting to connect...")
+
     if VSYNC_EN := True:
         set_config_flags(FLAG_VSYNC_HINT)
     else:
@@ -52,14 +75,17 @@ def run():
         draw_text(
             f'Frametime{": vsync" if VSYNC_EN else ""}: {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
 
-        if state.rx == None: continue
-        for entity in state.rx.entities:
-            if entity.type == schema_capnp.Entity.EntityType.myPlayer:
-                draw_shape(ARROW, [entity.x, entity.y], entity.rotation, 1, GREEN)
-                draw_text(f"Lives: {entity.lives} ", 10, 70, 20, RED)
+        for player in state.rx.players:
+            if player.type == schema_capnp.Player.PlayerType.myPlayer:
+                draw_shape(ARROW, [player.x, player.y], player.rotation, 1, GREEN)
+                draw_text(f"Lives: {player.lives} ", 10, 70, 20, RED)
+            if player.type == schema_capnp.Player.PlayerType.player:
+                draw_shape(ARROW, [player.x, player.y], player.rotation, 1, WHITE)
 
-            if entity.type == schema_capnp.Entity.EntityType.player:
-                draw_shape(ARROW, [entity.x, entity.y], entity.rotation, 1, WHITE)
+        print(len(state.rx.asteroids))
+        for asteroid in state.rx.asteroids:
+            print([asteroid.x, asteroid.y])
+            draw_shape(ASTEROID, [asteroid.x, asteroid.y], asteroid.rotation, asteroid.size, WHITE)
 
         # draw_shape(ASTEROID, [120, 120])
 

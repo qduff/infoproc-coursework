@@ -37,22 +37,32 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
         let mut message = ::capnp::message::Builder::new_default();
         {
             let r = data.read().unwrap();
-            let rx = message.init_root::<crate::schema_capnp::rx::Builder>();
-            let mut entities = rx.init_entities(r.players.len() as u32);
+            let mut rx = message.init_root::<crate::schema_capnp::rx::Builder>();
+            let mut players = rx.reborrow().init_players(r.players.len() as u32);
             for (i, player) in r.players.iter().enumerate() {
-                let mut tmp = entities.reborrow().get(i as u32);
+                let mut tmp = players.reborrow().get(i as u32);
                 tmp.set_x(player.1.position.x);
                 tmp.set_y(player.1.position.y);
                 tmp.set_x_vel(player.1.velocity.x);
                 tmp.set_y_vel(player.1.velocity.y);
                 tmp.set_rotation(player.1.rotation);
                 if player.0 == &addr {
-                    tmp.set_type(crate::schema_capnp::entity::EntityType::MyPlayer);
+                    tmp.set_type(crate::schema_capnp::player::PlayerType::MyPlayer);
                     tmp.set_lives(player.1.lives);
                 } else {
-                    tmp.set_type(crate::schema_capnp::entity::EntityType::Player);
+                    tmp.set_type(crate::schema_capnp::player::PlayerType::Player);
                     tmp.set_lives(player.1.lives);
                 }
+            }
+            let mut asteroids = rx.reborrow().init_asteroids(r.asteroids.len() as u32);
+            for (i, asteroid) in r.asteroids.iter().enumerate() {
+                let mut c = asteroids.reborrow().get(i as u32);
+                c.set_x(asteroid.position.x);
+                c.set_y(asteroid.position.y);
+                c.set_x_vel(asteroid.velocity.x);
+                c.set_y_vel(asteroid.velocity.y);
+                c.set_rotation(asteroid.rotation);
+                c.set_size(asteroid.size);
             }
         }
 

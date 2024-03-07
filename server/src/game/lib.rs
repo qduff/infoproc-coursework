@@ -41,7 +41,11 @@ impl Coord {
 
     pub fn random_pos() -> Self{
         let mut rng = rand::thread_rng();
-        Self{x: rng.gen_range(0.0..10.0), y : rng.gen_range(0.0..10.0)}
+        Self{x: rng.gen_range(0.0..1.0), y : rng.gen_range(0.0..1.0)}
+    }
+    pub fn random_vel() -> Self{
+        let mut rng = rand::thread_rng();
+        Self{x: rng.gen_range(-0.0001..0.0001), y : rng.gen_range(-0.0001..0.0001)}
     }
 
     //TODO implement more advanced movement

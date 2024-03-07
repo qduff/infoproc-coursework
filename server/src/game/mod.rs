@@ -23,6 +23,9 @@ impl Game {
     }
 
     pub fn tick(&mut self, dt: f32) {
+        if self.asteroids.len < 10 {
+            self.asteroids.push(Asteroid::new());
+        }
         self.step_motion(dt);
         self.collisions(); // IDK if this not taking motion into account when calculating collisions is a good idea
     }

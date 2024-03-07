@@ -4,22 +4,12 @@ mod net;
 use std::sync::{Arc, RwLock};
 use std::thread;
 
+const TICKRATE : u64 = 15; // ms
+
 pub mod schema_capnp {
     include!(concat!(env!("OUT_DIR"), "/schema_capnp.rs"));
 }
 
-
-// fn main() { // example main to eat up unused warnings
-//     let mut game = game::Game::new();
-
-//     game.add_player();
-//     game.set_player_inputs(0, true, 0.0,true);
-//     game.step();
-//     game.get_serialized();
-
-// }
-
-const TICKRATE : u64 = 15; // ms
 fn main() {
     let gamestate: Arc<RwLock<game::Game>> = Arc::new(RwLock::new(game::Game::new()));
 

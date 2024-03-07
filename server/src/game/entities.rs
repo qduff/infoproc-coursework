@@ -69,9 +69,10 @@ pub struct Asteroid {
 }
 
 impl Asteroid {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Asteroid {
             size: 4,
+            position: Coord::random_pos(),
             ..Default::default()
         }
     }

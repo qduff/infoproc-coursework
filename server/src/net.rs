@@ -37,9 +37,8 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
         let mut message = ::capnp::message::Builder::new_default();
         {
             let r = data.read().unwrap();
-            let mut rx = message.init_root::<crate::schema_capnp::rx::Builder>();
+            let rx = message.init_root::<crate::schema_capnp::rx::Builder>();
             let mut entities = rx.init_entities(r.players.len() as u32);
-            let mut lives: u8 = 0;
             for (i, player) in r.players.iter().enumerate() {
                 let mut tmp = entities.reborrow().get(i as u32);
                 tmp.set_x(player.1.position.x);

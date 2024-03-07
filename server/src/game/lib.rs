@@ -1,4 +1,5 @@
 // Coord is a coordinate, where components range from 0->1 and where 0 is top left
+use rand::Rng;
 
 #[derive(Default, Debug)]
 pub struct Coord {
@@ -36,6 +37,11 @@ impl Coord {
         self.y += -prop_factor * rotation.cos();
         self.x -= dt * 1.35f32 * self.x.powi(2) * self.x.signum();
         self.y -= dt * 1.35f32 * self.y.powi(2) * self.y.signum();
+    }
+
+    pub fn random_pos() -> Self{
+        let mut rng = rand::thread_rng();
+        Self{x: rng.gen_range(0.0..10.0), y : rng.gen_range(0.0..10.0)}
     }
 
     //TODO implement more advanced movement

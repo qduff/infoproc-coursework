@@ -37,6 +37,7 @@ pub struct Player {
     pub rotation: f32,
 
     pub lives: u8,
+    pub invincability_timer: u32,
 
     // accel_scale: i64,
     // decay_mul: i64,
@@ -56,13 +57,13 @@ impl Player {
         }
     }
 
-    pub fn calculate_motion(&mut self, dt: f32) {
-        self.rotation += dt * self.in_angle / 200f32;
+    pub fn calculate_motion(&mut self, dt: u32) {
+        self.rotation += dt as f32 * self.in_angle / 200f32;
         self.velocity
             .apply_propulsion(self.in_propulsion, self.rotation, dt);
         self.position.add_modulo(&Coord {
-            x: self.velocity.x * dt,
-            y: self.velocity.y * dt,
+            x: self.velocity.x * dt as f32,
+            y: self.velocity.y * dt as f32,
         });
 
         //TODO emit bullets
@@ -91,10 +92,10 @@ impl Asteroid {
         }
     }
 
-    pub fn calculate_motion(&mut self, dt: f32) {
+    pub fn calculate_motion(&mut self, dt: u32) {
         self.position.add_modulo(&Coord {
-            x: self.velocity.x * dt,
-            y: self.velocity.y * dt,
+            x: self.velocity.x * dt as f32,
+            y: self.velocity.y * dt as f32,
         });
     }
 

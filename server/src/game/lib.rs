@@ -31,12 +31,12 @@ impl Coord {
         (dy.powi(2) + dx.powi(2)).sqrt()
     }
 
-    pub fn apply_propulsion(&mut self, propel: bool, rotation: f32, dt: f32) {
-        let prop_factor = propel as u8 as f32 * 0.00000055 * dt;
+    pub fn apply_propulsion(&mut self, propel: bool, rotation: f32, dt: u32) {
+        let prop_factor = propel as u8 as f32 * 0.00000055 * dt as f32;
         self.x += prop_factor * rotation.sin();
         self.y += -prop_factor * rotation.cos();
-        self.x -= dt * 1.35f32 * self.x.powi(2) * self.x.signum();
-        self.y -= dt * 1.35f32 * self.y.powi(2) * self.y.signum();
+        self.x -= dt as f32 * 1.35f32 * self.x.powi(2) * self.x.signum();
+        self.y -= dt as f32 * 1.35f32 * self.y.powi(2) * self.y.signum();
     }
 
     pub fn random_pos() -> Self{

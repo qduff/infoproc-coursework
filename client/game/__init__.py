@@ -1,4 +1,3 @@
-import time
 from raylibpy import *
 import math
 import random
@@ -53,7 +52,6 @@ def draw_shape(shape, offset: list[float, float], angle: float = 0,  scale: int 
         draw_shape_single(shape, [offset[0]+1, offset[1]-1], angle, scale, color)
         draw_shape_single(shape, [offset[0]-1, offset[1]-1], angle, scale, color)
 
-
 def draw_shape_single(shape, offset: list[float, float], angle: float = 0,  scale: int = 1, color: Color = WHITE) -> None:
     l = len(shape)
     transformed = [[((row[0]*math.cos(angle) - row[1]*math.sin(angle))*scale + offset[0])*WIDTH,
@@ -86,7 +84,7 @@ def run():
             f"pollrate: t:{pollrate}ms r:{state.pollrate*1000:.2f}ms ", 10, 30, 20, LIGHTGRAY)
 
         draw_text(
-            f'Frametime{": vsync" if VSYNC_EN else ""}: {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
+            f'Frametime{": vsync" if VSYNC_EN else ""}: {get_fps()} FPS - {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
 
         for player in state.rx.players:
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
@@ -95,10 +93,8 @@ def run():
             if player.type == schema_capnp.Player.PlayerType.player:
                 draw_shape(ARROW, [player.x, player.y], player.rotation, 1, WHITE)
 
-        print(len(state.rx.asteroids))
         i = 0
         for asteroid in state.rx.asteroids:
-            print([asteroid.x, asteroid.y])
             draw_shape(ASTEROIDS[i], [asteroid.x, asteroid.y], asteroid.rotation, asteroid.size, WHITE)
             i += 1
 

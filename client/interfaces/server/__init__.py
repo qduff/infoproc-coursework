@@ -1,16 +1,14 @@
 import os
-import signal
-import sys
 from threading import Thread
 import time
 import socket
 import state
+import capnp
 
 POLLRATE = 50 #ms - determines max rate of polling, will increase if server to slow!
 HOST = "127.0.0.1"
 PORT = 5000
 
-import capnp
 schema_capnp = capnp.load('interfaces/server/schema.capnp')
 
 

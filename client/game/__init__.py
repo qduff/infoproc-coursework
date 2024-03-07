@@ -1,6 +1,7 @@
 import time
 from raylibpy import *
 import math
+import random
 import copy
 import state
 from interfaces.server import schema_capnp, POLLRATE as pollrate
@@ -9,6 +10,17 @@ ARROW = [[-.015, .025],
          [.015, .025],
          [.00, -.025]]
 
+def generate_asteroid(radius, rad_deviation, points, arg_deviation):
+    asteroid = []
+    for p in range(points):
+        arg = (p * math.pi * 2 / points) + random.uniform(- arg_deviation, arg_deviation)
+        rad = radius + random.uniform(- rad_deviation, rad_deviation)
+        asteroid.append([rad*math.cos(arg),rad*math.sin(arg)])
+    return asteroid
+
+ASTEROIDS = [generate_asteroid(0.015, 0.008, 11, 0.1) for i in range(100)] # i doubt we will ever have over 100 ASTEROIDS
+
+'''
 ASTEROID = [[-.010, .020],
             [0, .030],
             [.020, .020],
@@ -17,6 +29,7 @@ ASTEROID = [[-.010, .020],
             [.00, -.030],
             [-.010, -.010],
             [-.040, 0]]
+'''
 
 WIDTH = 800
 HEIGHT = 800
@@ -83,9 +96,11 @@ def run():
                 draw_shape(ARROW, [player.x, player.y], player.rotation, 1, WHITE)
 
         print(len(state.rx.asteroids))
+        i = 0
         for asteroid in state.rx.asteroids:
             print([asteroid.x, asteroid.y])
-            draw_shape(ASTEROID, [asteroid.x, asteroid.y], asteroid.rotation, asteroid.size, WHITE)
+            draw_shape(ASTEROIDS[i], [asteroid.x, asteroid.y], asteroid.rotation, asteroid.size, WHITE)
+            i += 1
 
         # draw_shape(ASTEROID, [120, 120])
 

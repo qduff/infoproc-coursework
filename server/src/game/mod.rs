@@ -23,11 +23,7 @@ impl Game {
     }
 
     pub fn tick(&mut self, dt: f32) {
-<<<<<<< HEAD
         if self.asteroids.iter().filter(|a| a.size == 4).count() < 3 {
-=======
-        if self.asteroids.len() < 10 {
->>>>>>> c47e4c1 (bullet spawning with direction)
             self.asteroids.push(Asteroid::new());
         }
         self.step_motion(dt);

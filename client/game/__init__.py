@@ -6,10 +6,12 @@ import state
 from interfaces.server import schema_capnp, POLLRATE as pollrate
 
 ARROW = [[-.015, .025],
+         [-.01, .015],
+         [.01, .015],
          [.015, .025],
          [.00, -.025]]
-PROPEL = [[-.007, .025],
-         [.007, .025],
+PROPEL = [[-.007, .02],
+         [.007, .02],
          [.00, .04]]
 
 

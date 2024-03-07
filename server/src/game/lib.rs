@@ -30,12 +30,12 @@ impl Coord {
         (dy.powi(2) + dx.powi(2)).sqrt()
     }
 
-    pub fn apply_propulsion(&mut self, propel: bool, rotation: f32) {
-        let prop_factor = propel as u8 as f32 * 0.0001;
+    pub fn apply_propulsion(&mut self, propel: bool, rotation: f32, dt: f32) {
+        let prop_factor = propel as u8 as f32 * 0.00000055 * dt;
         self.x += prop_factor * rotation.sin();
         self.y += -prop_factor * rotation.cos();
-        self.x -= 5f32 * self.x.powi(2) * self.x.signum();
-        self.y -= 5f32 * self.y.powi(2) * self.y.signum();
+        self.x -= dt * 1.35f32 * self.x.powi(2) * self.x.signum();
+        self.y -= dt * 1.35f32 * self.y.powi(2) * self.y.signum();
     }
 
     //TODO implement more advanced movement

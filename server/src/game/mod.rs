@@ -22,14 +22,14 @@ impl Game {
         }
     }
 
-    pub fn tick(&mut self) {
-        self.step_motion();
+    pub fn tick(&mut self, dt: f32) {
+        self.step_motion(dt);
         self.collisions(); // IDK if this not taking motion into account when calculating collisions is a good idea
     }
 
-    fn step_motion(&mut self) {
+    fn step_motion(&mut self, dt: f32) {
         for (_, player) in &mut self.players {
-            player.calculate_motion();
+            player.calculate_motion(dt);
         }
         // for asteroid in &mut self.asteroids {
         //     asteroid.calculate_motion(&self.settings);

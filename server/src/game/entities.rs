@@ -1,15 +1,14 @@
 use crate::game::lib::Coord;
 
-// #[derive(Clone)]
+#[derive(Default)]
 pub struct Bullet {
     position: Coord,
     velocity: Coord,
-
     lifetime: u8,
 }
 
-impl Default for Bullet {
-    fn default() -> Self {
+impl Bullet {
+    fn new() -> Self {
         Bullet {
             lifetime: 5,
             ..Default::default()
@@ -49,16 +48,16 @@ impl Player {
         }
     }
 
-    pub fn calculate_motion(&mut self) {
-        // calculate motion
-        self.rotation += self.in_angle / 15f32;
-        self.velocity.apply_propulsion(self.in_propulsion, self.rotation);
-        self.position.add_modulo(&self.velocity);
+    pub fn calculate_motion(&mut self, dt: f32) {
+        self.rotation += dt * self.in_angle / 200f32 ;
+        self.velocity.apply_propulsion(self.in_propulsion, self.rotation, dt);
+        self.position.add_modulo(&Coord { x: self.velocity.x * dt, y: self.velocity.y * dt });
 
         //TODO emit bullets
     }
 }
 
+#[derive(Default)]
 pub struct Asteroid {
     position: Coord,
     velocity: Coord,
@@ -69,16 +68,14 @@ pub struct Asteroid {
               // size_mul: i64,
 }
 
-impl Default for Asteroid {
-    fn default() -> Self {
+impl Asteroid {
+    fn new() -> Self {
         Asteroid {
             size: 4,
             ..Default::default()
         }
     }
-}
 
-impl Asteroid {
     fn handle_shot(&mut self) {
         // break into two seperate asteroids, where size is halved
     }

@@ -57,7 +57,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
             }
         }
 
-        thread::sleep(std::time::Duration::from_millis(80)); // simulate latency
+        // thread::sleep(std::time::Duration::from_millis(80)); // simulate latency
 
         // if let Err(_) = serialize::write_message(&mut stream, &message) {break;} // changed to avoid buffering, not ideal
         let mut out: Vec<u8> = Vec::new();
@@ -69,7 +69,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
 }
 
 pub fn net_thread(data: Arc<RwLock<game::Game>>) {
-    let l = std::net::TcpListener::bind("127.0.0.1:5000").unwrap();
+    let l = std::net::TcpListener::bind("0.0.0.0:5000").unwrap();
 
     for stream in l.incoming() {
         let stream = stream.unwrap();

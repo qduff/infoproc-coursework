@@ -8,6 +8,12 @@ from interfaces.server import schema_capnp, POLLRATE as pollrate
 ARROW = [[-.015, .025],
          [.015, .025],
          [.00, -.025]]
+PROPEL = [[-.007, .025],
+         [.007, .025],
+         [.00, .04]]
+
+
+
 
 def generate_asteroid(radius, rad_deviation, points, arg_deviation):
     asteroid = []
@@ -89,6 +95,9 @@ def run():
         for player in state.rx.players:
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
                 draw_shape(ARROW, [player.x, player.y], player.rotation, 1, GREEN)
+                if state.input.accelerating: # TODO - put this into rx packet so works for all players
+                    draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, GREEN)
+
                 draw_text(f"Lives: {player.lives} ", 10, 70, 20, RED)
             if player.type == schema_capnp.Player.PlayerType.player:
                 draw_shape(ARROW, [player.x, player.y], player.rotation, 1, WHITE)

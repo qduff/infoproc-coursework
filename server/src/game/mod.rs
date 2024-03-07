@@ -45,7 +45,7 @@ impl Game {
         // player - asteroid collisions
         for (_, player) in &mut self.players {
             for asteroid in &mut self.asteroids {
-                if player.position.distance_to(&asteroid.position) < asteroid.size as f32 / 60.0 {
+                if player.position.distance_to(&asteroid.position) < asteroid.size as f32 / 50.0 {
                     if player.invincability_timer == 0 {
                         if player.lives == 1 {
                             println!("dead");

@@ -10,9 +10,14 @@ pub struct Bullet {
 }
 
 impl Bullet {
-    fn new() -> Self {
+    fn new(rotation: f32) -> Self {
+        let bullet_speed: f32 = 1.0;
         Bullet {
-            lifetime: 5,
+            lifetime: 100,
+            velocity: Coord {
+                x: bullet_speed * rotation.cos(),
+                y: bullet_speed * rotation.sin(),
+            },
             ..Default::default()
         }
     }
@@ -20,7 +25,8 @@ impl Bullet {
 
 impl Bullet {
     fn calculate_motion(&mut self) {
-        self.position.add_modulo(&self.velocity)
+        self.position.add_modulo(&self.velocity);
+        self.lifetime -= 1;
     }
 }
 

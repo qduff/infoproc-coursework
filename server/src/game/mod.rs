@@ -1,5 +1,5 @@
-use std::net::SocketAddr;
 use std::collections::HashMap;
+use std::net::SocketAddr;
 mod lib;
 // mod game_params;
 // use game_params::GameParams;
@@ -10,8 +10,8 @@ pub use entities::*;
 #[derive(Default)]
 pub struct Game {
     pub players: HashMap<SocketAddr, Player>,
-    bullets: Vec<Bullet>,
     pub asteroids: Vec<Asteroid>,
+    bullets: Vec<Bullet>,
     // settings: game_params::GameParams,
 }
 
@@ -23,9 +23,8 @@ impl Game {
     }
 
     pub fn tick(&mut self, dt: f32) {
-        if self.asteroids.len() < 5 {
+        if self.asteroids.iter().filter(|a| a.size == 4).count() < 3 {
             self.asteroids.push(Asteroid::new());
-            // println!("{:?}", self.asteroids.last().unwrap().position);
         }
         self.step_motion(dt);
         self.collisions(); // IDK if this not taking motion into account when calculating collisions is a good idea
@@ -38,10 +37,6 @@ impl Game {
         for asteroid in &mut self.asteroids {
             asteroid.calculate_motion(dt);
         }
-
-        // for asteroid in &mut self.asteroids {
-        //     asteroid.calculate_motion(&self.settings);
-        // }
     }
 
     fn collisions(&mut self) {}

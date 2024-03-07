@@ -1,4 +1,6 @@
 use crate::game::lib::Coord;
+use rand::Rng;
+use std::f32::consts::PI;
 
 #[derive(Default)]
 pub struct Bullet {
@@ -49,9 +51,13 @@ impl Player {
     }
 
     pub fn calculate_motion(&mut self, dt: f32) {
-        self.rotation += dt * self.in_angle / 200f32 ;
-        self.velocity.apply_propulsion(self.in_propulsion, self.rotation, dt);
-        self.position.add_modulo(&Coord { x: self.velocity.x * dt, y: self.velocity.y * dt });
+        self.rotation += dt * self.in_angle / 200f32;
+        self.velocity
+            .apply_propulsion(self.in_propulsion, self.rotation, dt);
+        self.position.add_modulo(&Coord {
+            x: self.velocity.x * dt,
+            y: self.velocity.y * dt,
+        });
 
         //TODO emit bullets
     }
@@ -64,14 +70,15 @@ pub struct Asteroid {
     pub angle: f32,
     pub size: u8, // 4 -> 2 -> 1  -  i think?
     pub rotation: f32,
-              // speed_mul: i64,
-              // size_mul: i64,
+    // speed_mul: i64,
+    // size_mul: i64,
 }
 
 impl Asteroid {
     pub fn new() -> Self {
         Asteroid {
             size: 4,
+            rotation: rand::thread_rng().gen_range(0.0..2.0 * PI),
             position: Coord::random_pos(),
             velocity: Coord::random_vel(),
             ..Default::default()
@@ -79,7 +86,10 @@ impl Asteroid {
     }
 
     pub fn calculate_motion(&mut self, dt: f32) {
-        self.position.add_modulo(&Coord { x: self.velocity.x * dt, y: self.velocity.y * dt });
+        self.position.add_modulo(&Coord {
+            x: self.velocity.x * dt,
+            y: self.velocity.y * dt,
+        });
     }
 
     fn handle_shot(&mut self) {

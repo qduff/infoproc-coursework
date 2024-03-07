@@ -43,19 +43,23 @@ impl Game {
 
     fn collisions(&mut self, dt: u32) {
         // player - asteroid collisions
-        for it in &mut self.players.iter_mut().zip(&mut self.asteroids) {
-            let ((_, player), asteroid) = it;
-            if player.position.distance_to(&asteroid.position) < asteroid.size as f32 / 35.0 {
-                if player.invincability_timer == 0 {
-                    if player.lives == 1 {
-                        println!("dead");
+        for (_, player) in &mut self.players {
+            for asteroid in &mut self.asteroids {
+                if player.position.distance_to(&asteroid.position) < asteroid.size as f32 / 60.0 {
+                    if player.invincability_timer == 0 {
+                        if player.lives == 1 {
+                            println!("dead");
+                        } else {
+                            player.lives -= 1;
+                            player.position = Coord { x: 0.5, y: 0.5 };
+                            player.velocity = Coord { x: 0.0, y: 0.0 };
+                            // leave rotation
+                            player.invincability_timer = 1000;
+
+                        }
                     } else {
-                        player.lives -= 1;
-                        player.position = Coord { x: 0.5, y: 0.5 };
-                        player.invincability_timer = 1000;
+                        player.invincability_timer -= std::cmp::min(dt, player.invincability_timer);
                     }
-                } else {
-                    player.invincability_timer -= std::cmp::min(dt, player.invincability_timer);
                 }
             }
         }

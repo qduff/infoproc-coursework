@@ -46,6 +46,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
                 tmp.set_x_vel(player.1.velocity.x);
                 tmp.set_y_vel(player.1.velocity.y);
                 tmp.set_rotation(player.1.rotation);
+                tmp.set_propelling(player.1.in_propulsion);
                 if player.0 == &addr {
                     tmp.set_type(crate::schema_capnp::player::PlayerType::MyPlayer);
                     tmp.set_lives(player.1.lives);

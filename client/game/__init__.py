@@ -19,13 +19,13 @@ PROPEL = [[-.007, .02],
 
 def generate_asteroid(radius, rad_deviation, rad_large_prob, points, arg_deviation):
     asteroid = []
-    
+
     for p in range(points):
         if (random.random() < rad_large_prob):
             rad_large_prob *= 0.5
-            delta_rad = random.uniform(-rad_deviation * 3,-rad_deviation* 2)   
+            delta_rad = random.uniform(-rad_deviation * 3,-rad_deviation* 2)
         else:
-            delta_rad = random.uniform(-rad_deviation, rad_deviation) 
+            delta_rad = random.uniform(-rad_deviation, rad_deviation)
 
         arg = (p * math.pi * 2 / points) + random.uniform(- arg_deviation, arg_deviation)
         rad = radius + delta_rad
@@ -103,13 +103,14 @@ def run():
 
         for player in state.rx.players:
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
-                draw_shape(ARROW, [player.x, player.y], player.rotation, 1, GREEN)
-                if state.input.accelerating: # TODO - put this into rx packet so works for all players
-                    draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, GREEN)
-
+                col = GREEN
                 draw_text(f"Lives: {player.lives} ", 10, 70, 20, RED)
-            if player.type == schema_capnp.Player.PlayerType.player:
-                draw_shape(ARROW, [player.x, player.y], player.rotation, 1, WHITE)
+            else:
+                col = WHITE
+            draw_shape(ARROW, [player.x, player.y], player.rotation, 1, col)
+            if player.propelling:
+                draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)
+
 
         i = 0
         for asteroid in state.rx.asteroids:

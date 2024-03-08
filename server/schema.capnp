@@ -19,6 +19,7 @@ struct Player {
     rotation @4 :Float32;
     type @5 :PlayerType;
     lives @6 :UInt8 = 0;
+    propelling @7 :Bool;
 
     enum PlayerType {
         player @0;

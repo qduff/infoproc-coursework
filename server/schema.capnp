@@ -20,6 +20,7 @@ struct Player {
     type @5 :PlayerType;
     lives @6 :UInt8 = 0;
     propelling @7 :Bool;
+    invincabilityTimer @8 :UInt32;
 
     enum PlayerType {
         player @0;

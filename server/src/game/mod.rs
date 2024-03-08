@@ -44,6 +44,7 @@ impl Game {
     fn collisions(&mut self, dt: u32) {
         // player - asteroid collisions
         for (_, player) in &mut self.players {
+            player.invincability_timer -= std::cmp::min(dt, player.invincability_timer);
             for asteroid in &mut self.asteroids {
                 if player.position.distance_to(&asteroid.position) < asteroid.size as f32 / 50.0 {
                     if player.invincability_timer == 0 {
@@ -54,11 +55,9 @@ impl Game {
                             player.position = Coord { x: 0.5, y: 0.5 };
                             player.velocity = Coord { x: 0.0, y: 0.0 };
                             // leave rotation
-                            player.invincability_timer = 1000;
+                            player.invincability_timer = 3000;
 
                         }
-                    } else {
-                        player.invincability_timer -= std::cmp::min(dt, player.invincability_timer);
                     }
                 }
             }

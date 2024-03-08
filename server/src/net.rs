@@ -40,19 +40,20 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
             let mut rx = message.init_root::<crate::schema_capnp::rx::Builder>();
             let mut players = rx.reborrow().init_players(r.players.len() as u32);
             for (i, player) in r.players.iter().enumerate() {
-                let mut tmp = players.reborrow().get(i as u32);
-                tmp.set_x(player.1.position.x);
-                tmp.set_y(player.1.position.y);
-                tmp.set_x_vel(player.1.velocity.x);
-                tmp.set_y_vel(player.1.velocity.y);
-                tmp.set_rotation(player.1.rotation);
-                tmp.set_propelling(player.1.in_propulsion);
+                let mut p = players.reborrow().get(i as u32);
+                p.set_x(player.1.position.x);
+                p.set_y(player.1.position.y);
+                p.set_x_vel(player.1.velocity.x);
+                p.set_y_vel(player.1.velocity.y);
+                p.set_rotation(player.1.rotation);
+                p.set_propelling(player.1.in_propulsion);
+                p.set_invincability_timer(player.1.invincability_timer);
                 if player.0 == &addr {
-                    tmp.set_type(crate::schema_capnp::player::PlayerType::MyPlayer);
-                    tmp.set_lives(player.1.lives);
+                    p.set_type(crate::schema_capnp::player::PlayerType::MyPlayer);
+                    p.set_lives(player.1.lives);
                 } else {
-                    tmp.set_type(crate::schema_capnp::player::PlayerType::Player);
-                    tmp.set_lives(player.1.lives);
+                    p.set_type(crate::schema_capnp::player::PlayerType::Player);
+                    p.set_lives(player.1.lives);
                 }
             }
             let mut asteroids = rx.reborrow().init_asteroids(r.asteroids.len() as u32);
@@ -67,7 +68,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
             }
         }
 
-        // thread::sleep(std::time::Duration::from_millis(80)); // simulate latency
+        thread::sleep(std::time::Duration::from_millis(40)); // simulate latency
 
         // if let Err(_) = serialize::write_message(&mut stream, &message) {break;} // changed to avoid buffering, not ideal
         let mut out: Vec<u8> = Vec::new();

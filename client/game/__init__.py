@@ -107,6 +107,9 @@ def run():
                 draw_text(f"Lives: {player.lives} ", 10, 70, 20, RED)
             else:
                 col = WHITE
+            if player.invincabilityTimer % 200 > 100:
+                col = RED
+
             draw_shape(ARROW, [player.x, player.y], player.rotation, 1, col)
             if player.propelling:
                 draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)

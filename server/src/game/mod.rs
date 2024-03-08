@@ -7,7 +7,7 @@ mod lib;
 mod entities;
 pub use entities::*;
 
-use crate::game::lib::Coord;
+use crate::game::lib::Vec2;
 
 #[derive(Default)]
 pub struct Game {
@@ -25,7 +25,7 @@ impl Game {
     }
 
     pub fn tick(&mut self, dt: u32) {
-        if self.asteroids.iter().filter(|a| a.size == 4).count() < 3 {
+        if self.asteroids.iter().filter(|a| a.size == 4).count() < 4 {
             self.asteroids.push(Asteroid::new());
         }
         self.step_motion(dt);
@@ -52,13 +52,29 @@ impl Game {
                             println!("dead");
                         } else {
                             player.lives -= 1;
-                            player.position = Coord { x: 0.5, y: 0.5 };
-                            player.velocity = Coord { x: 0.0, y: 0.0 };
+                            player.position = Vec2 { x: 0.5, y: 0.5 };
+                            player.velocity = Vec2 { x: 0.0, y: 0.0 };
                             // leave rotation
                             player.invincability_timer = 3000;
-
                         }
                     }
+                }
+            }
+        }
+        // asteroid asteroid collisions
+        for a in 0..self.asteroids.len() {
+            for b in 0..self.asteroids.len() {
+                if a >= b {
+                    continue;
+                }
+                if self.asteroids[a].position.distance_to(&self.asteroids[b].position)
+                    < self.asteroids[a].size as f32 / 50.0
+                {
+                    // let unit = self.asteroids[a].position.unit_vector_to(&self.asteroids[b].position);
+                    // TODO use this vector to determine new vectors
+                    self.asteroids[a].velocity = self.asteroids[a].velocity.negate();
+                    self.asteroids[b].velocity = self.asteroids[b].velocity.negate();
+
                 }
             }
         }

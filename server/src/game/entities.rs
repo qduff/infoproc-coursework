@@ -1,11 +1,11 @@
-use crate::game::lib::Coord;
+use crate::game::lib::Vec2;
 use rand::Rng;
 use std::f32::consts::PI;
 
 #[derive(Default)]
 pub struct Bullet {
-    position: Coord,
-    velocity: Coord,
+    position: Vec2,
+    velocity: Vec2,
     lifetime: u8,
 }
 
@@ -14,7 +14,7 @@ impl Bullet {
         let bullet_speed: f32 = 1.0;
         Bullet {
             lifetime: 100,
-            velocity: Coord {
+            velocity: Vec2 {
                 x: bullet_speed * rotation.cos(),
                 y: bullet_speed * rotation.sin(),
             },
@@ -32,8 +32,8 @@ impl Bullet {
 
 #[derive(Default)]
 pub struct Player {
-    pub position: Coord,
-    pub velocity: Coord,
+    pub position: Vec2,
+    pub velocity: Vec2,
     pub rotation: f32,
 
     pub lives: u8,
@@ -52,7 +52,7 @@ impl Player {
     pub fn new() -> Player {
         Player {
             lives: 3,
-            position: Coord { x: 0.5, y: 0.5 },
+            position: Vec2 { x: 0.5, y: 0.5 },
             ..Default::default()
         }
     }
@@ -61,7 +61,7 @@ impl Player {
         self.rotation += dt as f32 * self.in_angle / 200f32;
         self.velocity
             .apply_propulsion(self.in_propulsion, self.rotation, dt);
-        self.position.add_modulo(&Coord {
+        self.position.add_modulo(&Vec2 {
             x: self.velocity.x * dt as f32,
             y: self.velocity.y * dt as f32,
         });
@@ -72,8 +72,8 @@ impl Player {
 
 #[derive(Default)]
 pub struct Asteroid {
-    pub position: Coord,
-    pub velocity: Coord,
+    pub position: Vec2,
+    pub velocity: Vec2,
     pub angle: f32,
     pub size: u8, // 4 -> 2 -> 1  -  i think?
     pub rotation: f32,
@@ -86,14 +86,14 @@ impl Asteroid {
         Asteroid {
             size: 4,
             rotation: rand::thread_rng().gen_range(0.0..2.0 * PI),
-            position: Coord::random_pos(),
-            velocity: Coord::random_vel(),
+            position: Vec2::random_pos(),
+            velocity: Vec2::random_vel(),
             ..Default::default()
         }
     }
 
     pub fn calculate_motion(&mut self, dt: u32) {
-        self.position.add_modulo(&Coord {
+        self.position.add_modulo(&Vec2 {
             x: self.velocity.x * dt as f32,
             y: self.velocity.y * dt as f32,
         });

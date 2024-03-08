@@ -2,13 +2,13 @@
 use rand::Rng;
 
 #[derive(Default, Debug)]
-pub struct Coord {
+pub struct Vec2 {
     pub x: f32,
     pub y: f32,
 }
 
-impl Coord {
-    pub fn add_modulo(&mut self, rhs: &Coord) {
+impl Vec2 {
+    pub fn add_modulo(&mut self, rhs: &Vec2) {
         self.x = self.x + rhs.x;
         if self.x <= 0f32 {
             self.x += 1f32
@@ -25,10 +25,46 @@ impl Coord {
         }
     }
 
-    pub fn distance_to(&self, point2: &Coord) -> f32 {
-        let dx = self.x - point2.x;
-        let dy = self.y - point2.y;
+    pub fn subtract(&self, point2: &Vec2) -> Vec2 {
+        Vec2 {
+            x: self.x - point2.x,
+            y: self.y - point2.y,
+        }
+    }
+
+    pub fn negate(&self) -> Vec2 {
+        Vec2 {
+            x: -self.x,
+            y: -self.y,
+        }
+    }
+
+    pub fn dot_product(&self, point2: &Vec2) -> Vec2 {
+        Vec2 {
+            x: self.x * point2.x,
+            y: self.y * point2.y,
+        }
+    }
+
+    pub fn distance_to(&self, point2: &Vec2) -> f32 {
+        let Vec2 { x: dx, y: dy } = self.subtract(point2);
         (dy.powi(2) + dx.powi(2)).sqrt()
+    }
+
+    pub fn magnitude(&self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+
+    pub fn unit_vector(&self) -> Vec2 {
+        let dist = self.magnitude();
+        Self {
+            x: self.x * 1.0 / dist,
+            y: self.y * 1.0 / dist,
+        }
+    }
+
+    pub fn unit_vector_to(&self, point2: &Vec2) -> Vec2 {
+        self.subtract(point2).unit_vector()
     }
 
     pub fn apply_propulsion(&mut self, propel: bool, rotation: f32, dt: u32) {
@@ -39,13 +75,19 @@ impl Coord {
         self.y -= dt as f32 * 1.35f32 * self.y.powi(2) * self.y.signum();
     }
 
-    pub fn random_pos() -> Self{
+    pub fn random_pos() -> Self {
         let mut rng = rand::thread_rng();
-        Self{x: rng.gen_range(0.0..1.0), y : rng.gen_range(0.0..1.0)}
+        Self {
+            x: rng.gen_range(0.0..1.0),
+            y: rng.gen_range(0.0..1.0),
+        }
     }
-    pub fn random_vel() -> Self{
+    pub fn random_vel() -> Self {
         let mut rng = rand::thread_rng();
-        Self{x: rng.gen_range(-0.0001..0.0001), y : rng.gen_range(-0.0001..0.0001)}
+        Self {
+            x: rng.gen_range(-0.0001..0.0001),
+            y: rng.gen_range(-0.0001..0.0001),
+        }
     }
 
     //TODO implement more advanced movement

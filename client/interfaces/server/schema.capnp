@@ -21,6 +21,7 @@ struct Player {
     lives @6 :UInt8 = 0;
     propelling @7 :Bool;
     invincabilityTimer @8 :UInt32;
+    bullets @9 :List(Bullet);
 
     enum PlayerType {
         player @0;
@@ -35,4 +36,12 @@ struct Asteroid {
     yVel @3 :Float32;
     rotation @4 :Float32;
     size @5 :Float32;
+}
+
+struct Bullet {
+    x @0 :Float32;
+    y @1 :Float32;
+    xVel @2: Float32;
+    yVel @3: Float32;
+    lifetime @4: UInt8;
 }

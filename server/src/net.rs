@@ -55,6 +55,15 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
                     p.set_type(crate::schema_capnp::player::PlayerType::Player);
                     p.set_lives(player.1.lives);
                 }
+                let mut bullets = p.reborrow().init_bullets(player.1.bullets.len() as u32);
+                for (i, bullet) in player.1.bullets.iter().enumerate() {
+                    let mut b = bullets.reborrow().get(i as u32);
+                    b.set_x(bullet.position.x);
+                    b.set_y(bullet.position.y);
+                    b.set_x_vel(bullet.velocity.x);
+                    b.set_y_vel(bullet.velocity.y);
+                    b.set_lifetime(bullet.lifetime);
+                }
             }
             let mut asteroids = rx.reborrow().init_asteroids(r.asteroids.len() as u32);
             for (i, asteroid) in r.asteroids.iter().enumerate() {

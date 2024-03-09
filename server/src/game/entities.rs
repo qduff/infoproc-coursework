@@ -4,9 +4,9 @@ use std::f32::consts::PI;
 
 #[derive(Default)]
 pub struct Bullet {
-    position: Vec2,
-    velocity: Vec2,
-    lifetime: u8,
+    pub position: Vec2,
+    pub velocity: Vec2,
+    pub lifetime: u8,
 }
 
 impl Bullet {
@@ -21,12 +21,11 @@ impl Bullet {
             ..Default::default()
         }
     }
-}
-
-impl Bullet {
-    fn calculate_motion(&mut self) {
+    
+    fn calculate_motion(&mut self) -> u8 {
         self.position.add_modulo(&self.velocity);
         self.lifetime -= 1;
+        self.lifetime
     }
 }
 
@@ -35,9 +34,11 @@ pub struct Player {
     pub position: Vec2,
     pub velocity: Vec2,
     pub rotation: f32,
+    pub size: f32,
 
     pub lives: u8,
     pub invincability_timer: u32,
+    pub bullets: Vec<Bullet>,
 
     // accel_scale: i64,
     // decay_mul: i64,
@@ -53,6 +54,7 @@ impl Player {
         Player {
             lives: 3,
             position: Vec2 { x: 0.5, y: 0.5 },
+            size: 1.0,
             ..Default::default()
         }
     }
@@ -66,6 +68,23 @@ impl Player {
             y: self.velocity.y * dt as f32,
         });
 
+        if self.in_shoot {
+            self.in_shoot = false;
+            self.bullets.push(Bullet::new(self.rotation));
+        }
+
+        let mut b_index = 0;
+
+        while b_index < self.bullets.len() {
+            let lifetime = self.bullets[b_index].calculate_motion();
+            println!("{}",lifetime);
+            if lifetime == 0 {
+                self.bullets.remove(b_index);
+            }else{
+                b_index += 1;
+            }
+        }
+
         //TODO emit bullets
     }
 }
@@ -75,8 +94,9 @@ pub struct Asteroid {
     pub position: Vec2,
     pub velocity: Vec2,
     pub angle: f32,
-    pub size: u8, // 4 -> 2 -> 1  -  i think?
+    pub size: f32, // 4 -> 2 -> 1  -  i think?
     pub rotation: f32,
+    pub lives: u8,
     // speed_mul: i64,
     // size_mul: i64,
 }
@@ -84,10 +104,11 @@ pub struct Asteroid {
 impl Asteroid {
     pub fn new() -> Self {
         Asteroid {
-            size: 4,
+            size: 4.0,
             rotation: rand::thread_rng().gen_range(0.0..2.0 * PI),
             position: Vec2::random_pos(),
             velocity: Vec2::random_vel(),
+            lives: 3,
             ..Default::default()
         }
     }
@@ -99,8 +120,9 @@ impl Asteroid {
         });
     }
 
-    fn handle_shot(&mut self) {
-        // break into two seperate asteroids, where size is halved
+    pub fn hit(&mut self) -> u8 {
+        self.lives -= 1;
+        self.lives
     }
     // fn calculate_motion(&mut self, settings: &GameParams) {
     //     self.pos.mod_add(self.velocity, settings.size);

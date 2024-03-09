@@ -34,5 +34,5 @@ struct Asteroid {
     xVel @2 :Float32;
     yVel @3 :Float32;
     rotation @4 :Float32;
-    size @5 :UInt8;
+    size @5 :Float32;
 }

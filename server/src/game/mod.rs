@@ -13,7 +13,7 @@ use crate::game::lib::Vec2;
 pub struct Game {
     pub players: HashMap<SocketAddr, Player>,
     pub asteroids: Vec<Asteroid>,
-    bullets: Vec<Bullet>,
+    // bullets: Vec<Bullet>,
     // settings: game_params::GameParams,
 }
 
@@ -25,7 +25,7 @@ impl Game {
     }
 
     pub fn tick(&mut self, dt: u32) {
-        if self.asteroids.iter().filter(|a| a.size == 4).count() < 4 {
+        if self.asteroids.iter().filter(|a| a.lives == 3).count() < 4 {
             self.asteroids.push(Asteroid::new());
         }
         self.step_motion(dt);
@@ -42,11 +42,12 @@ impl Game {
     }
 
     fn collisions(&mut self, dt: u32) {
-        // player - asteroid collisions
+        // player / bullet collisions
         for (_, player) in &mut self.players {
             player.invincability_timer -= std::cmp::min(dt, player.invincability_timer);
+            // player asteroid collisions
             for asteroid in &mut self.asteroids {
-                if player.position.distance_to(&asteroid.position) < asteroid.size as f32 / 50.0 {
+                if player.position.distance_to(&asteroid.position) < (player.size + asteroid.size) as f32 / 50.0 {
                     if player.invincability_timer == 0 {
                         if player.lives == 1 {
                             println!("dead");
@@ -59,6 +60,25 @@ impl Game {
                         }
                     }
                 }
+            }
+
+            // bullet collisions
+            for bullet in &mut player.bullets {
+                // bullet asteroid collisions
+                let mut a_index = 0;
+                while a_index < self.asteroids.len() {
+                    if bullet.position.distance_to( &self.asteroids[a_index].position ) < self.asteroids[a_index].size {
+                        if (self.asteroids[a_index].hit() == 0){
+                            self.asteroids.remove(a_index);
+                        } else {
+                            a_index += 1;
+                        }
+                        bullet.lifetime = 1;
+                    }else{
+                        a_index += 1;
+                    }
+                }
+                
             }
         }
         // asteroid asteroid collisions

@@ -36,8 +36,8 @@ t.start()
 
 def update_state(button_val, accelerometer_val, gyroscope_val):
     accelerometer_val  
-    button_val < -0.7  
-    gyroscope_val > 0.7  
+    button_val
+    gyroscope_val 
 
     # Update the state
     state.state = state.State(gyroscope_val, button_val, accelerometer_val)

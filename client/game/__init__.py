@@ -115,8 +115,10 @@ def run():
                 draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)
 
             for bullet in player.bullets:
-                print("bullet",bullet.x, bullet.y )
-                draw_circle(bullet.x, bullet.y, 0.2, RED)
+                # print("bullet",bullet.x, bullet.y )
+                draw_shape(generate_asteroid(0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
+                draw_shape(generate_asteroid(0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE)
+                draw_poly([bullet.x,bullet.y],5, 5,0,WHITE)
 
 
 

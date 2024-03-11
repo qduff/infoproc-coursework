@@ -21,7 +21,7 @@ class ServerInterface:
             self.sock.connect((HOST,PORT))
             while True:
                 start = time.time()
-                print("[tick]")
+                # print("[tick]")
                 self.tick()
                 state.rtt = time.time() - start
                 time.sleep(max(0, POLLRATE/1000 - state.rtt ))

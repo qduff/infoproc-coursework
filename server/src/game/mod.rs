@@ -50,7 +50,7 @@ impl Game {
                 if player.position.distance_to(&asteroid.position) < (player.size + asteroid.size) as f32 / 50.0 {
                     if player.invincability_timer == 0 {
                         if player.lives == 1 {
-                            println!("dead");
+                            println!("oof!");
                         } else {
                             player.lives -= 1;
                             player.position = Vec2 { x: 0.5, y: 0.5 };
@@ -88,7 +88,7 @@ impl Game {
                     continue;
                 }
                 if self.asteroids[a].position.distance_to(&self.asteroids[b].position)
-                    < self.asteroids[a].size as f32 / 50.0
+                    < self.asteroids[a].size + self.asteroids[b].size
                 {
                     // let unit = self.asteroids[a].position.unit_vector_to(&self.asteroids[b].position);
                     // TODO use this vector to determine new vectors

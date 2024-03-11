@@ -122,7 +122,7 @@ def run():
 
         i = 0
         for asteroid in state.rx.asteroids:
-            draw_shape(ASTEROIDS[i], [asteroid.x, asteroid.y], asteroid.rotation, asteroid.size, WHITE)
+            draw_shape(ASTEROIDS[i], [asteroid.x, asteroid.y], asteroid.rotation, asteroid.size * 65, WHITE)
             i += 1
 
         # draw_shape(ASTEROID, [120, 120])

@@ -10,19 +10,21 @@ pub struct Bullet {
 }
 
 impl Bullet {
-    fn new(rotation: f32) -> Self {
-        let bullet_speed: f32 = 1.0;
+    fn new(rotation: f32, location: & Vec2) -> Self {
+        let bullet_speed: f32 = 0.01;
         Bullet {
             lifetime: 100,
             velocity: Vec2 {
                 x: bullet_speed * rotation.cos(),
                 y: bullet_speed * rotation.sin(),
             },
+            position: location.clone(),
             ..Default::default()
         }
     }
     
     fn calculate_motion(&mut self) -> u8 {
+        println!("vel -> x:{}y:{}",self.velocity.x, self.velocity.y);
         self.position.add_modulo(&self.velocity);
         self.lifetime -= 1;
         self.lifetime
@@ -70,14 +72,13 @@ impl Player {
 
         if self.in_shoot {
             self.in_shoot = false;
-            self.bullets.push(Bullet::new(self.rotation));
+            self.bullets.push(Bullet::new(self.rotation, &self.position));
         }
 
         let mut b_index = 0;
 
         while b_index < self.bullets.len() {
             let lifetime = self.bullets[b_index].calculate_motion();
-            println!("{}",lifetime);
             if lifetime == 0 {
                 self.bullets.remove(b_index);
             }else{
@@ -104,7 +105,7 @@ pub struct Asteroid {
 impl Asteroid {
     pub fn new() -> Self {
         Asteroid {
-            size: 4.0,
+            size: 0.1,
             rotation: rand::thread_rng().gen_range(0.0..2.0 * PI),
             position: Vec2::random_pos(),
             velocity: Vec2::random_vel(),
@@ -122,6 +123,7 @@ impl Asteroid {
 
     pub fn hit(&mut self) -> u8 {
         self.lives -= 1;
+        self.size /= 2.0;
         self.lives
     }
     // fn calculate_motion(&mut self, settings: &GameParams) {

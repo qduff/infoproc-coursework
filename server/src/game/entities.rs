@@ -146,7 +146,7 @@ impl Asteroid {
 
     pub fn hit(&mut self) -> u8 {
         self.lives -= 1;
-        self.size /= 2.0;
+        self.size /= 1.7;
         self.lives
     }
     // fn calculate_motion(&mut self, settings: &GameParams) {

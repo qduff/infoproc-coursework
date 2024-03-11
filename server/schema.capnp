@@ -36,6 +36,7 @@ struct Asteroid {
     yVel @3 :Float32;
     rotation @4 :Float32;
     size @5 :Float32;
+    seed @6 :UInt8;
 }
 
 struct Bullet {

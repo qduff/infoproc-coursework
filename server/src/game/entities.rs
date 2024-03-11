@@ -22,7 +22,7 @@ impl Bullet {
             ..Default::default()
         }
     }
-    
+
     fn calculate_motion(&mut self) -> u8 {
         println!("vel -> x:{}y:{}",self.velocity.x, self.velocity.y);
         self.position.add_modulo(&self.velocity);
@@ -98,6 +98,8 @@ pub struct Asteroid {
     pub size: f32, // 4 -> 2 -> 1  -  i think?
     pub rotation: f32,
     pub lives: u8,
+
+    pub seed: u8,
     // speed_mul: i64,
     // size_mul: i64,
 }
@@ -110,6 +112,7 @@ impl Asteroid {
             position: Vec2::random_pos(),
             velocity: Vec2::random_vel(),
             lives: 3,
+            seed: rand::thread_rng().gen(),
             ..Default::default()
         }
     }

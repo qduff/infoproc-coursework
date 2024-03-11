@@ -17,9 +17,9 @@ PROPEL = [[-.007, .02],
 
 
 
-def generate_asteroid(radius, rad_deviation, rad_large_prob, points, arg_deviation):
+def generate_asteroid(seed, radius = 0.015, rad_deviation = 0.004, rad_large_prob = 0.2, points = 12, arg_deviation =0.05):
+    random.seed(seed)
     asteroid = []
-
     for p in range(points):
         if (random.random() < rad_large_prob):
             rad_large_prob *= 0.5
@@ -32,7 +32,6 @@ def generate_asteroid(radius, rad_deviation, rad_large_prob, points, arg_deviati
         asteroid.append([rad*math.cos(arg),rad*math.sin(arg)])
     return asteroid
 
-ASTEROIDS = [generate_asteroid(0.015, 0.004,0.2, 12, 0.05) for i in range(100)] # i doubt we will ever have over 100 ASTEROIDS
 
 '''
 ASTEROID = [[-.010, .020],
@@ -116,15 +115,16 @@ def run():
 
             for bullet in player.bullets:
                 # print("bullet",bullet.x, bullet.y )
-                draw_shape(generate_asteroid(0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
-                draw_shape(generate_asteroid(0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE)
+                draw_shape(generate_asteroid(0, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
+                draw_shape(generate_asteroid(0, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE)
                 draw_poly([bullet.x,bullet.y],5, 5,0,WHITE)
 
 
 
         i = 0
         for asteroid in state.rx.asteroids:
-            draw_shape(ASTEROIDS[i], [asteroid.x, asteroid.y], asteroid.rotation, asteroid.size * 65, WHITE)
+
+            draw_shape(generate_asteroid(asteroid.seed), [asteroid.x, asteroid.y], asteroid.rotation, asteroid.size * 65, WHITE)
             i += 1
 
         # draw_shape(ASTEROID, [120, 120])

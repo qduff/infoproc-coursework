@@ -44,7 +44,7 @@ ASTEROID = [[-.010, .020],
             [-.040, 0]]
 '''
 
-WIDTH = 1600
+WIDTH = 1000
 HEIGHT = 1000
 
 def draw_shape(shape, offset: list[float, float], angle: float = 0,  scale: int = 1, color: Color = WHITE) -> None:

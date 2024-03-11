@@ -1,39 +1,47 @@
-import state
+import state  # Assuming state module contains the State class
 import time
 import math
-from threading  import Thread
+from threading import Thread
 import subprocess
+from collections import deque
 
-if False:
-    proc = subprocess.Popen(
-        "/home/qduff/Programs/intelFPGA_lite/18.1/quartus/bin/nios2-terminal",
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-    )
+button_values = deque(maxlen=1000)
+accelerometer_values = deque(maxlen=1000)
+gyroscope_values = deque(maxlen=1000)
 
-    def collect(out):
-        while True:
-            l = out.readline().rstrip()
-            try:
-                # append a float from -1->1, depending on whether angled left/right
-                stream.append(l)
-            except Exception:
-                continue
+proc = subprocess.Popen(
+    "/home/qduff/Programs/intelFPGA_lite/18.1/quartus/bin/nios2-terminal",
+    stdin=subprocess.PIPE,
+    stdout=subprocess.PIPE,
+)
 
-    t = Thread(target=collect, args=[proc.stdout])
+def collect(out):
+    while True:
+        l = out.readline().rstrip()
+        try:
+            l = l.split(",")
+            button_val = int(l[0])
+            accelerometer_val = int(l[1])
+            gyroscope_val = int(l[2])
+            button_values.append(button_val)
+            accelerometer_values.append(accelerometer_val)
+            gyroscope_values.append(gyroscope_val)
+            update_state(button_val, accelerometer_val, gyroscope_val)
+        except Exception:
+            continue
 
-if False:
-    def collect():
-        i = 0
-        while True:
-            l = math.sin(i)
-            state.state = state.State(l, l<-0.7, l>0.7) # generate arb values
-            i+=0.01
-            time.sleep(0.01)
+t = Thread(target=collect, args=[proc.stdout])
+t.daemon = True
+t.start()
 
-    fpga_thread = Thread(target=collect)
+def update_state(button_val, accelerometer_val, gyroscope_val):
+    accelerometer_val  
+    button_val < -0.7  
+    gyroscope_val > 0.7  
 
-if True:
-    fpga_thread = Thread(target=None)
+    # Update the state
+    state.state = state.State(gyroscope_val, button_val, accelerometer_val)
 
-fpga_thread.daemon = True
+# Initial state              do i need to get back to the initial value????
+state.state = state.State(0, False, False)
+

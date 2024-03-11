@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::net::SocketAddr;
 mod lib;
+use rand::Rng;
 // mod game_params;
 // use game_params::GameParams;
 
@@ -25,11 +26,29 @@ impl Game {
     }
 
     pub fn tick(&mut self, dt: u32) {
-        if self.asteroids.iter().filter(|a| a.lives == 3).count() < 4 {
-            self.asteroids.push(Asteroid::new());
-        }
+        self.asteroid_gen();
         self.step_motion(dt);
         self.collisions(dt); // IDK if this not taking motion into account when calculating collisions is a good idea
+    }
+
+    fn asteroid_gen(&mut self){
+        let MAX_LIVES: u64 = 20;
+        let mut rng = rand::thread_rng();
+
+        let mut life_count: u64 = 0;
+        for a in & self.asteroids {
+            life_count += a.lives as u64;
+        }
+        life_count = life_count.min(MAX_LIVES);
+
+        let new_chance = (MAX_LIVES - life_count).pow(2);
+        let random_number = rng.gen_range(0_u64..(MAX_LIVES.pow(2) * 10));
+        if new_chance > random_number {
+            self.asteroids.push(Asteroid::new());
+            println!("new asteroid: {} : {} > {}", life_count, new_chance, random_number);
+        }
+        //println!("new asteroid: {} : {} > {}", life_count, new_chance, random_number);
+
     }
 
     fn step_motion(&mut self, dt: u32) {
@@ -68,7 +87,7 @@ impl Game {
                 let mut a_index = 0;
                 while a_index < self.asteroids.len() {
                     if bullet.position.distance_to( &self.asteroids[a_index].position ) < self.asteroids[a_index].size {
-                        if (self.asteroids[a_index].hit() == 0){
+                        if self.asteroids[a_index].hit() == 0{
                             self.asteroids.remove(a_index);
                         } else {
                             a_index += 1;

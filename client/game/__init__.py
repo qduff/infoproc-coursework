@@ -44,8 +44,8 @@ ASTEROID = [[-.010, .020],
             [-.040, 0]]
 '''
 
-WIDTH = 800
-HEIGHT = 800
+WIDTH = 1600
+HEIGHT = 1000
 
 def draw_shape(shape, offset: list[float, float], angle: float = 0,  scale: int = 1, color: Color = WHITE) -> None:
     draw_shape_single(shape, offset, angle, scale, color)
@@ -115,8 +115,8 @@ def run():
 
             for bullet in player.bullets:
                 # print("bullet",bullet.x, bullet.y )
-                draw_shape(generate_asteroid(0, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
-                draw_shape(generate_asteroid(0, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE)
+                draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
+                draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE) # TODO: generating asteroids like this tanks fps
                 draw_poly([bullet.x,bullet.y],5, 5,0,WHITE)
 
 

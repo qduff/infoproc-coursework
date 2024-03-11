@@ -24,7 +24,7 @@ impl Bullet {
     }
 
     fn calculate_motion(&mut self) -> u8 {
-        println!("vel -> x:{}y:{}",self.velocity.x, self.velocity.y);
+        // println!("vel -> x:{}y:{}",self.velocity.x, self.velocity.y);
         self.position.add_modulo(&self.velocity);
         self.lifetime -= 1;
         self.lifetime

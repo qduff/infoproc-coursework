@@ -114,6 +114,11 @@ def run():
             if player.propelling:
                 draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)
 
+            for bullet in player.bullets:
+                print("bullet",bullet.x, bullet.y )
+                draw_circle(bullet.x, bullet.y, 0.2, RED)
+
+
 
         i = 0
         for asteroid in state.rx.asteroids:

@@ -67,7 +67,7 @@ impl Player {
         self.rotation += dt as f32 * self.in_angle / 200f32;
         self.velocity
             .apply_propulsion(self.in_propulsion, self.rotation, dt);
-        self.recoil = self.recoil.scale(0.8);
+        self.recoil = self.recoil.scale(0.85);
 
         if self.shoot_cooldown == 0 && self.in_shoot {
             self.in_shoot = false;

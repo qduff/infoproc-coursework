@@ -47,7 +47,7 @@ impl Game {
             player.invincability_timer -= std::cmp::min(dt, player.invincability_timer);
             // player asteroid collisions
             for asteroid in &mut self.asteroids {
-                if player.position.distance_to(&asteroid.position) < (player.size + asteroid.size) as f32 / 50.0 {
+                if player.position.distance_to(&asteroid.position) < (player.size + asteroid.size) {
                     if player.invincability_timer == 0 {
                         if player.lives == 1 {
                             println!("oof!");

@@ -56,7 +56,7 @@ impl Player {
         Player {
             lives: 3,
             position: Vec2 { x: 0.5, y: 0.5 },
-            size: 1.0,
+            size: 0.05,
             ..Default::default()
         }
     }
@@ -105,7 +105,7 @@ pub struct Asteroid {
 impl Asteroid {
     pub fn new() -> Self {
         Asteroid {
-            size: 0.1,
+            size: 0.08,
             rotation: rand::thread_rng().gen_range(0.0..2.0 * PI),
             position: Vec2::random_pos(),
             velocity: Vec2::random_vel(),

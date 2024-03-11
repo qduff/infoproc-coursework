@@ -32,6 +32,13 @@ impl Vec2 {
         }
     }
 
+    pub fn scale(&self, scale: f32) -> Vec2 {
+        Vec2 {
+            x: self.x * scale,
+            y: self.y * scale,
+        }
+    }
+
     pub fn negate(&self) -> Vec2 {
         Vec2 {
             x: -self.x,
@@ -89,8 +96,12 @@ impl Vec2 {
             y: rng.gen_range(-0.0001..0.0001),
         }
     }
-
-    //TODO implement more advanced movement
+    pub fn from_polar(magnitude: f32, rotation: f32) -> Self{
+        Vec2{
+            x: magnitude * rotation.sin(),
+            y: magnitude * rotation.cos(),
+        }
+    }
 }
 
 // #[derive(Debug, Copy, Clone)]

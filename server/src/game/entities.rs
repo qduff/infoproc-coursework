@@ -35,12 +35,14 @@ impl Bullet {
 pub struct Player {
     pub position: Vec2,
     pub velocity: Vec2,
+    recoil: Vec2, // rapidly decaying velocity
     pub rotation: f32,
     pub size: f32,
 
     pub lives: u8,
     pub invincability_timer: u32,
     pub bullets: Vec<Bullet>,
+    shoot_cooldown: u32,
 
     // accel_scale: i64,
     // decay_mul: i64,
@@ -65,15 +67,29 @@ impl Player {
         self.rotation += dt as f32 * self.in_angle / 200f32;
         self.velocity
             .apply_propulsion(self.in_propulsion, self.rotation, dt);
-        self.position.add_modulo(&Vec2 {
-            x: self.velocity.x * dt as f32,
-            y: self.velocity.y * dt as f32,
-        });
+        self.recoil = self.recoil.scale(0.8);
 
-        if self.in_shoot {
+        if self.shoot_cooldown == 0 && self.in_shoot {
             self.in_shoot = false;
+            self.shoot_cooldown = 15;
             self.bullets.push(Bullet::new(self.rotation, &self.position));
+
+            // recoil
+            let mut rng = rand::thread_rng();
+            self.rotation +=  rng.gen_range(-0.05..0.05);
+            self.recoil = Vec2::from_polar(0.0008,- self.rotation);
+            println!("{:?}",self.recoil);
+
+            // self.recoil = self.velocity.subtract(&recoil);
+            //self.position.add_modulo(&Vec2::from_polar(0.02, -self.rotation));
+
         }
+        self.shoot_cooldown = self.shoot_cooldown.min(self.shoot_cooldown.wrapping_sub(1));
+
+        self.position.add_modulo(&Vec2 {
+            x: (self.velocity.x + self.recoil.x ) * dt as f32,
+            y: (self.velocity.y + self.recoil.y) * dt as f32,
+        });
 
         let mut b_index = 0;
 
@@ -87,6 +103,10 @@ impl Player {
         }
 
         //TODO emit bullets
+    }
+
+    pub fn get_velocity(& self) -> Vec2{
+        return self.velocity.subtract(&self.recoil);
     }
 }
 

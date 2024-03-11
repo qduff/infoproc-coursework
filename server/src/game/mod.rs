@@ -42,7 +42,7 @@ impl Game {
         life_count = life_count.min(MAX_LIVES);
 
         let new_chance = (MAX_LIVES - life_count).pow(2);
-        let random_number = rng.gen_range(0_u64..(MAX_LIVES.pow(2) * 10));
+        let random_number = rng.gen_range(0_u64..(MAX_LIVES.pow(2) * 30));
         if new_chance > random_number {
             self.asteroids.push(Asteroid::new());
             println!("new asteroid: {} : {} > {}", life_count, new_chance, random_number);

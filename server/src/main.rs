@@ -29,8 +29,17 @@ async fn main() -> anyhow::Result<()> {
 }
 
 async fn test_db() -> anyhow::Result<()> {
-    lobby::donothing();
-    lobby::create_player(&String::from("lol"), &String::from("wow how secure")).await?;
-    println!("player lol has id {}", lobby::get_player_id(&String::from("lol")).await?);
+    let pid = lobby::create_player(&String::from("lol"), &String::from("wow how secure")).await?;
+    lobby::get_player_id(&String::from("lol")).await?;
+    println!("player lol has id {}", pid);
+
+    lobby::create_lobby(&String::from("test lobby"), pid).await?;
+    let lobbies = lobby::get_lobby_list().await?;
+    println!("avalible lobbies:");
+    for l in lobbies{
+        println!("{:?}", l);
+    }
+    
+
     Ok(())
 }

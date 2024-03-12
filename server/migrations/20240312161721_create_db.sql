@@ -12,16 +12,17 @@ CREATE TABLE IF NOT EXISTS lobbies
 (
     id          INTEGER PRIMARY KEY NOT NULL,
     name        TEXT    NOT NULL,
-    maxPlayers  INT     NOT NULL DEFAULT FALSE,
+    maxPlayers  INT     NOT NULL DEFAULT 4,
     inGame      BOOLEAN NOT NULL DEFAULT FALSE
 );
 CREATE TABLE IF NOT EXISTS in_lobby
 (
     lobbyId     INTEGER NOT NULL,
     playerId    INTEGER KEY NOT NULL,
+    admin       BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (lobbyId) REFERENCES lobbies(id),
     FOREIGN KEY (playerId) REFERENCES players(id),
-    PRIMARY KEY (lobbyId, playerId)
+    PRIMARY KEY (playerId) -- one player cant be in multiple lobbies
 );
 
 CREATE TABLE IF NOT EXISTS finished_games

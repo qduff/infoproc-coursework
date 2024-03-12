@@ -58,7 +58,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
                 }
                 let mut bullets = p.reborrow().init_bullets(player.1.bullets.len() as u32);
                 for (i, bullet) in player.1.bullets.iter().enumerate() {
-                    println!("here");
+                    // println!("here");
                     let mut b = bullets.reborrow().get(i as u32);
                     b.set_x(bullet.position.x);
                     b.set_y(bullet.position.y);

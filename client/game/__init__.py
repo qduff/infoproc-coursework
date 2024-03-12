@@ -45,8 +45,8 @@ ASTEROID = [[-.010, .020],
             [-.040, 0]]
 '''
 
-WIDTH = 800
-HEIGHT = 800
+WIDTH = 1000
+HEIGHT = 1000
 
 def draw_shape(shape, offset: list[float, float], angle: float = 0,  scale: int = 1, color: Color = WHITE) -> None:
     draw_shape_single(shape, offset, angle, scale, color)
@@ -117,32 +117,32 @@ def run():
             f'Frametime{": vsync" if VSYNC_EN else ""}: {get_fps()} FPS - {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
         
 
-        for player in state.rx.players:
-            draw_text(f'score: {player.score} ', 10, 70, 20, LIGHTGRAY)
+        for i, player in enumerate(state.rx.players):
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
-                col = GREEN
-                ##draw_text(f"Lives: {player.lives} ", WIDTH*0.45, 5, 40, RED)
-                draw_text_ex(
-                    custom_font,
-                    f"Lives: {player.lives} ",
-                    Vector2(WIDTH*0.40, 5),
-                    50,  # Font size
-                    3,   # Spacing
-                    RED
-                )
+                if player.lives == 0:
+                    col = RED
+                    draw_text("WASTED", 150, 400, 150, RED)
+                else:
+                    col = GREEN
+                draw_text(f"Me: {player.lives}", 10, 90 + i * 20, 20, col)
             else:
-                col = WHITE
+                if player.lives == 0:
+                    col = RED
+                else:
+                    col = WHITE
+                draw_text(f"Player {i+1}: {player.lives}", 10, 90 + i * 20, 20, col)
             if player.invincabilityTimer % 200 > 100:
                 col = RED
 
-            draw_shape(ARROW, [player.x, player.y], player.rotation, 1, col)
-            if player.propelling:
-                draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)
+            if player.lives > 0:
+                draw_shape(ARROW, [player.x, player.y], player.rotation, 1, col)
+                if player.propelling:
+                    draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)
 
             for bullet in player.bullets:
-                # print("bullet",bullet.x, bullet.y )
-                draw_shape(generate_asteroid(0, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
-                draw_shape(generate_asteroid(0, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE)
+
+                draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
+                draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE) # TODO: generating asteroids like this tanks fps
                 draw_poly([bullet.x,bullet.y],5, 5,0,WHITE)
 
 

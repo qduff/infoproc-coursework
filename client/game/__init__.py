@@ -104,7 +104,7 @@ def run():
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
                 if player.lives == 0:
                     col = RED
-                    draw_text("DEAD", 300, 400, 150, RED)
+                    draw_text("WASTED", 150, 400, 150, RED)
                 else:
                     col = GREEN
                 draw_text(f"Me: {player.lives}", 10, 90 + i * 20, 20, col)

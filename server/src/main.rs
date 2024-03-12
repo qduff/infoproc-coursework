@@ -20,6 +20,6 @@ fn main() {
         let start = std::time::Instant::now();
         gamestate.write().unwrap().tick(TICKRATE);
         thread::sleep(std::time::Duration::from_millis(TICKRATE as u64));
-        //println!("tick [{}ms] - {} players", start.elapsed().as_millis(),  &gamestate.read().unwrap().players.len());
+        println!("tick [{}ms] - {} players", start.elapsed().as_millis(),  &gamestate.read().unwrap().players.len());
     }
 }

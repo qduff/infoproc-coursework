@@ -100,21 +100,30 @@ def run():
         draw_text(
             f'Frametime{": vsync" if VSYNC_EN else ""}: {get_fps()} FPS - {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
 
-        for player in state.rx.players:
+        for i, player in enumerate(state.rx.players):
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
-                col = GREEN
-                draw_text(f"Lives: {player.lives} ", 10, 70, 20, RED)
+                if player.lives == 0:
+                    col = RED
+                    draw_text("DEAD", 300, 400, 150, RED)
+                else:
+                    col = GREEN
+                draw_text(f"Me: {player.lives}", 10, 90 + i * 20, 20, col)
             else:
-                col = WHITE
+                if player.lives == 0:
+                    col = RED
+                else:
+                    col = WHITE
+                draw_text(f"Player {i+1}: {player.lives}", 10, 90 + i * 20, 20, col)
             if player.invincabilityTimer % 200 > 100:
                 col = RED
 
-            draw_shape(ARROW, [player.x, player.y], player.rotation, 1, col)
-            if player.propelling:
-                draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)
+            if player.lives > 0:
+                draw_shape(ARROW, [player.x, player.y], player.rotation, 1, col)
+                if player.propelling:
+                    draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)
 
             for bullet in player.bullets:
-                # print("bullet",bullet.x, bullet.y )
+
                 draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
                 draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE) # TODO: generating asteroids like this tanks fps
                 draw_poly([bullet.x,bullet.y],5, 5,0,WHITE)

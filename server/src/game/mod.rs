@@ -32,17 +32,17 @@ impl Game {
     }
 
     fn asteroid_gen(&mut self){
-        let MAX_LIVES: u64 = 20;
+        let max_lives: u64 = 20;
         let mut rng = rand::thread_rng();
 
         let mut life_count: u64 = 0;
         for a in & self.asteroids {
             life_count += a.lives as u64;
         }
-        life_count = life_count.min(MAX_LIVES);
+        life_count = life_count.min(max_lives);
 
-        let new_chance = (MAX_LIVES - life_count).pow(2);
-        let random_number = rng.gen_range(0_u64..(MAX_LIVES.pow(2) * 30));
+        let new_chance = (max_lives - life_count).pow(2);
+        let random_number = rng.gen_range(0_u64..(max_lives.pow(2) * 30));
         if new_chance > random_number {
             self.asteroids.push(Asteroid::new());
             println!("new asteroid: {} : {} > {}", life_count, new_chance, random_number);
@@ -52,7 +52,7 @@ impl Game {
     }
 
     fn step_motion(&mut self, dt: u32) {
-        for (_, player) in &mut self.players {
+        for player in self.players.values_mut().filter(|p| p.lives > 0) {
             player.calculate_motion(dt);
         }
         for asteroid in &mut self.asteroids {
@@ -68,9 +68,7 @@ impl Game {
             for asteroid in &mut self.asteroids {
                 if player.position.distance_to(&asteroid.position) < (player.size + asteroid.size) {
                     if player.invincability_timer == 0 {
-                        if player.lives == 1 {
-                            println!("oof!");
-                        } else {
+                        if player.lives != 0 {
                             player.lives -= 1;
                             player.position = Vec2 { x: 0.5, y: 0.5 };
                             player.velocity = Vec2 { x: 0.0, y: 0.0 };
@@ -97,7 +95,7 @@ impl Game {
                         a_index += 1;
                     }
                 }
-                
+
             }
         }
         // asteroid asteroid collisions

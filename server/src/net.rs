@@ -48,6 +48,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
                 p.set_rotation(player.1.rotation);
                 p.set_propelling(player.1.in_propulsion);
                 p.set_invincability_timer(player.1.invincability_timer);
+                p.set_score(player.1.score);
                 if player.0 == &addr {
                     p.set_type(crate::schema_capnp::player::PlayerType::MyPlayer);
                     p.set_lives(player.1.lives);
@@ -91,7 +92,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
 }
 
 pub fn net_thread(data: Arc<RwLock<game::Game>>) {
-    let l = std::net::TcpListener::bind("0.0.0.0:5000").unwrap();
+    let l = std::net::TcpListener::bind("0.0.0.0:5002").unwrap();
 
     for stream in l.incoming() {
         let stream = stream.unwrap();

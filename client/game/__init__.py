@@ -1,4 +1,5 @@
 from raylibpy import *
+from raylibpy import load_font
 import math
 import random
 import copy
@@ -74,7 +75,19 @@ def draw_shape_single(shape, offset: list[float, float], angle: float = 0,  scal
     for i in range(l):
         draw_line(transformed[i][0], transformed[i][1], transformed[(
             i+1) % l][0], transformed[(i+1) % l][1], color)
+        
+def generate_stars(n, width, height):
+    return [(random.randint(0, width), random.randint(0, height)) for _ in range(n)]
 
+stars = generate_stars(100, WIDTH, HEIGHT)  
+
+def draw_stars(stars):
+    for star in stars:
+        draw_pixel(int(star[0]), int(star[1]), WHITE)
+
+
+custom_font = load_font("{CWD}/fonts/lato.ttf")
+print("Loaded font Maybe")
 
 def run():
 
@@ -92,6 +105,9 @@ def run():
         begin_drawing()
 
         clear_background(BLACK)
+
+        draw_stars(stars)
+
         draw_text(
             f"rtt: {state.rtt*1000:.2f}ms ", 10, 10, 20, LIGHTGRAY)
         draw_text(
@@ -99,11 +115,21 @@ def run():
 
         draw_text(
             f'Frametime{": vsync" if VSYNC_EN else ""}: {get_fps()} FPS - {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
+        
 
         for player in state.rx.players:
+            draw_text(f'score: {player.score} ', 10, 70, 20, LIGHTGRAY)
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
                 col = GREEN
-                draw_text(f"Lives: {player.lives} ", 10, 70, 20, RED)
+                ##draw_text(f"Lives: {player.lives} ", WIDTH*0.45, 5, 40, RED)
+                draw_text_ex(
+                    custom_font,
+                    f"Lives: {player.lives} ",
+                    Vector2(WIDTH*0.40, 5),
+                    50,  # Font size
+                    3,   # Spacing
+                    RED
+                )
             else:
                 col = WHITE
             if player.invincabilityTimer % 200 > 100:
@@ -140,6 +166,8 @@ def run():
 
         state.input.accelerating = True if is_key_down(KEY_UP) else False
         state.input.shooting = True if is_key_down(KEY_SPACE) else False
+
+        unload_font(custom_font)
 
         end_drawing()
     close_window()

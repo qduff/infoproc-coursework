@@ -22,6 +22,7 @@ struct Player {
     propelling @7 :Bool;
     invincabilityTimer @8 :UInt32;
     bullets @9 :List(Bullet);
+    score @10 :UInt32 = 0;
 
     enum PlayerType {
         player @0;

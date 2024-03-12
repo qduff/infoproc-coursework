@@ -63,7 +63,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GameState>>) {
 }
 
 fn net_thread(data: Arc<RwLock<GameState>>) {
-    let l = std::net::TcpListener::bind("127.0.0.1:5000").unwrap();
+    let l = std::net::TcpListener::bind("127.0.0.1:5001").unwrap();
 
     for stream in l.incoming() {
         let stream = stream.unwrap();
@@ -106,7 +106,7 @@ fn main() {
                 addr, player.in_angle, player.in_shoot, player.in_propulsion
             )
         }
-        thread::sleep(std::time::Duration::from_millis(100));
+        thread::sleep(std::time::Duration::from_millis(15));
         println!("tick [{}ms]", start.elapsed().as_millis());
     }
 }

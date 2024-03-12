@@ -41,6 +41,7 @@ pub struct Player {
     pub lives: u8,
     pub invincability_timer: u32,
     pub bullets: Vec<Bullet>,
+    pub score: u32,
 
     // accel_scale: i64,
     // decay_mul: i64,
@@ -88,6 +89,7 @@ impl Player {
 
         //TODO emit bullets
     }
+
 }
 
 #[derive(Default)]

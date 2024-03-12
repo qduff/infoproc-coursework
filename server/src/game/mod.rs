@@ -67,14 +67,16 @@ impl Game {
                 // bullet asteroid collisions
                 let mut a_index = 0;
                 while a_index < self.asteroids.len() {
-                    if bullet.position.distance_to( &self.asteroids[a_index].position ) < self.asteroids[a_index].size {
+                    if (bullet.position.distance_to(&self.asteroids[a_index].position) < self.asteroids[a_index].size) {
+                        player.score += 100;
                         if (self.asteroids[a_index].hit() == 0){
                             self.asteroids.remove(a_index);
                         } else {
                             a_index += 1;
                         }
                         bullet.lifetime = 1;
-                    }else{
+                    }
+                    else{
                         a_index += 1;
                     }
                 }
@@ -93,7 +95,9 @@ impl Game {
                     // let unit = self.asteroids[a].position.unit_vector_to(&self.asteroids[b].position);
                     // TODO use this vector to determine new vectors
                     self.asteroids[a].velocity = self.asteroids[a].velocity.negate();
+                    self.asteroids[a].rotation =  (self.asteroids[a].rotation) * 0.75;
                     self.asteroids[b].velocity = self.asteroids[b].velocity.negate();
+                    self.asteroids[b].rotation =  (self.asteroids[b].rotation) * 0.75;
 
                 }
             }

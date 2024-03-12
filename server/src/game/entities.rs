@@ -6,14 +6,14 @@ use std::f32::consts::PI;
 pub struct Bullet {
     pub position: Vec2,
     pub velocity: Vec2,
-    pub lifetime: u8,
+    pub lifetime: u32,
 }
 
 impl Bullet {
     fn new(rotation: f32, location: &Vec2) -> Self {
         let bullet_speed: f32 = 0.01;
         Bullet {
-            lifetime: 100,
+            lifetime: 1000, // 1 second
             velocity: Vec2 {
                 x: -bullet_speed * (-rotation).sin(),
                 y: -bullet_speed * rotation.cos(),
@@ -23,10 +23,9 @@ impl Bullet {
         }
     }
 
-    fn calculate_motion(&mut self) {
-        // println!("vel -> x:{}y:{}",self.velocity.x, self.velocity.y);
+    fn calculate_motion(&mut self, dt: u32) {
         self.position.add_modulo(&self.velocity);
-        self.lifetime -= 1;
+        self.lifetime = self.lifetime.checked_sub(dt).unwrap_or(0);
     }
 }
 
@@ -79,7 +78,7 @@ impl Player {
             y: self.velocity.y * dt as f32,
         });
 
-        self.bullets.iter_mut().for_each(|b| b.calculate_motion());
+        self.bullets.iter_mut().for_each(|b| b.calculate_motion(dt));
         self.bullets.retain(|b| b.lifetime > 0);
     }
 }

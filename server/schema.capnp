@@ -44,5 +44,5 @@ struct Bullet {
     y @1 :Float32;
     xVel @2: Float32;
     yVel @3: Float32;
-    lifetime @4: UInt8;
+    lifetime @4: UInt32;
 }

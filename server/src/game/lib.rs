@@ -82,6 +82,12 @@ impl Vec2 {
         self.y -= dt as f32 * 1.35f32 * self.y.powi(2) * self.y.signum();
     }
 
+    pub fn apply_recoil(&mut self, propel: bool, rotation: f32, dt: u32) {
+        let prop_factor = propel as u8 as f32 * 0.000004 * dt as f32;
+        self.x += -prop_factor * rotation.sin();
+        self.y += prop_factor * rotation.cos();
+    }
+
     pub fn random_pos() -> Self {
         let mut rng = rand::thread_rng();
         Self {

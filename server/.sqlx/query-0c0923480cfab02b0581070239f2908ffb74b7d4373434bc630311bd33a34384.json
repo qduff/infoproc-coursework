@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\nINSERT INTO todos ( description )\nVALUES ( ?1 )\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "0c0923480cfab02b0581070239f2908ffb74b7d4373434bc630311bd33a34384"
+}

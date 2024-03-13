@@ -252,7 +252,7 @@ pub async fn create_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,stat
     let admin_id = state.read().unwrap().logged_in.get_by_left(address).expect("Admin ID not found").clone();
     println!("join success");
 
-    set_admin(admin_id, true);
+    set_admin(admin_id, true).await?;
 
     Ok(String::from("success"))
 }

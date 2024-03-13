@@ -118,7 +118,6 @@ def run():
 
 
         for i, player in enumerate(state.rx.players):
-            draw_circle(player.x*WIDTH, player.y*HEIGHT, 0.03*WIDTH, DARKGRAY)
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
                 if player.lives == 0:
                     col = RED
@@ -136,6 +135,7 @@ def run():
                 col = RED
 
             if player.lives > 0:
+                draw_circle(player.x*WIDTH, player.y*HEIGHT, 0.03*WIDTH, DARKGRAY)
                 draw_shape(ARROW, [player.x, player.y], player.rotation, 1, col)
                 if player.propelling:
                     draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)

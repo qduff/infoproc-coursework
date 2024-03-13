@@ -46,11 +46,10 @@ impl Vec2 {
         }
     }
 
-    pub fn dot_product(&self, point2: &Vec2) -> Vec2 {
-        Vec2 {
-            x: self.x * point2.x,
-            y: self.y * point2.y,
-        }
+    pub fn dot_product(&self, point2: &Vec2) -> f32 {
+             self.x * point2.x +
+             self.y * point2.y
+
     }
 
     pub fn distance_to(&self, point2: &Vec2) -> f32 {

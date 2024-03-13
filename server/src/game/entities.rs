@@ -121,4 +121,8 @@ impl Asteroid {
             y: self.velocity.y * dt as f32,
         });
     }
+
+    pub fn get_mass(&self) -> f32{
+        self.size.powi(2)
+    }
 }

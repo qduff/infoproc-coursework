@@ -116,15 +116,32 @@ impl Game {
                 if a >= b {
                     continue;
                 }
-                if self.asteroids[a]
-                    .position
-                    .distance_to(&self.asteroids[b].position)
-                    < self.asteroids[a].size + self.asteroids[b].size
+
+                let dist = self.asteroids[a].position.distance_to(&self.asteroids[b].position);
+                let size =self.asteroids[a].size + self.asteroids[b].size;
+                // collide if close, and approaching
+                if dist < size &&
+                    self.asteroids[a].velocity.subtract(&self.asteroids[b].velocity).
+                    dot_product(&self.asteroids[a].position.subtract(&self.asteroids[b].position)) < 0f32
                 {
-                    // let unit = self.asteroids[a].position.unit_vector_to(&self.asteroids[b].position);
-                    // TODO use this vector to determine new vectors
-                    self.asteroids[a].velocity = self.asteroids[a].velocity.negate();
-                    self.asteroids[b].velocity = self.asteroids[b].velocity.negate();
+                    if size-dist > 0.005 { // in case asteroids enter each other (e.g. moving in opposite directions around)
+                        self.asteroids[a].position.add_modulo(&Vec2{x: 0.001, y: 0.0});
+                        self.asteroids[b].position.add_modulo(&Vec2{x: -0.001, y: 0.0});
+                    }
+
+                    let unit = self.asteroids[a].position.unit_vector_to(&self.asteroids[b].position);
+
+                    let p =
+                        2f32 * ( self.asteroids[a].velocity.x * unit.x
+                        + self.asteroids[a].velocity.y * unit.y
+                        - self.asteroids[b].velocity.x * unit.x
+                        - self.asteroids[b].velocity.y * unit.y )
+                        / (self.asteroids[a].get_mass() + self.asteroids[b].get_mass());
+
+                    self.asteroids[a].velocity.x -= p * unit.x * self.asteroids[a].get_mass();
+                    self.asteroids[a].velocity.y -= p * unit.y * self.asteroids[a].get_mass() ;
+                    self.asteroids[b].velocity.x += p * unit.x * self.asteroids[b].get_mass();
+                    self.asteroids[b].velocity.y += p * unit.y * self.asteroids[b].get_mass();
                 }
             }
         }

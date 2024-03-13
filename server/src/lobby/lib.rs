@@ -329,6 +329,27 @@ pub async fn display_lobby_list() -> anyhow::Result<()> {
 
     Ok(())
 }
+// display lobby list table
+pub async fn display_lobby_list() -> anyhow::Result<()> {
+    let lobbies = get_lobby_list().await?;
+
+    // Print table header
+    println!(
+        "{:<5} | {:<20} | {:<10} | {:<10} | {:<10}",
+        "ID", "Name", "Players", "Max", "Started"
+    );
+    println!("-----------------------------------------------");
+
+    // Print lobby information
+    for lobby in &lobbies {
+        println!(
+            "{:<5} | {:<20} | {:<10} | {:<10} | {:<10}",
+            lobby.id, lobby.name, lobby.connected_players, lobby.max_players, lobby.started
+        );
+    }
+
+    Ok(())
+}
 
 pub async fn get_lobby_player_count(lobby_id: i64) -> anyhow::Result<i64> {
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;

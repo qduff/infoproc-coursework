@@ -1,4 +1,5 @@
 use sqlx::sqlite::SqlitePool;
+use tokio::net::unix::SocketAddr;
 use std::env;
 use anyhow;
 use std::sync::{Arc, RwLock};
@@ -6,7 +7,7 @@ use std::thread;
 use crate::game;
 use crate::net;
 
-pub async fn handle_command(name: &String, address: &String) -> anyhow::Result<String> {
+pub async fn handle_command(name: String, address: &std::net::SocketAddr) -> anyhow::Result<String> {
     let response = String::from("hi");
     Ok(response)
 }

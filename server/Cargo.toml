@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.81"
 capnp = "0.19.2"
+futures = "0.3.30"
 rand = "0.8"
 sqlx = {version = "0.7.4", features = ["runtime-tokio", "sqlite"]}
 tokio = { version = "1.36.0", features = ["full"] }

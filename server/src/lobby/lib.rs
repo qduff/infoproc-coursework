@@ -9,7 +9,17 @@ use crate::net;
 use crate::lobby::net::LobbyState;
 
 pub async fn handle_command(name: String, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
-    let response = String::from("hi");
+    let mut response = String::from("invalid command");
+    let chunks: Vec<&str> = response.split_whitespace().collect();
+    if chunks.len() == 0 {
+        return Ok(response);
+    }
+
+    match chunks[0]{
+        "test" => {response = String::from("success")}
+        &_ => {}
+    }
+
     Ok(response)
 }
 

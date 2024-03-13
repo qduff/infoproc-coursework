@@ -1,6 +1,10 @@
 use sqlx::sqlite::SqlitePool;
 use std::env;
 use anyhow;
+use std::sync::{Arc, RwLock};
+use std::thread;
+use crate::game;
+use crate::net;
 
 pub async fn create_player(name: &String, secret: &String) -> anyhow::Result<i64> {
     println!("adding player to database");
@@ -144,7 +148,92 @@ WHERE in_lobby.playerId = filtered.playerId
     Ok(())
 }
 
-//TODO: set_admin, set_max_players, start (including spinning up instance of game)
+// NOTE this still ensured there is at least 1 admin per lobby so may assign new admin if none are left
+pub async fn set_admin(player_id: i64, admin_state: bool) -> anyhow::Result<i64> {
+    let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
+
+    let lobby_id: i64 = get_lobby_from_player(player_id).await?;
+
+    sqlx::query!(
+        r#"
+UPDATE in_lobby
+SET admin = ?2
+WHERE playerId = ?1
+        "#,
+        player_id,
+        admin_state
+    )
+    .execute(&pool)
+    .await?;
+
+    clean_lobby(lobby_id).await?;
+
+    Ok(lobby_id)
+}
+
+pub async fn set_max_players(game_id: i64, max: i64) -> anyhow::Result<()> {
+    let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
+
+    sqlx::query!(
+        r#"
+UPDATE lobbies
+SET maxPlayers = ?2
+WHERE id = ?1
+        "#,
+        game_id,
+        max
+    )
+    .execute(&pool)
+    .await?;
+
+
+    Ok(())
+}
+
+pub async fn start_lobby(game_id: i64) -> anyhow::Result<()> {
+    let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
+
+    sqlx::query!(
+        r#"
+UPDATE lobbies
+SET inGame = TRUE
+WHERE id = ?1
+        "#,
+        game_id,
+    )
+    .execute(&pool)
+    .await?;
+
+    let players = sqlx::query!(
+        r#"
+SELECT *
+FROM in_lobby
+WHERE lobbyId = ?1
+        "#,
+        game_id,
+    )
+    .fetch_all(&pool)
+    .await?;
+
+
+    let gamestate: Arc<RwLock<game::Game>> = Arc::new(RwLock::new(game::Game::new()));
+    //TODL: spin up game correctly
+    for p in players{
+
+    }
+
+    let net_arc = Arc::clone(&gamestate);
+    thread::spawn(move || net::net_thread(net_arc));
+
+    loop {
+        let start = std::time::Instant::now();
+        gamestate.write().unwrap().tick(crate::TICKRATE);
+        thread::sleep(std::time::Duration::from_millis(crate::TICKRATE as u64));
+        //println!("tick [{}ms] - {} players", start.elapsed().as_millis(),  &gamestate.read().unwrap().players.len());
+    }
+
+    Ok(())
+}
 
 // lobby queries
 
@@ -236,12 +325,30 @@ WHERE playerId = ?1
     Ok(query_result.lobbyId)
 }
 
-//TODO: is_admin
+pub async fn get_player_is_admin(player_id: i64) -> anyhow::Result<bool> {
+    let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
+
+    let query_result = sqlx::query!(
+        r#"
+SELECT admin
+FROM in_lobby 
+WHERE playerId = ?1
+        "#,
+        player_id
+    )
+    .fetch_one(&pool)
+    .await?;
+
+    Ok(query_result.admin)
+}
+
 
 
 // score saving
 
-//TODO: 
+//TODO: save game outcome
 
 
 // finished game querying
+
+//TODO: highscore, leaderboards, match history etc

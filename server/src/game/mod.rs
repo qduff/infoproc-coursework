@@ -64,7 +64,7 @@ impl Game {
 
     fn collisions(&mut self, dt: u32) {
         // player / bullet collisions
-        for (_, player) in &mut self.players {
+        for player in self.players.values_mut() {
             player.invincability_timer -= std::cmp::min(dt, player.invincability_timer);
             // player asteroid collisions
             for asteroid in &mut self.asteroids {
@@ -83,6 +83,9 @@ impl Game {
 
             // bullet collisions
             for bullet in &mut player.bullets {
+
+
+
                 // bullet asteroid collisions
                 let mut i = 0;
                 while i < self.asteroids.len() {

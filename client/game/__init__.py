@@ -1,3 +1,4 @@
+import time
 from raylibpy import *
 from raylibpy import load_font
 import math
@@ -5,17 +6,22 @@ import random
 import copy
 import state
 from interfaces.server import schema_capnp, POLLRATE as pollrate
+from interfaces.fpga import FPGA_ENABLED
+
+DEBUG = True
+
+WIDTH = 1000
+HEIGHT = 1000
 
 ARROW = [[-.015, .025],
          [-.01, .015],
          [.01, .015],
          [.015, .025],
          [.00, -.025]]
+
 PROPEL = [[-.007, .02],
          [.007, .02],
          [.00, .04]]
-
-
 
 
 def generate_asteroid(seed, radius = 0.015, rad_deviation = 0.004, rad_large_prob = 0.2, points = 12, arg_deviation =0.05):
@@ -32,21 +38,6 @@ def generate_asteroid(seed, radius = 0.015, rad_deviation = 0.004, rad_large_pro
         rad = radius + delta_rad
         asteroid.append([rad*math.cos(arg),rad*math.sin(arg)])
     return asteroid
-
-
-'''
-ASTEROID = [[-.010, .020],
-            [0, .030],
-            [.020, .020],
-            [.010, .010],
-            [.020, -.010],
-            [.00, -.030],
-            [-.010, -.010],
-            [-.040, 0]]
-'''
-
-WIDTH = 1000
-HEIGHT = 1000
 
 def draw_shape(shape, offset: list[float, float], angle: float = 0,  scale: int = 1, color: Color = WHITE) -> None:
     draw_shape_single(shape, offset, angle, scale, color)
@@ -85,14 +76,10 @@ def draw_stars(stars):
     for star in stars:
         draw_pixel(int(star[0]), int(star[1]), WHITE)
 
-
-custom_font = load_font("{CWD}/fonts/lato.ttf")
-print("Loaded font Maybe")
+# custom_font = load_font("./game/fonts/lato.ttf") # causes segfault lol
 
 def run():
-
-    # while state.rx == None: time.sleep(5); print("Waiting to connect...")
-
+    while state.rx is None: print("Waiting to connect..."); time.sleep(1)
     if VSYNC_EN := True:
         set_config_flags(FLAG_VSYNC_HINT)
     else:
@@ -103,19 +90,14 @@ def run():
 
     while not window_should_close():
         begin_drawing()
-
         clear_background(BLACK)
 
         draw_stars(stars)
 
-        draw_text(
-            f"rtt: {state.rtt*1000:.2f}ms ", 10, 10, 20, LIGHTGRAY)
-        draw_text(
-            f"pollrate: t:{pollrate}ms r:{state.pollrate*1000:.2f}ms ", 10, 30, 20, LIGHTGRAY)
-
-        draw_text(
-            f'Frametime{": vsync" if VSYNC_EN else ""}: {get_fps()} FPS - {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
-
+        if DEBUG:
+            draw_text(f"rtt: {state.rtt*1000:.2f}ms ", 10, 10, 20, LIGHTGRAY)
+            draw_text(f"pollrate: t:{pollrate}ms r:{state.pollrate*1000:.2f}ms ", 10, 30, 20, LIGHTGRAY)
+            draw_text(f'Frametime{": vsync" if VSYNC_EN else ""}: {get_fps()} FPS - {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
 
         for i, player in enumerate(state.rx.players):
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
@@ -135,40 +117,34 @@ def run():
                 col = RED
 
             if player.lives > 0:
-                draw_circle(player.x*WIDTH, player.y*HEIGHT, 0.03*WIDTH, DARKGRAY)
+                if DEBUG:
+                    draw_circle(player.x*WIDTH, player.y*HEIGHT, 0.03*WIDTH, DARKGRAY)
                 draw_shape(ARROW, [player.x, player.y], player.rotation, 1, col)
                 if player.propelling:
                     draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)
 
             for bullet in player.bullets:
+                draw_circle(bullet.x*WIDTH, bullet.y*HEIGHT, 0.004*WIDTH, WHITE)
+                # draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
+                # draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE) # TODO: generating asteroids like this tanks fps
 
-                draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
-                draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE) # TODO: generating asteroids like this tanks fps
-                draw_poly([bullet.x,bullet.y],5, 5,0,WHITE)
-
-
-
-        i = 0
         for asteroid in state.rx.asteroids:
-            draw_circle(asteroid.x*WIDTH, asteroid.y*HEIGHT, asteroid.size*WIDTH, DARKGREEN)
+            if DEBUG:
+                draw_circle(asteroid.x*WIDTH, asteroid.y*HEIGHT, asteroid.size*WIDTH, DARKGREEN)
             draw_shape(generate_asteroid(asteroid.seed), [asteroid.x, asteroid.y], 0, asteroid.size * 65, WHITE)
-            i += 1
 
-        # draw_shape(ASTEROID, [120, 120])
+        if not FPGA_ENABLED:
+            if is_key_down(KEY_LEFT):
+                state.input.rotation_amount = -1
+            elif is_key_down(KEY_RIGHT):
+                state.input.rotation_amount = 1
+            else:
+                state.input.rotation_amount = 0
 
-        # draw_poly_lines()
+            state.input.accelerating = True if is_key_down(KEY_UP) else False
+            state.input.shooting = True if is_key_down(KEY_SPACE) else False
 
-        if is_key_down(KEY_LEFT):
-            state.input.rotation_amount = -1
-        elif is_key_down(KEY_RIGHT):
-            state.input.rotation_amount = 1
-        else:
-            state.input.rotation_amount = 0
-
-        state.input.accelerating = True if is_key_down(KEY_UP) else False
-        state.input.shooting = True if is_key_down(KEY_SPACE) else False
-
-        unload_font(custom_font)
 
         end_drawing()
+    # unload_font(custom_font)
     close_window()

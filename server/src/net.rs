@@ -5,17 +5,18 @@ use std::io::prelude::*;
 // use std::net::SocketAddr;
 use std::sync::{Arc, RwLock};
 use std::thread;
+use std::net::TcpStream;
 
 use crate::game;
 
-fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
-    let addr = stream.peer_addr().unwrap();
+fn create_conn(mut addr: std::net::SocketAddr, data: Arc<RwLock<game::Game>>) -> anyhow::Result<()> {
     {
         let mut w = data.write().unwrap();
         if w.players.get(&addr).is_none() {
             w.players.insert(addr, crate::game::Player::new());
         }
     }
+    let mut stream = TcpStream::connect(addr)?;
     loop {
         let mut buf = [0; 24];
         if let Err(_) = stream.read_exact(&mut buf) {
@@ -87,9 +88,11 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
         stream.write_all(out.as_slice()).unwrap();
     }
     let mut w = data.write().unwrap();
-    w.players.remove(&addr);
+    // w.players.remove(&addr);
+    Ok(())
 }
 
+/*/
 pub fn net_thread(data: Arc<RwLock<game::Game>>) {
     let l = std::net::TcpListener::bind("0.0.0.0:5002").unwrap();
 
@@ -99,5 +102,23 @@ pub fn net_thread(data: Arc<RwLock<game::Game>>) {
         thread::spawn(move || {
             handle_conn(stream, data);
         });
+    }
+}
+*/
+
+pub fn create_match(players: Vec<std::net::SocketAddr>){
+    println!("creating game");
+    let gamestate: Arc<RwLock<game::Game>> = Arc::new(RwLock::new(game::Game::new()));
+
+    for p in players{
+        let data = Arc::clone(&gamestate);
+        let addr = std::net::SocketAddr::new(p.ip(),p.port() + 1);
+        //TODO: spawn net thread that reaches out to clients game thread
+    }
+    loop {
+        let start = std::time::Instant::now();
+        gamestate.write().unwrap().tick(crate::TICKRATE);
+        thread::sleep(std::time::Duration::from_millis(crate::TICKRATE as u64));
+        //println!("tick [{}ms] - {} players", start.elapsed().as_millis(),  &gamestate.read().unwrap().players.len());
     }
 }

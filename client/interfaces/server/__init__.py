@@ -47,7 +47,9 @@ class ServerInterface:
 
     def run(self):
         try:
-            self.sock.connect((HOST,GAME_PORT))
+            self.sock.bind(("", GAME_PORT))
+            self.sock.listen(1)
+            conn, addr = self.sock.accept()
             while True:
                 start = time.time()
                 # print("[tick]")
@@ -60,6 +62,20 @@ class ServerInterface:
             print("[ServerThread]", e)
             os._exit(-1)
 
+    def game_thread(self):
+        try:
+            self.sock.connect((HOST,GAME_PORT))
+            while True:
+                start = time.time()
+                # print("[tick]")
+                self.tick()
+                state.rtt = time.time() - start
+                time.sleep(max(0, POLLRATE/1000 - state.rtt ))
+                state.pollrate = time.time() - start
+
+        except Exception as e:
+            print("[ServerThread]", e)
+            os._exit(-1)
 
     def tick(self):
         tx = schema_capnp.Tx.new_message()

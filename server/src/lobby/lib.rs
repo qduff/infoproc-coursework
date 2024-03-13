@@ -4,7 +4,6 @@ use anyhow;
 use std::sync::{Arc, RwLock};
 use std::thread;
 use crate::game;
-use crate::net;
 use crate::lobby::net::LobbyState;
 
 pub async fn handle_command(command: String, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
@@ -19,9 +18,10 @@ pub async fn handle_command(command: String, address: &std::net::SocketAddr,stat
         "lobbies" => {response = display_lobby_list().await?}
         "login" => {response = login(chunks, address, state).await?}
         "create_account" => {response = create_account(chunks, address, state).await?}
-        //Spent ages trying to figure out how it was able to handle requests other than "test". Makes sense now! nicce
-
-        
+        "join_lobby" => {response = join_lobby(chunks, address, state).await?}
+        "leave_lobby" => {response = leave_lobby(chunks, address, state).await?}
+        "start" => {response = start(chunks, address, state).await?}
+        "create_lobby" => {response = create_lobby(chunks, address, state).await?}
         &_ => {}
     }
 
@@ -30,34 +30,98 @@ pub async fn handle_command(command: String, address: &std::net::SocketAddr,stat
 
 // text interface handling
 
+pub async fn start(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
+    
+    let mut player_id = -1;
+    {
+        match state.read().unwrap().logged_in.get_by_left(address){
+            None => return Ok(String::from("you aren't logged in")),
+            Some(num) => player_id = *num
+        }
+    }
+
+    let mut lob_id: i64 = -1;
+    match get_lobby_from_player(player_id).await{
+        Err(_) => return Ok(String::from("you aren't in a lobby")),
+        Ok(r) => lob_id = r
+    }
+
+    match get_player_is_admin(player_id).await{
+        Err(_) => return Ok(String::from("this is wierd")),
+        Ok(r) => {if !r {return Ok(String::from("you aren't admin"))}}
+    }
+
+    let players = set_lobby_start(lob_id).await?;
+    let mut player_ips: Vec<std::net::SocketAddr> = Vec::new();
+
+    let gamestate: Arc<RwLock<game::Game>> = Arc::new(RwLock::new(game::Game::new()));
+    //TODL: spin up game correctly
+    for p in players {
+        let mut addr = *address;
+        
+        match state.read().unwrap().logged_in.get_by_right(&p) {
+            None => return Ok(String::from("unknown error")),
+            Some(val) => addr = *val
+        }
+
+        player_ips.push(addr);
+    }    
+
+    //run it! still errors out!
+
+    thread::spawn(move || crate::net::create_match(player_ips));
+
+    Ok(String::from("game starting"))
+}
+
 pub async fn login(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
-    let lobbies = get_lobby_list().await?;
+    
+    if(chunks[0] == "logout"){
+        state.write().unwrap().logged_in.remove_by_left(address);
+        return Ok(String::from("logout successful"));
+    }  
 
     if chunks.len()!=3{
         return Ok(String::from("expected 3 arguments"));
     }
 
-    let mut result: String = String::from("welcome: ");
-    // Print table header
     let id_result = get_player_id(&String::from(chunks[1]),&String::from(chunks[2])).await;
     let mut id: i64 = -1;
 
     match id_result {
         Err(_) => return Ok(String::from("login fialed")),
         Ok(r) => id = r        
+        }
+    println!("{}", id);
+    state.write().unwrap().logged_in.insert(*address , id);
+    return Ok(String::from("login successful"));
+                                                                                                                                                        
+}
+
+pub async fn leave_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
+    if chunks.len()!=1{
+        return Ok(String::from("leave_lobby expected 0 arguments"));
     }
 
-    println!("{}", id);
-
-    state.write().unwrap().logged_in.insert(*address , id);
+    let mut result: String = String::from("success");
+    
+    let mut player_id: i64 = -1;
+    {
+        match state.read().unwrap().logged_in.get_by_left(address){
+            None => return Ok(String::from("you aren't logged in")),
+            Some(x) => {player_id = *x}
+        }
+    }
+    leave_lobby_db(player_id).await?;
+    
     return Ok(result);
 }
 
+
 pub async fn create_account(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
-    let lobbies = get_lobby_list().await?;
 
     if chunks.len()!=3{
-        return Ok(String::from("expected 3 arguments"));
+        return Ok(String::from("create_account expected 2 arguments"));
     }
 
     let mut result: String = String::from("account created, please log in.");
@@ -133,9 +197,11 @@ WHERE name=?1 AND secret=?2
 
 // lobby interactions
 
-pub async fn create_lobby(lobby_name: &String, player_id: i64) -> anyhow::Result<i64> {
+pub async fn create_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
     let mut conn = pool.acquire().await?;
+
+    let lobby_name = chunks[1];
 
     println!("adding lobby: {} to database", lobby_name);
     let id = sqlx::query!(
@@ -149,36 +215,61 @@ pub async fn create_lobby(lobby_name: &String, player_id: i64) -> anyhow::Result
     .await?
     .last_insert_rowid();
 
-    join_lobby(id, player_id).await?;
+    let mut params: Vec<&str> = Vec::new();
 
-    Ok(id)
+    let ws: String = String::from(" ");
+    let id_str = id.to_string();
+
+    params.push(&ws);
+    params.push(&id_str);
+
+    join_lobby(params, address, state).await?;
+    
+    let admin_id = state.read().unwrap().logged_in.get_by_left(address).expect("Admin ID not found").clone();
+
+    set_admin(admin_id, true);
+
+    Ok(String::from("success"))
 }
 
-pub async fn join_lobby(lobby_id: i64, player_id: i64) -> anyhow::Result<()> {
+pub async fn join_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
     let mut conn = pool.acquire().await?;
+    let playercount = get_lobby_player_count((chunks[1].parse::<i64>().unwrap())).await?;
+    let maxcount = get_max_player_count((chunks[1].parse::<i64>().unwrap())).await?;
 
-    println!("adding player to lobby: {}", lobby_id);
+    if playercount >= maxcount {
+        return Ok(String::from("This lobby is full. Please join another one"));
+    }
+    
+    let player_id: i64;
+    match state.read().unwrap().logged_in.get_by_left(address){
+        None    => {return Ok(String::from("error"))},
+        Some(x) => {player_id = *x}
+    }
+
+    println!("adding player to lobby: {}", chunks[1]);
     sqlx::query!(
         r#"
-INSERT INTO in_lobby ( lobbyId, playerId, admin)
-VALUES ( ?1, ?2, TRUE)
+INSERT INTO in_lobby ( lobbyId, playerId)
+VALUES ( ?1, ?2)
         "#,
-        lobby_id, player_id
+        chunks[1], player_id
     )
     .execute(&mut *conn)
     .await?
     .last_insert_rowid();
 
-    Ok(())
+    Ok(String::from("Success! You have now joined the lobby"))
+
 }
 
-pub async fn leave_lobby(player_id: i64) -> anyhow::Result<i64> {
+pub async fn leave_lobby_db(player_id: i64) -> anyhow::Result<i64> {
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
 
     let lobby_id: i64 = get_lobby_from_player(player_id).await?;
 
-    println!("removing player form lobby");
+    println!("removing player from lobby");
     sqlx::query!(
         r#"
 DELETE
@@ -238,6 +329,23 @@ WHERE in_lobby.playerId = filtered.playerId
     Ok(())
 }
 
+pub async fn update_admin_status(requester_id: i64, target_player_id: i64, lobby_id: i64, new_admin_status: bool) -> anyhow::Result<()> {
+    // Check if the requester is an admin
+    let requester_is_admin = get_player_is_admin(requester_id).await?;
+
+    if requester_is_admin {
+        // Update the admin status of the target player
+        set_admin(target_player_id, new_admin_status).await?;
+    } else {
+        // Handle case where requester is not an admin
+        return Err(anyhow::Error::msg("Requester is not an admin and cannot update admin status"));
+    }
+
+    Ok(())
+}
+
+
+
 
 // NOTE this still ensured there is at least 1 admin per lobby so may assign new admin if none are left
 pub async fn set_admin(player_id: i64, admin_state: bool) -> anyhow::Result<i64> {
@@ -281,7 +389,7 @@ WHERE id = ?1
     Ok(())
 }
 
-pub async fn start_lobby(game_id: i64) -> anyhow::Result<()> {
+pub async fn set_lobby_start(game_id: i64) -> anyhow::Result<Vec<i64>> {
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
 
     sqlx::query!(
@@ -306,24 +414,13 @@ WHERE lobbyId = ?1
     .fetch_all(&pool)
     .await?;
 
+    let mut result: Vec<i64> = Vec::new();
 
-    let gamestate: Arc<RwLock<game::Game>> = Arc::new(RwLock::new(game::Game::new()));
-    //TODL: spin up game correctly
     for p in players{
-
+        result.push(p.playerId);
     }
 
-    let net_arc = Arc::clone(&gamestate);
-    thread::spawn(move || net::net_thread(net_arc));
-
-    loop {
-        let start = std::time::Instant::now();
-        gamestate.write().unwrap().tick(crate::TICKRATE);
-        thread::sleep(std::time::Duration::from_millis(crate::TICKRATE as u64));
-        //println!("tick [{}ms] - {} players", start.elapsed().as_millis(),  &gamestate.read().unwrap().players.len());
-    }
-
-    Ok(())
+    Ok(result)
 }
 
 // lobby queries
@@ -374,7 +471,7 @@ SELECT COUNT(*) AS player_count
 FROM in_lobby 
 WHERE lobbyId = ?1
         "#,
-        lobby_id
+        lobby_id 
     )
     .fetch_one(&pool)
     .await?;
@@ -382,6 +479,24 @@ WHERE lobbyId = ?1
     Ok(player_count.player_count as i64)
 }
 
+pub async fn get_max_player_count(lobby_id: i64) -> anyhow::Result<i64> {
+
+    let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
+
+    let max_count = sqlx::query!(
+        r#"
+SELECT maxPlayers 
+FROM lobbies
+WHERE id = ?1  
+        "#,
+        lobby_id 
+    )
+    
+    .fetch_one(&pool).await?;
+
+    Ok(max_count.maxPlayers as i64)
+
+}
 pub async fn get_lobby_admin_count(lobby_id: i64) -> anyhow::Result<i64> {
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
 

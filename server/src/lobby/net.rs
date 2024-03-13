@@ -1,5 +1,6 @@
 use capnp::message::ReaderOptions;
 use capnp::serialize;
+use rand::rngs::adapter::ReadError;
 // use std::collections::HashMap;
 use std::io::prelude::*;
 // use std::net::SocketAddr;
@@ -12,21 +13,24 @@ use crate::lobby::lib::{self, handle_command};
 use crate::lobby::net;
 use bimap::BiMap;
 
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct LobbyState {
     pub logged_in: BiMap<std::net::SocketAddr, i64>,
 }
 
-
-
 async fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbyState>>) {
     let addr = stream.peer_addr().unwrap();
 
-    loop {
-        let mut buf = [0; 24];
-        
+    loop{
 
-        let reader = serialize::read_message(&stream, ReaderOptions::new()).unwrap();
+        let reader = serialize::read_message(&stream, ReaderOptions::new());
+        
+        match reader {
+            Err(_) => {break},
+            Ok(_) => {}
+        }
+        let reader = reader.unwrap();
+
         let command = reader
             .get_root::<crate::schema_capnp::command::Reader>()
             .unwrap();
@@ -44,13 +48,14 @@ async fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbySta
             response.set_command(lib::handle_command(command_str, &addr, &state).await.expect("command error"));
 
         }
-
         let mut out: Vec<u8> = Vec::new();
         capnp::serialize::write_message(&mut out, &message).unwrap();
         stream.write_all(out.as_slice()).unwrap();
     }
-}
 
+    lib::handle_command(String::from("logout"), &addr, &state).await.expect("command error");
+
+}
 
 pub fn net_thread() {
     let state: Arc<RwLock<LobbyState>> = Arc::new(RwLock::new(LobbyState::default()));
@@ -64,3 +69,4 @@ pub fn net_thread() {
         });
     }
 }
+

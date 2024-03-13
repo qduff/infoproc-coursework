@@ -18,16 +18,10 @@ fn main() -> anyhow::Result<()> {
     let gamestate: Arc<RwLock<game::Game>> = Arc::new(RwLock::new(game::Game::new()));
 
     let net_arc = Arc::clone(&gamestate);
-    thread::spawn(move || net::net_thread(net_arc));
+    // thread::spawn(move || net::net_thread(net_arc));
 
-    thread::spawn(move || lobby::net::net_thread());
-
-    loop {
-        let start = std::time::Instant::now();
-        gamestate.write().unwrap().tick(TICKRATE);
-        thread::sleep(std::time::Duration::from_millis(TICKRATE as u64));
-        //println!("tick [{}ms] - {} players", start.elapsed().as_millis(),  &gamestate.read().unwrap().players.len());
-    }
+    lobby::net::net_thread();
+    Ok(())
 }
 
 /*/

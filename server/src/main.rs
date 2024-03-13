@@ -12,8 +12,8 @@ pub mod schema_capnp {
     include!(concat!(env!("OUT_DIR"), "/schema_capnp.rs"));
 }
 
-#[tokio::main]
-async fn main() -> anyhow::Result<()> {
+
+fn main() -> anyhow::Result<()> {
     //test_db().await?;
     let gamestate: Arc<RwLock<game::Game>> = Arc::new(RwLock::new(game::Game::new()));
 
@@ -30,9 +30,9 @@ async fn main() -> anyhow::Result<()> {
     }
 }
 
+/*/
 async fn test_db() -> anyhow::Result<()> {
     let pid = lobby::lib::create_player(&String::from("lol"), &String::from("wow how secure")).await?;
-    lobby::lib::get_player_id(&String::from("lol")).await?;
     println!("player lol has id {}", pid);
 
     lobby::lib::create_lobby(&String::from("test lobby"), pid).await?;
@@ -44,3 +44,4 @@ async fn test_db() -> anyhow::Result<()> {
     
     Ok(())
 }
+*/

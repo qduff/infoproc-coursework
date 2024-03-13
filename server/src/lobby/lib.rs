@@ -1,5 +1,4 @@
 use sqlx::sqlite::SqlitePool;
-use tokio::net::unix::SocketAddr;
 use std::env;
 use anyhow;
 use std::sync::{Arc, RwLock};
@@ -8,19 +7,88 @@ use crate::game;
 use crate::net;
 use crate::lobby::net::LobbyState;
 
-pub async fn handle_command(name: String, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
+pub async fn handle_command(command: String, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
     let mut response = String::from("invalid command");
-    let chunks: Vec<&str> = response.split_whitespace().collect();
+    let chunks: Vec<&str> = command.split_whitespace().collect();
     if chunks.len() == 0 {
         return Ok(response);
     }
-
+    println!("{}",chunks[0]);
     match chunks[0]{
         "test" => {response = String::from("success")}
+        "lobbies" => {response = display_lobby_list().await?}
+        "login" => {response = login(chunks, address, state).await?}
+        "create_account" => {response = create_account(chunks, address, state).await?}
+        //Spent ages trying to figure out how it was able to handle requests other than "test". Makes sense now! nicce
+
+        
         &_ => {}
     }
 
     Ok(response)
+}
+
+// text interface handling
+
+pub async fn login(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
+    let lobbies = get_lobby_list().await?;
+
+    if chunks.len()!=3{
+        return Ok(String::from("expected 3 arguments"));
+    }
+
+    let mut result: String = String::from("welcome: ");
+    // Print table header
+    let id_result = get_player_id(&String::from(chunks[1]),&String::from(chunks[2])).await;
+    let mut id: i64 = -1;
+
+    match id_result {
+        Err(_) => return Ok(String::from("login fialed")),
+        Ok(r) => id = r        
+    }
+
+    println!("{}", id);
+
+    state.write().unwrap().logged_in.insert(*address , id);
+    return Ok(result);
+}
+
+pub async fn create_account(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
+    let lobbies = get_lobby_list().await?;
+
+    if chunks.len()!=3{
+        return Ok(String::from("expected 3 arguments"));
+    }
+
+    let mut result: String = String::from("account created, please log in.");
+    // Print table header
+    let id = create_player(&String::from(chunks[1]),&String::from(chunks[2])).await?;
+    println!("{}", id);
+
+    return Ok(result);
+}
+
+// display lobby list table
+pub async fn display_lobby_list() -> anyhow::Result<String> {
+    let lobbies = get_lobby_list().await?;
+
+    let mut result: String = format!("");
+    // Print table header
+    (
+        "{:<5} | {:<20} | {:<10} | {:<10} | {:<10}",
+        "ID", "Name", "Players", "Max", "Started"
+    );
+    result.push_str("-----------------------------------------------\n");
+
+    // Print lobby information
+    for lobby in &lobbies {
+        result.push_str(&format!(
+            "{:<5} | {:<20} | {:<10} | {:<10} | {:<10}\n",
+            lobby.id, lobby.name, lobby.connected_players, lobby.max_players, lobby.started
+        ));
+    }
+
+    Ok(result)
 }
 
 
@@ -35,7 +103,8 @@ pub async fn create_player(name: &String, secret: &String) -> anyhow::Result<i64
 INSERT INTO players ( name, secret )
 VALUES ( ?1, ?2)
         "#,
-        name, secret
+        name,
+        secret
     )
     .execute(&mut *conn)
     .await?
@@ -43,7 +112,7 @@ VALUES ( ?1, ?2)
     Ok(id)
 }
 
-pub async fn get_player_id(name: &String) -> anyhow::Result<i64>{
+pub async fn get_player_id(name: &String, secret: &String) -> anyhow::Result<i64>{
     println!("getting player id");
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
 
@@ -51,9 +120,10 @@ pub async fn get_player_id(name: &String) -> anyhow::Result<i64>{
         r#"
 SELECT id
 FROM players
-WHERE name=?1
+WHERE name=?1 AND secret=?2
         "#,
-        name
+        name,
+        secret
     )
     .fetch_one(&pool)
     .await?;
@@ -292,27 +362,6 @@ SELECT * FROM lobbies
     }
 
     Ok(result)
-}
-// display lobby list table
-pub async fn display_lobby_list() -> anyhow::Result<()> {
-    let lobbies = get_lobby_list().await?;
-
-    // Print table header
-    println!(
-        "{:<5} | {:<20} | {:<10} | {:<10} | {:<10}",
-        "ID", "Name", "Players", "Max", "Started"
-    );
-    println!("-----------------------------------------------");
-
-    // Print lobby information
-    for lobby in &lobbies {
-        println!(
-            "{:<5} | {:<20} | {:<10} | {:<10} | {:<10}",
-            lobby.id, lobby.name, lobby.connected_players, lobby.max_players, lobby.started
-        );
-    }
-
-    Ok(())
 }
 
 

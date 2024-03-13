@@ -10,11 +10,14 @@ use futures::executor::block_on;
 use crate::game;
 use crate::lobby::lib::{self, handle_command};
 use crate::lobby::net;
+use bimap::BiMap;
 
 #[derive(Default)]
 pub struct LobbyState {
-    
+    pub logged_in: BiMap<std::net::SocketAddr, i64>,
 }
+
+
 
 async fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbyState>>) {
     let addr = stream.peer_addr().unwrap();
@@ -22,13 +25,11 @@ async fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbySta
     loop {
         let mut buf = [0; 24];
         
-        println!("waiting for command");
 
         let reader = serialize::read_message(&stream, ReaderOptions::new()).unwrap();
         let command = reader
             .get_root::<crate::schema_capnp::command::Reader>()
             .unwrap();
-        println!("command recieved: {:?}", command);
 
         let mut message = ::capnp::message::Builder::new_default();
         let mut response = message.init_root::<crate::schema_capnp::command::Builder>();

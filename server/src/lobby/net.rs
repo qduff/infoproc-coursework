@@ -13,7 +13,7 @@ use crate::lobby::net;
 
 #[derive(Default)]
 pub struct LobbyState {
-
+    
 }
 
 async fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbyState>>) {

@@ -100,8 +100,8 @@ def run():
             draw_text(f'Frametime{": vsync" if VSYNC_EN else ""}: {get_fps()} FPS - {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
 
         for i, player in enumerate(state.rx.players):
-            draw_text(f'score: {player.score} ', 10, 70, 20, BLUE)
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
+                draw_text(f'score: {player.score} ', 10, 70, 20, BLUE)
                 if player.lives == 0:
                     col = RED
                     draw_text("WASTED", 150, 400, 150, RED)

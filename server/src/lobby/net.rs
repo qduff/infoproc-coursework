@@ -5,15 +5,18 @@ use std::io::prelude::*;
 // use std::net::SocketAddr;
 use std::sync::{Arc, RwLock};
 use std::thread;
+use futures::executor::block_on;
 
 use crate::game;
+use crate::lobby::lib::{self, handle_command};
+use crate::lobby::net;
 
 #[derive(Default)]
-struct LobbyState {
+pub struct LobbyState {
 
 }
 
-fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbyState>>) {
+async fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbyState>>) {
     let addr = stream.peer_addr().unwrap();
 
     loop {
@@ -32,7 +35,12 @@ fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbyState>>) 
         
         {
             //TODO: handle commands and send response
-            response.set_command("hello");
+            let mut command_str: String = String::from("error");
+            match command.get_command(){
+                Err(capnp::Error { kind: E, extra })  => println!("get_command error"),
+                Ok(s)  => command_str = s.to_string().expect("utf8 error"),
+            }
+            response.set_command(lib::handle_command(command_str, &addr, &state).await.expect("command error"));
 
         }
 
@@ -51,7 +59,7 @@ pub fn net_thread() {
         let stream = stream.unwrap();
         let data = Arc::clone(&state);
         thread::spawn(move || {
-            handle_conn(stream, data);
+            block_on( handle_conn(stream, data) );
         });
     }
 }

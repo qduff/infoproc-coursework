@@ -1,16 +1,26 @@
 use sqlx::sqlite::SqlitePool;
+use tokio::net::unix::SocketAddr;
 use std::env;
 use anyhow;
 use std::sync::{Arc, RwLock};
 use std::thread;
 use crate::game;
 use crate::net;
+<<<<<<< HEAD
+use tabled::Tabled;
+user serde::Serialize;
 
-pub async fn handle_command(name: &String, address: &String) -> anyhow::Result<String> {
+
+pub async fn handle_command(command: &String, address: &String) -> anyhow::Result<String> {
+=======
+use crate::lobby::net::LobbyState;
+
+pub async fn handle_command(name: String, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
+>>>>>>> 22575502569f6a0e247bf2c176c8a9c856afc1fd
     let response = String::from("hi");
     Ok(response)
 }
-
+// log in ability, state needed. 
 
 // database commands
 pub async fn create_player(name: &String, secret: &String) -> anyhow::Result<i64> {
@@ -113,6 +123,7 @@ WHERE playerId = ?1
     Ok(lobby_id)
 }
 
+
 // restore admin and delete if abandonned
 pub async fn clean_lobby(lobby_id: i64) -> anyhow::Result<()> {
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
@@ -154,6 +165,7 @@ WHERE in_lobby.playerId = filtered.playerId
 
     Ok(())
 }
+
 
 // NOTE this still ensured there is at least 1 admin per lobby so may assign new admin if none are left
 pub async fn set_admin(player_id: i64, admin_state: bool) -> anyhow::Result<i64> {
@@ -278,6 +290,27 @@ SELECT * FROM lobbies
     }
 
     Ok(result)
+}
+// display lobby list table
+pub async fn display_lobby_list() -> anyhow::Result<()> {
+    let lobbies = get_lobby_list().await?;
+
+    // Print table header
+    println!(
+        "{:<5} | {:<20} | {:<10} | {:<10} | {:<10}",
+        "ID", "Name", "Players", "Max", "Started"
+    );
+    println!("-----------------------------------------------");
+
+    // Print lobby information
+    for lobby in &lobbies {
+        println!(
+            "{:<5} | {:<20} | {:<10} | {:<10} | {:<10}",
+            lobby.id, lobby.name, lobby.connected_players, lobby.max_players, lobby.started
+        );
+    }
+
+    Ok(())
 }
 
 pub async fn get_lobby_player_count(lobby_id: i64) -> anyhow::Result<i64> {

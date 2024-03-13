@@ -4,14 +4,14 @@ import math
 from threading import Thread
 import subprocess
 
-proc = subprocess.Popen(
-    "/home/qduff/Programs/intelFPGA_lite/18.1/quartus/bin/nios2-terminal",
-    stdin=subprocess.PIPE,
-    stdout=subprocess.PIPE,
-)
+
 
 if FPGA_ENABLED := False:
-
+    proc = subprocess.Popen(
+        "/home/qduff/Programs/intelFPGA_lite/18.1/quartus/bin/nios2-terminal",
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+    )
     def collect(out):
         while True:
             l = out.readline().rstrip()

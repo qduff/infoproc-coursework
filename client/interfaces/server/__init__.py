@@ -32,10 +32,7 @@ class LobbyInterface:
                 send_packet.write(self.sock)
 
                 # read
-                print("wfr")
-                #recieved = self.sock.recv(2048)
                 with schema_capnp.Command.from_bytes(self.sock.recv(2048)) as rx:
-                    print("recieved")
                     print(rx.command)
 
 

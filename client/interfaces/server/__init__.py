@@ -7,9 +7,41 @@ import capnp
 
 POLLRATE = 50 #ms - determines max rate of polling, will increase if server to slow!
 HOST = "127.0.0.1"
-PORT = 5002
+GAME_PORT = 5002
+LOBBY_PORT = 5003
 
 schema_capnp = capnp.load('interfaces/server/schema.capnp')
+
+class LobbyInterface:
+    def __init__(self) -> None:
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    def run(self):
+        try:
+            self.sock.connect((HOST,LOBBY_PORT))
+            while True:
+
+                command = input(">")
+
+                if state.in_game:
+                    print("can't input commands wilst in game")
+                    continue
+
+                send_packet = schema_capnp.Command.new_message()
+                send_packet.command = command
+                send_packet.write(self.sock)
+
+                # read
+                print("wfr")
+                #recieved = self.sock.recv(2048)
+                with schema_capnp.Command.from_bytes(self.sock.recv(2048)) as rx:
+                    print("recieved")
+                    print(rx.command)
+
+
+        except Exception as e:
+            print("[LobbyThread]", e)
+            os._exit(-1)
 
 
 class ServerInterface:
@@ -18,7 +50,7 @@ class ServerInterface:
 
     def run(self):
         try:
-            self.sock.connect((HOST,PORT))
+            self.sock.connect((HOST,GAME_PORT))
             while True:
                 start = time.time()
                 # print("[tick]")
@@ -44,6 +76,9 @@ class ServerInterface:
         with schema_capnp.Rx.from_bytes(rx) as rx:
             state.rx = rx
 
+lobbyInterface = LobbyInterface()
+lobby_thread = Thread(target=lobbyInterface.run)
+lobby_thread.daemon = True
 
 serverinterface = ServerInterface()
 server_thread = Thread(target=serverinterface.run)

@@ -14,11 +14,13 @@ pub mod schema_capnp {
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    test_db().await?;
+    //test_db().await?;
     let gamestate: Arc<RwLock<game::Game>> = Arc::new(RwLock::new(game::Game::new()));
 
     let net_arc = Arc::clone(&gamestate);
     thread::spawn(move || net::net_thread(net_arc));
+
+    thread::spawn(move || lobby::net::net_thread());
 
     loop {
         let start = std::time::Instant::now();

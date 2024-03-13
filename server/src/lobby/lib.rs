@@ -6,6 +6,13 @@ use std::thread;
 use crate::game;
 use crate::net;
 
+pub async fn handle_command(name: &String, address: &String) -> anyhow::Result<String> {
+    let response = String::from("hi");
+    Ok(response)
+}
+
+
+// database commands
 pub async fn create_player(name: &String, secret: &String) -> anyhow::Result<i64> {
     println!("adding player to database");
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;

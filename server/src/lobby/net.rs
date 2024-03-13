@@ -18,24 +18,34 @@ fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbyState>>) 
 
     loop {
         let mut buf = [0; 24];
-        if let Err(_) = stream.read_exact(&mut buf) {
-            break;
-        }
+        
+        println!("waiting for command");
 
-        let reader = serialize::read_message(buf.as_slice(), ReaderOptions::new()).unwrap();
+        let reader = serialize::read_message(&stream, ReaderOptions::new()).unwrap();
         let command = reader
             .get_root::<crate::schema_capnp::command::Reader>()
             .unwrap();
+        println!("command recieved: {:?}", command);
+
+        let mut message = ::capnp::message::Builder::new_default();
+        let mut response = message.init_root::<crate::schema_capnp::command::Builder>();
+        
         {
             //TODO: handle commands and send response
+            response.set_command("hello");
+
         }
+
+        let mut out: Vec<u8> = Vec::new();
+        capnp::serialize::write_message(&mut out, &message).unwrap();
+        stream.write_all(out.as_slice()).unwrap();
     }
 }
 
 
 pub fn net_thread() {
     let state: Arc<RwLock<LobbyState>> = Arc::new(RwLock::new(LobbyState::default()));
-    let l = std::net::TcpListener::bind("0.0.0.0:5000").unwrap();
+    let l = std::net::TcpListener::bind("0.0.0.0:5003").unwrap();
 
     for stream in l.incoming() {
         let stream = stream.unwrap();

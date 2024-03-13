@@ -17,11 +17,13 @@ pub async fn handle_command(command: String, address: &std::net::SocketAddr,stat
         "test" => {response = String::from("success")}
         "lobbies" => {response = display_lobby_list().await?}
         "login" => {response = login(chunks, address, state).await?}
+        "logout" => {response = login(chunks, address, state).await?}
         "create_account" => {response = create_account(chunks, address, state).await?}
         "join_lobby" => {response = join_lobby(chunks, address, state).await?}
         "leave_lobby" => {response = leave_lobby(chunks, address, state).await?}
         "start" => {response = start(chunks, address, state).await?}
         "create_lobby" => {response = create_lobby(chunks, address, state).await?}
+        "clean_lobbies" => {response = clean_lobbies().await?}
         &_ => {}
     }
 
@@ -76,7 +78,15 @@ pub async fn start(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Ar
 
 pub async fn login(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
     
+    if chunks.len()==0{
+        return Ok(String::from("wtfevenisthis"));
+    }
+
     if(chunks[0] == "logout"){
+        println!("logging out");
+        let mut tmp = Vec::new();
+        tmp.push(chunks[0]);
+        leave_lobby(tmp, address, state).await?;
         state.write().unwrap().logged_in.remove_by_left(address);
         return Ok(String::from("logout successful"));
     }  
@@ -99,7 +109,7 @@ pub async fn login(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Ar
 }
 
 pub async fn leave_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
-    if chunks.len()!=1{
+    if chunks.len()<1{
         return Ok(String::from("leave_lobby expected 0 arguments"));
     }
 
@@ -113,6 +123,7 @@ pub async fn leave_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,state
         }
     }
     leave_lobby_db(player_id).await?;
+    println!("exited lobby");
     
     return Ok(result);
 }
@@ -203,6 +214,11 @@ pub async fn create_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,stat
 
     let lobby_name = chunks[1];
 
+    if chunks.len()!=2{
+        return Ok(String::from("expected 1 argument"));
+    }
+    
+
     println!("adding lobby: {} to database", lobby_name);
     let id = sqlx::query!(
         r#"
@@ -222,10 +238,19 @@ pub async fn create_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,stat
 
     params.push(&ws);
     params.push(&id_str);
+    println!("joining");
 
-    join_lobby(params, address, state).await?;
+    let mut tmp = Vec::new();
+    tmp.push(chunks[0]);
+    tmp.push(&id.to_string().as_str());
+    match join_lobby(params, address, state).await{
+        Err(_) => {return Ok(String::from("error"))},
+        Ok(_) => {}
+    }
+    println!("before success");
     
     let admin_id = state.read().unwrap().logged_in.get_by_left(address).expect("Admin ID not found").clone();
+    println!("join success");
 
     set_admin(admin_id, true);
 
@@ -235,9 +260,31 @@ pub async fn create_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,stat
 pub async fn join_lobby(chunks: Vec<&str>, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
     let mut conn = pool.acquire().await?;
-    let playercount = get_lobby_player_count((chunks[1].parse::<i64>().unwrap())).await?;
-    let maxcount = get_max_player_count((chunks[1].parse::<i64>().unwrap())).await?;
+    if chunks.len()!=2{
+        return Ok(String::from("expected 1 argument"));
+    }
 
+    let mut tmp = Vec::new();
+    tmp.push(chunks[0]);
+
+    match leave_lobby(tmp, address, state).await{
+        Err(_) => {},
+        Ok(_) => {}
+    }  
+
+    let tmp;
+    match chunks[1].parse::<i64>() {
+        Err(_) => return Ok(String::from("pleae use lobby ID")),
+        Ok(x) => tmp = x
+    }
+
+    let playercount = match get_lobby_player_count((tmp)).await{
+        Err(_) => 0,
+        Ok(r) => r
+    };
+    let maxcount = get_max_player_count((chunks[1].parse::<i64>().unwrap())).await?;
+    
+    println!("check");
     if playercount >= maxcount {
         return Ok(String::from("This lobby is full. Please join another one"));
     }
@@ -286,7 +333,22 @@ WHERE playerId = ?1
     Ok(lobby_id)
 }
 
+pub async fn clean_lobbies() -> anyhow::Result<String> {
+    let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;
 
+    let lobbies = sqlx::query!(
+        r#"
+SELECT id FROM lobbies
+        "#
+    )
+    .fetch_all(&pool)
+    .await?;
+
+    for l in lobbies {
+        clean_lobby(l.id).await?;
+    }
+    Ok(String::from("success"))
+}
 // restore admin and delete if abandonned
 pub async fn clean_lobby(lobby_id: i64) -> anyhow::Result<()> {
     let pool = SqlitePool::connect(&env::var("DATABASE_URL")?).await?;

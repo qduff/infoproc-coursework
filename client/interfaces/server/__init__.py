@@ -7,7 +7,7 @@ import capnp
 
 POLLRATE = 50 #ms - determines max rate of polling, will increase if server to slow!
 HOST = "127.0.0.1"
-GAME_PORT = 5002
+GAME_PORT = 5004
 LOBBY_PORT = 5003
 
 schema_capnp = capnp.load('interfaces/server/schema.capnp')

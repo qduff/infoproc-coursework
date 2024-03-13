@@ -95,6 +95,7 @@ impl Game {
                         player.score += 100;
                         // self.asteroids[i].lives -= 1;
                         self.asteroids[i].size /= 2.0;
+                        self.asteroids[i].seed = rand::thread_rng().gen();
                         if self.asteroids[i].size == 0.02 {
                             self.asteroids.remove(i);
                         } else {

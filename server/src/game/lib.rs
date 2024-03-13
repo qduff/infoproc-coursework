@@ -97,8 +97,8 @@ impl Vec2 {
     pub fn random_vel() -> Self {
         let mut rng = rand::thread_rng();
         Self {
-            x: rng.gen_range(-0.0001..0.0001),
-            y: rng.gen_range(-0.0001..0.0001),
+            x: rng.gen_range(-0.00005..0.00005),
+            y: rng.gen_range(-0.00005..0.00005),
         }
     }
     pub fn from_polar(magnitude: f32, rotation: f32) -> Self{

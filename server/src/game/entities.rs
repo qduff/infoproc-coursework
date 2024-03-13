@@ -53,7 +53,7 @@ impl Player {
         Player {
             lives: 3,
             position: Vec2 { x: 0.5, y: 0.5 },
-            size: 0.05,
+            size: 0.03,
             invincability_timer: 3000, // start with invincability
             ..Default::default()
         }
@@ -89,24 +89,27 @@ impl Player {
 pub struct Asteroid {
     pub position: Vec2,
     pub velocity: Vec2,
-    pub angle: f32,
-    pub size: f32, // 4 -> 2 -> 1  -  i think?
-    pub rotation: f32,
-    pub lives: u8,
+    pub size: f32,
 
     pub seed: u8,
-    // speed_mul: i64,
-    // size_mul: i64,
 }
 
 impl Asteroid {
     pub fn new() -> Self {
         Asteroid {
             size: 0.08,
-            rotation: rand::thread_rng().gen_range(0.0..2.0 * PI),
             position: Vec2::random_pos(),
             velocity: Vec2::random_vel(),
-            lives: 3,
+            seed: rand::thread_rng().gen(),
+            ..Default::default()
+        }
+    }
+
+    pub fn new_spec(position: Vec2, velocity: Vec2, size: f32) -> Self {
+        Asteroid {
+            size: size,
+            position: position,
+            velocity: velocity,
             seed: rand::thread_rng().gen(),
             ..Default::default()
         }
@@ -118,13 +121,4 @@ impl Asteroid {
             y: self.velocity.y * dt as f32,
         });
     }
-
-    pub fn hit(&mut self) -> u8 {
-        self.lives -= 1;
-        self.size /= 1.7;
-        self.lives
-    }
-    // fn calculate_motion(&mut self, settings: &GameParams) {
-    //     self.pos.mod_add(self.velocity, settings.size);
-    // }
 }

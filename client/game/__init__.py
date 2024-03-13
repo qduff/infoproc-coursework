@@ -75,11 +75,11 @@ def draw_shape_single(shape, offset: list[float, float], angle: float = 0,  scal
     for i in range(l):
         draw_line(transformed[i][0], transformed[i][1], transformed[(
             i+1) % l][0], transformed[(i+1) % l][1], color)
-        
+
 def generate_stars(n, width, height):
     return [(random.randint(0, width), random.randint(0, height)) for _ in range(n)]
 
-stars = generate_stars(100, WIDTH, HEIGHT)  
+stars = generate_stars(100, WIDTH, HEIGHT)
 
 def draw_stars(stars):
     for star in stars:
@@ -115,9 +115,10 @@ def run():
 
         draw_text(
             f'Frametime{": vsync" if VSYNC_EN else ""}: {get_fps()} FPS - {get_frame_time()*1000:.2f}ms', 10, 50, 20, LIGHTGRAY)
-        
+
 
         for i, player in enumerate(state.rx.players):
+            draw_circle(player.x*WIDTH, player.y*HEIGHT, 0.03*WIDTH, DARKGRAY)
             if player.type == schema_capnp.Player.PlayerType.myPlayer:
                 if player.lives == 0:
                     col = RED
@@ -149,8 +150,8 @@ def run():
 
         i = 0
         for asteroid in state.rx.asteroids:
-
-            draw_shape(generate_asteroid(asteroid.seed), [asteroid.x, asteroid.y], asteroid.rotation, asteroid.size * 65, WHITE)
+            draw_circle(asteroid.x*WIDTH, asteroid.y*HEIGHT, asteroid.size*WIDTH, DARKGREEN)
+            draw_shape(generate_asteroid(asteroid.seed), [asteroid.x, asteroid.y], 0, asteroid.size * 65, WHITE)
             i += 1
 
         # draw_shape(ASTEROID, [120, 120])

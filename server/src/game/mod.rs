@@ -31,13 +31,13 @@ impl Game {
         self.collisions(dt); // IDK if this not taking motion into account when calculating collisions is a good idea
     }
 
-    fn asteroid_gen(&mut self){
+    fn asteroid_gen(&mut self) {
         let max_lives: u64 = 20;
         let mut rng = rand::thread_rng();
 
         let mut life_count: u64 = 0;
-        for a in & self.asteroids {
-            life_count += a.lives as u64;
+        for a in &self.asteroids {
+            life_count += (a.size * 40.0) as u64;
         }
         life_count = life_count.min(max_lives);
 
@@ -45,10 +45,12 @@ impl Game {
         let random_number = rng.gen_range(0_u64..(max_lives.pow(2) * 30));
         if new_chance > random_number {
             self.asteroids.push(Asteroid::new());
-            println!("new asteroid: {} : {} > {}", life_count, new_chance, random_number);
+            println!(
+                "new asteroid: {} : {} > {}",
+                life_count, new_chance, random_number
+            );
         }
         //println!("new asteroid: {} : {} > {}", life_count, new_chance, random_number);
-
     }
 
     fn step_motion(&mut self, dt: u32) {
@@ -82,22 +84,30 @@ impl Game {
             // bullet collisions
             for bullet in &mut player.bullets {
                 // bullet asteroid collisions
-                let mut a_index = 0;
-                while a_index < self.asteroids.len() {
-                    if bullet.position.distance_to( &self.asteroids[a_index].position ) < self.asteroids[a_index].size {
+                let mut i = 0;
+                while i < self.asteroids.len() {
+                    if bullet.position.distance_to(&self.asteroids[i].position)
+                        < self.asteroids[i].size
+                    {
                         player.score += 100;
-                        if self.asteroids[a_index].hit() == 0{
-                            self.asteroids.remove(a_index);
+                        // self.asteroids[i].lives -= 1;
+                        self.asteroids[i].size /= 2.0;
+                        if self.asteroids[i].size == 0.02 {
+                            self.asteroids.remove(i);
                         } else {
-                            a_index += 1;
+                            self.asteroids.push(Asteroid::new_spec(
+                                self.asteroids[i].position.subtract(&Vec2 { x: 0.05, y: 0.05 }),
+                                self.asteroids[i].velocity,
+                                self.asteroids[i].size
+                            ));
+                            self.asteroids[i].position.add_modulo(&Vec2 { x: 0.05, y: 0.05 });
+                            i += 1;
                         }
                         bullet.lifetime = 1;
-                    }
-                    else{
-                        a_index += 1;
+                    } else {
+                        i += 1;
                     }
                 }
-
             }
         }
         // asteroid asteroid collisions
@@ -106,16 +116,15 @@ impl Game {
                 if a >= b {
                     continue;
                 }
-                if self.asteroids[a].position.distance_to(&self.asteroids[b].position)
+                if self.asteroids[a]
+                    .position
+                    .distance_to(&self.asteroids[b].position)
                     < self.asteroids[a].size + self.asteroids[b].size
                 {
                     // let unit = self.asteroids[a].position.unit_vector_to(&self.asteroids[b].position);
                     // TODO use this vector to determine new vectors
                     self.asteroids[a].velocity = self.asteroids[a].velocity.negate();
-                    self.asteroids[a].rotation =  (self.asteroids[a].rotation) * 0.75;
                     self.asteroids[b].velocity = self.asteroids[b].velocity.negate();
-                    self.asteroids[b].rotation =  (self.asteroids[b].rotation) * 0.75;
-
                 }
             }
         }

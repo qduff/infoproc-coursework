@@ -11,6 +11,10 @@ struct Rx {
     asteroids @1 :List(Asteroid);
 }
 
+struct Command {
+    command @0 :Text;
+}
+
 struct Player {
     x @0 :Float32;
     y @1 :Float32;
@@ -35,9 +39,8 @@ struct Asteroid {
     y @1 :Float32;
     xVel @2 :Float32;
     yVel @3 :Float32;
-    rotation @4 :Float32;
-    size @5 :Float32;
-    seed @6 :UInt8;
+    size @4 :Float32;
+    seed @5 :UInt8;
 }
 
 struct Bullet {

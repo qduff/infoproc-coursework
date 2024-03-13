@@ -74,7 +74,6 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<game::Game>>) {
                 c.set_y(asteroid.position.y);
                 c.set_x_vel(asteroid.velocity.x);
                 c.set_y_vel(asteroid.velocity.y);
-                c.set_rotation(asteroid.rotation);
                 c.set_size(asteroid.size);
                 c.set_seed(asteroid.seed);
             }

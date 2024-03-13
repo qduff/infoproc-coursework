@@ -7,6 +7,7 @@ use std::thread;
 use crate::game;
 use crate::net;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use tabled::Tabled;
 user serde::Serialize;
 
@@ -18,6 +19,22 @@ use crate::lobby::net::LobbyState;
 pub async fn handle_command(name: String, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
 >>>>>>> 22575502569f6a0e247bf2c176c8a9c856afc1fd
     let response = String::from("hi");
+=======
+use crate::lobby::net::LobbyState;
+
+pub async fn handle_command(name: String, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
+    let mut response = String::from("invalid command");
+    let chunks: Vec<&str> = response.split_whitespace().collect();
+    if chunks.len() == 0 {
+        return Ok(response);
+    }
+
+    match chunks[0]{
+        "test" => {response = String::from("success")}
+        &_ => {}
+    }
+
+>>>>>>> 18ab9fc1c14975e7b6a10b5671856d12824af1fd
     Ok(response)
 }
 // log in ability, state needed. 

@@ -11,6 +11,10 @@ struct Rx {
     asteroids @1 :List(Asteroid);
 }
 
+struct Command {
+    command @0 :Text;
+}
+
 struct Player {
     x @0 :Float32;
     y @1 :Float32;

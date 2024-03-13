@@ -6,7 +6,7 @@ use anyhow;
 use std::sync::{Arc, RwLock};
 use std::thread;
 
-const TICKRATE : u32 = 15; // ms
+pub const TICKRATE : u32 = 15; // ms
 
 pub mod schema_capnp {
     include!(concat!(env!("OUT_DIR"), "/schema_capnp.rs"));
@@ -29,12 +29,12 @@ async fn main() -> anyhow::Result<()> {
 }
 
 async fn test_db() -> anyhow::Result<()> {
-    let pid = lobby::create_player(&String::from("lol"), &String::from("wow how secure")).await?;
-    lobby::get_player_id(&String::from("lol")).await?;
+    let pid = lobby::lib::create_player(&String::from("lol"), &String::from("wow how secure")).await?;
+    lobby::lib::get_player_id(&String::from("lol")).await?;
     println!("player lol has id {}", pid);
 
-    lobby::create_lobby(&String::from("test lobby"), pid).await?;
-    let lobbies = lobby::get_lobby_list().await?;
+    lobby::lib::create_lobby(&String::from("test lobby"), pid).await?;
+    let lobbies = lobby::lib::get_lobby_list().await?;
     println!("avalible lobbies:");
     for l in lobbies{
         println!("{:?}", l);

@@ -42,6 +42,5 @@ async fn test_db() -> anyhow::Result<()> {
         println!("{:?}", l);
     }
     
-
     Ok(())
 }

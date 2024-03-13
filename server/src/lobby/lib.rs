@@ -6,8 +6,9 @@ use std::sync::{Arc, RwLock};
 use std::thread;
 use crate::game;
 use crate::net;
+use crate::lobby::net::LobbyState;
 
-pub async fn handle_command(name: String, address: &std::net::SocketAddr) -> anyhow::Result<String> {
+pub async fn handle_command(name: String, address: &std::net::SocketAddr,state : &Arc<RwLock<LobbyState>>) -> anyhow::Result<String> {
     let response = String::from("hi");
     Ok(response)
 }

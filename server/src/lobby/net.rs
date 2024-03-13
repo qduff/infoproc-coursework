@@ -12,7 +12,7 @@ use crate::lobby::lib::{self, handle_command};
 use crate::lobby::net;
 
 #[derive(Default)]
-struct LobbyState {
+pub struct LobbyState {
 
 }
 
@@ -40,7 +40,7 @@ async fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbySta
                 Err(capnp::Error { kind: E, extra })  => println!("get_command error"),
                 Ok(s)  => command_str = s.to_string().expect("utf8 error"),
             }
-            response.set_command(lib::handle_command(command_str, &addr).await.expect("command error"));
+            response.set_command(lib::handle_command(command_str, &addr, &state).await.expect("command error"));
 
         }
 

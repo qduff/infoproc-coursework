@@ -10,6 +10,7 @@ use std::net::TcpStream;
 use crate::game;
 
 fn create_conn(mut addr: std::net::SocketAddr, data: Arc<RwLock<game::Game>>) -> anyhow::Result<()> {
+    println!("adding player {:?}", addr);
     {
         let mut w = data.write().unwrap();
         if w.players.get(&addr).is_none() {
@@ -17,6 +18,7 @@ fn create_conn(mut addr: std::net::SocketAddr, data: Arc<RwLock<game::Game>>) ->
         }
     }
     let mut stream = TcpStream::connect(addr)?;
+    println!("player connected");
     loop {
         let mut buf = [0; 24];
         if let Err(_) = stream.read_exact(&mut buf) {
@@ -112,7 +114,8 @@ pub fn create_match(players: Vec<std::net::SocketAddr>){
 
     for p in players{
         let data = Arc::clone(&gamestate);
-        let addr = std::net::SocketAddr::new(p.ip(),p.port() + 1);
+        let addr = std::net::SocketAddr::new(p.ip(),5004);
+        thread::spawn(move || {create_conn(addr, data);});
         //TODO: spawn net thread that reaches out to clients game thread
     }
     loop {

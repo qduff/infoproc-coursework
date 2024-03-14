@@ -79,6 +79,7 @@ def draw_stars(stars):
 # custom_font = load_font("./game/fonts/lato.ttf") # causes segfault lol
 
 def run():
+    print("running game")
     while state.rx is None: print("Waiting to connect..."); time.sleep(1)
     if VSYNC_EN := True:
         set_config_flags(FLAG_VSYNC_HINT)

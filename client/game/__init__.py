@@ -8,7 +8,7 @@ import state
 from interfaces.server import schema_capnp, POLLRATE as pollrate
 from interfaces.fpga import FPGA_ENABLED
 
-DEBUG = True
+DEBUG = False
 
 WIDTH = 1000
 HEIGHT = 1000

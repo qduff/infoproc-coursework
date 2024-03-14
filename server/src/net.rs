@@ -6,6 +6,7 @@ use std::io::prelude::*;
 use std::sync::{Arc, RwLock};
 use std::thread;
 use std::net::TcpStream;
+use std::time::Instant;
 
 use crate::game;
 
@@ -17,8 +18,18 @@ fn create_conn(mut addr: std::net::SocketAddr, data: Arc<RwLock<game::Game>>) ->
             w.players.insert(addr, crate::game::Player::new());
         }
     }
+
+    let start_time = Instant::now();
+
     let mut stream = TcpStream::connect(addr)?;
+
+    let end_time = Instant::now();
+
     println!("player connected");
+
+    let duration = end_time.duration_since(start_time);
+    println!("player connected in {:?} seconds", duration.as_secs_f64());
+
     loop {
         let mut buf = [0; 24];
         if let Err(_) = stream.read_exact(&mut buf) {

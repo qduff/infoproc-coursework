@@ -5,13 +5,16 @@ use std::io::prelude::*;
 // use std::net::SocketAddr;
 use std::sync::{Arc, RwLock};
 use std::thread;
+use r2d2_sqlite::SqliteConnectionManager;
+use r2d2::Pool;
 
 use crate::game::Game;
 use crate::GlobalState;
 
-fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>) {
+fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, pool: Arc<Pool<SqliteConnectionManager>> ) {
     let addr = stream.peer_addr().unwrap();
     let mut gameid :i32 = -1; // not in a game
+    let mut uid = -1;
     loop {
 
         // reader
@@ -40,25 +43,60 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>) 
                 let mut sp = cmd.split(" ");
                 match sp.next(){
                     Some(val) => match val{
-                        "join" => {
-                            if let Some(num_st) = sp.next() {
-                                if let Ok(num) = num_st.parse::<usize>(){
-                                    if num < w.games.len() {
-                                        if w.games[num].players.get(&addr).is_none() {
-                                            if gameid >= 0{
-                                                if gameid < w.games.len() as i32 {
-                                                    messages.push(format!("Leaving {}", gameid));
-                                                    w.games[gameid as usize].players.remove(&addr);
-                                                }
-                                            }
-                                            gameid = num as i32;
-                                            w.games[num].players.insert(addr, crate::game::Player::new());
-                                            messages.push(format!("Joining {}", gameid))
+                        "register" => {
+                            if let Some(username) = sp.next() {
+                                if let Some(password) = sp.next() {
+                                    let ret = pool.get().unwrap().execute("INSERT INTO Players (username, password) VALUES (?, ?)", (username, password));
+                                    if ret.is_err(){
+                                        messages.push("Failed!".into())
+                                    } else{
+                                        messages.push("Succeeded!".into());
+                                        uid = pool.get().unwrap().last_insert_rowid();
+                                        println!("{}", uid);
+                                    }
 
-                                        } else { messages.push("already there".into()) }
-                                    } else { messages.push("No such lobby".into()) }
-                                } else{ messages.push("invalid id".into()) }
-                            } else{ messages.push("id needed".into()) }
+                                } else{ messages.push("No password!".into()) }
+                            } else{ messages.push("No username!".into()) }
+                        }
+                        "login" => {
+                            if let Some(username) = sp.next() {
+                                if let Some(password) = sp.next() {
+                                    let pool = pool.get().unwrap();
+                                    let mut prep = pool.prepare("SELECT id FROM Players where username=? AND password=?").unwrap();
+                                    let mut rows = prep.query(&[&username, &password]).unwrap();
+                                    if let Ok(Some(row)) = rows.next() {
+                                        messages.push("Success!".into());
+                                        uid = row.get(0).unwrap(); // Assuming the first column contains user data (modify index based on your table)
+                                      }else{
+                                        messages.push("Failed!".into())
+                                      }
+                                } else{ messages.push("No password!".into()) }
+                            } else{ messages.push("No username!".into()) }
+                        }
+
+                        "join" => {
+                            if uid != -1{
+                                if let Some(num_st) = sp.next() {
+                                    if let Ok(num) = num_st.parse::<usize>(){
+                                        if num < w.games.len() {
+                                            if w.games[num].players.get(&addr).is_none() {
+                                                if gameid >= 0{
+                                                    if gameid < w.games.len() as i32 {
+                                                        messages.push(format!("Leaving {}", gameid));
+                                                        w.games[gameid as usize].players.remove(&addr);
+                                                    }
+                                                }
+                                                gameid = num as i32;
+                                                w.games[num].players.insert(addr, crate::game::Player::new());
+                                                messages.push(format!("Joining {}", gameid))
+
+                                            } else { messages.push("already there".into()) }
+                                        } else { messages.push("No such lobby".into()) }
+                                    } else{ messages.push("invalid id".into()) }
+                                } else{ messages.push("id needed".into()) }
+                            } else {
+                            messages.push("Login first!".into())
+                            }
                         }
                         "start" => {
                             if gameid >= 0{
@@ -70,15 +108,16 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>) 
                             } else { messages.push("not in lobby!".into()) }
                         }
                         "create" => {
-                            w.games.push(Game::new());
+                            if let Some(name) = sp.next() {
+                                w.games.push(Game::new(name.into()));
+                            }
                         }
                         "lobbies" => {
                             if w.games.len() == 0{
                                 messages.push("No games".into());
                             } else{
-                                for (i, _) in w.games.iter().enumerate(){
-                                    messages.push(format!("Gameid {}", i));
-                                    // could have game have a name parameter?
+                                for (i, game) in w.games.iter().enumerate(){
+                                    messages.push(format!("{}: {}", i, game.name));
                                 }
                             }
                         }
@@ -157,14 +196,16 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>) 
     }
 }
 
-pub fn net_thread(data: Arc<RwLock<GlobalState>>) {
+pub fn net_thread(data: Arc<RwLock<GlobalState>>, pool: Arc<Pool<SqliteConnectionManager>> ) {
     let l = std::net::TcpListener::bind("0.0.0.0:5000").unwrap();
 
     for stream in l.incoming() {
         let stream = stream.unwrap();
         let data = Arc::clone(&data);
+        let pool = Arc::clone(&pool);
+
         thread::spawn(move || {
-            handle_conn(stream, data);
+            handle_conn(stream, data, pool);
         });
     }
 }

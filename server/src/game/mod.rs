@@ -32,7 +32,9 @@ pub fn tickthread(gamestate: Arc<RwLock<GlobalState>>){
         {
             let mut handle = gamestate.write().unwrap();
             for game in handle.games.iter_mut() {
-                game.tick(TICKRATE);
+                if game.is_running{
+                    game.tick(TICKRATE);
+                }
             }
         }
         thread::sleep(std::time::Duration::from_millis(TICKRATE as u64));
@@ -44,12 +46,14 @@ pub fn tickthread(gamestate: Arc<RwLock<GlobalState>>){
 pub struct Game {
     pub players: HashMap<SocketAddr, Player>,
     pub asteroids: Vec<Asteroid>,
+    pub name: String,
     pub is_running: bool,
 }
 
 impl Game {
-    pub fn new() -> Game {
+    pub fn new(name: String) -> Game {
         Game {
+            name: name,
             is_running: false,
             ..Default::default()
         }

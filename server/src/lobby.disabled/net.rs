@@ -22,9 +22,8 @@ async fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbySta
     let addr = stream.peer_addr().unwrap();
 
     loop{
-
         let reader = serialize::read_message(&stream, ReaderOptions::new());
-        
+
         match reader {
             Err(_) => {break},
             Ok(_) => {}
@@ -37,7 +36,7 @@ async fn handle_conn(mut stream: std::net::TcpStream, state: Arc<RwLock<LobbySta
 
         let mut message = ::capnp::message::Builder::new_default();
         let mut response = message.init_root::<crate::schema_capnp::command::Builder>();
-        
+
         {
             //TODO: handle commands and send response
             let mut command_str: String = String::from("error");

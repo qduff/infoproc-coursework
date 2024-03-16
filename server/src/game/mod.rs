@@ -1,34 +1,68 @@
 use std::collections::HashMap;
 use std::net::SocketAddr;
+use std::sync::{Arc, RwLock};
+use std::thread;
 mod lib;
 use rand::Rng;
-// mod game_params;
-// use game_params::GameParams;
-
 mod entities;
 pub use entities::*;
 
 use crate::game::lib::Vec2;
+pub const TICKRATE : u32 = 15; // ms
+
+
+
+
+#[derive(Default)]
+pub struct GlobalState {
+    // pub players: Vec<SocketAddr>, // players that arent in a lobby
+    pub games : Vec<Game>
+}
+
+impl GlobalState{
+    pub fn new() -> GlobalState{
+        GlobalState{..Default::default()}
+    }
+}
+
+pub fn tickthread(gamestate: Arc<RwLock<GlobalState>>){
+    loop{ // global ticker
+        let start = std::time::Instant::now();
+        // gamestate.write().unwrap().tick(TICKRATE);
+        {
+            let mut handle = gamestate.write().unwrap();
+            for game in handle.games.iter_mut() {
+                game.tick(TICKRATE);
+            }
+        }
+        thread::sleep(std::time::Duration::from_millis(TICKRATE as u64));
+        // println!("game ticker tick [{}ms]", start.elapsed().as_millis());
+    }
+}
 
 #[derive(Default)]
 pub struct Game {
     pub players: HashMap<SocketAddr, Player>,
     pub asteroids: Vec<Asteroid>,
-    // bullets: Vec<Bullet>,
-    // settings: game_params::GameParams,
+    pub is_running: bool,
 }
 
 impl Game {
     pub fn new() -> Game {
         Game {
+            is_running: false,
             ..Default::default()
         }
     }
+
 
     pub fn tick(&mut self, dt: u32) {
         self.asteroid_gen();
         self.step_motion(dt);
         self.collisions(dt); // IDK if this not taking motion into account when calculating collisions is a good idea
+        if self.players.values().all(|p| p.lives == 0){
+            self.is_running = false
+        }
     }
 
     fn asteroid_gen(&mut self) {

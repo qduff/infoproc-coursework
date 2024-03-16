@@ -4,15 +4,13 @@ struct Tx {
     angle @0 :Float32;
     propulsion @1 :Bool;
     shoot @2 :Bool;
+    commands @3 :List(Text);
 }
 
 struct Rx {
     players @0 :List(Player);
     asteroids @1 :List(Asteroid);
-}
-
-struct Command {
-    command @0 :Text;
+    running @2 : Bool;
 }
 
 struct Player {

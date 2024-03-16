@@ -78,9 +78,21 @@ def draw_stars(stars):
 
 # custom_font = load_font("./game/fonts/lato.ttf") # causes segfault lol
 
+
+
 def run():
+    while True:
+        while state.rx is None:
+            print("Waiting to connect...")
+            time.sleep(1)
+        print("Connected to server!")
+        while state.rx.running is False:
+            time.sleep(1)
+        _run()
+
+def _run():
     print("running game")
-    while state.rx is None: print("Waiting to connect..."); time.sleep(1)
+
     if VSYNC_EN := True:
         set_config_flags(FLAG_VSYNC_HINT)
     else:
@@ -90,6 +102,10 @@ def run():
     rl_enable_smooth_lines()
 
     while not window_should_close():
+
+        if state.rx.running is False:
+            close_window() # currently broken as it kills all threads
+
         begin_drawing()
         clear_background(BLACK)
 

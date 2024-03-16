@@ -5,109 +5,122 @@ use std::io::prelude::*;
 // use std::net::SocketAddr;
 use std::sync::{Arc, RwLock};
 use std::thread;
-use std::net::TcpStream;
-use std::time::Instant;
 
-use crate::game;
+use crate::game::Game;
+use crate::GlobalState;
 
-fn create_conn(mut addr: std::net::SocketAddr, data: Arc<RwLock<game::Game>>) -> anyhow::Result<()> {
-    println!("adding player {:?}", addr);
-    {
-        let mut w = data.write().unwrap();
-        if w.players.get(&addr).is_none() {
-            w.players.insert(addr, crate::game::Player::new());
-        }
-    }
-
-    let start_time = Instant::now();
-
-    let mut stream = TcpStream::connect(addr)?;
-
-    let end_time = Instant::now();
-
-    println!("player connected");
-
-    let duration = end_time.duration_since(start_time);
-    println!("player connected in {:?} seconds", duration.as_secs_f64());
-
+fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>) {
+    let addr = stream.peer_addr().unwrap();
+    let mut gameid :i32 = -1; // not in a game
     loop {
-        let mut buf = [0; 24];
-        if let Err(_) = stream.read_exact(&mut buf) {
-            break;
-        }
-        let reader = serialize::read_message(buf.as_slice(), ReaderOptions::new()).unwrap();
-        let tx = reader
-            .get_root::<crate::schema_capnp::tx::Reader>()
-            .unwrap();
-        {
-            let mut writer = data.write().unwrap();
-            let handle = writer.players.get_mut(&addr).unwrap();
-            handle.in_angle = tx.get_angle();
-            handle.in_propulsion = tx.get_propulsion();
-            handle.in_shoot = tx.get_shoot();
-        }
 
-        // Serialize and send
+        // reader
+        let Ok(reader) = serialize::read_message(&stream, ReaderOptions::new()) else { break; };
+        let tx = reader.get_root::<crate::schema_capnp::tx::Reader>().unwrap();
+
+        // writer
         let mut message = ::capnp::message::Builder::new_default();
+        let mut rx = message.init_root::<crate::schema_capnp::rx::Builder>();
+
         {
-            let r = data.read().unwrap();
-            let mut rx = message.init_root::<crate::schema_capnp::rx::Builder>();
-            let mut players = rx.reborrow().init_players(r.players.len() as u32);
-            for (i, player) in r.players.iter().enumerate() {
-                let mut p = players.reborrow().get(i as u32);
-                p.set_x(player.1.position.x);
-                p.set_y(player.1.position.y);
-                p.set_x_vel(player.1.velocity.x);
-                p.set_y_vel(player.1.velocity.y);
-                p.set_rotation(player.1.rotation);
-                p.set_propelling(player.1.in_propulsion);
-                p.set_invincability_timer(player.1.invincability_timer);
-                p.set_score(player.1.score);
-                if player.0 == &addr {
-                    p.set_type(crate::schema_capnp::player::PlayerType::MyPlayer);
-                    p.set_lives(player.1.lives);
-                } else {
-                    p.set_type(crate::schema_capnp::player::PlayerType::Player);
-                    p.set_lives(player.1.lives);
-                }
-                let mut bullets = p.reborrow().init_bullets(player.1.bullets.len() as u32);
-                for (i, bullet) in player.1.bullets.iter().enumerate() {
-                    // println!("here");
-                    let mut b = bullets.reborrow().get(i as u32);
-                    b.set_x(bullet.position.x);
-                    b.set_y(bullet.position.y);
-                    b.set_x_vel(bullet.velocity.x);
-                    b.set_y_vel(bullet.velocity.y);
-                    b.set_lifetime(bullet.lifetime);
+            let mut w = data.write().unwrap();
+
+            // READING
+
+            if gameid >= 0{
+                let handle = w.games[gameid as usize].players.get_mut(&addr).unwrap();
+                handle.in_angle = tx.get_angle();
+                handle.in_propulsion = tx.get_propulsion();
+                handle.in_shoot = tx.get_shoot();
+            }
+
+            for c in tx.get_commands().unwrap() {
+                let cmd = c.unwrap().to_str().unwrap();
+                let mut sp = cmd.split(" ");
+                match sp.next(){
+                    Some(val) => match val{
+                        "join" => {
+                            if let Some(num_st) = sp.next() {
+                                if let Ok(num) = num_st.parse::<usize>(){
+                                    if num < w.games.len() {
+                                        gameid = num as i32;
+                                        if w.games[num].players.get(&addr).is_none() {
+                                            w.games[num].players.insert(addr, crate::game::Player::new());
+                                            println!("Moved!")
+
+                                        } else { println!("already there") }
+                                    } else { println!("No such lobby") }
+                                } else{ println!("invalid id") }
+                            } else{ println!("id needed") }
+                        }
+                        "start" => {
+                            if gameid >= 0{
+                                if w.games[gameid as usize].is_running == false {
+                                    w.games[gameid as usize].is_running = true;
+
+                                    println!("Starting!")
+                                } else { println!("already running!") }
+                            } else { println!("not in lobby!") }
+                        }
+                        _ => println!("Unknown command!")
+                    }
+                    None => println!("Nothing..?")
+
                 }
             }
-            let mut asteroids = rx.reborrow().init_asteroids(r.asteroids.len() as u32);
-            for (i, asteroid) in r.asteroids.iter().enumerate() {
-                let mut c = asteroids.reborrow().get(i as u32);
-                c.set_x(asteroid.position.x);
-                c.set_y(asteroid.position.y);
-                c.set_x_vel(asteroid.velocity.x);
-                c.set_y_vel(asteroid.velocity.y);
-                c.set_size(asteroid.size);
-                c.set_seed(asteroid.seed);
+
+            // WRITING
+
+            if gameid >= 0 {
+                let game = &w.games[gameid as usize];
+                rx.reborrow().set_running(game.is_running);
+                if game.is_running{
+                    let mut players = rx.reborrow().init_players(game.players.len() as u32);
+                    for (i, player) in game.players.iter().enumerate() {
+                        let mut tmp = players.reborrow().get(i as u32);
+                        tmp.set_x(player.1.position.x);
+                        tmp.set_y(player.1.position.y);
+                        tmp.set_x_vel(player.1.velocity.x);
+                        tmp.set_y_vel(player.1.velocity.y);
+                        tmp.set_rotation(player.1.rotation);
+                        if player.0 == &addr {
+                            tmp.set_type(crate::schema_capnp::player::PlayerType::MyPlayer);
+                            tmp.set_lives(player.1.lives);
+                        } else {
+                            tmp.set_type(crate::schema_capnp::player::PlayerType::Player);
+                            tmp.set_lives(player.1.lives);
+                        }
+                    }
+                    let mut asteroids = rx.reborrow().init_asteroids(w.games[gameid as usize].asteroids.len() as u32);
+                    for (i, asteroid) in w.games[gameid as usize].asteroids.iter().enumerate() {
+                        let mut c = asteroids.reborrow().get(i as u32);
+                        c.set_x(asteroid.position.x);
+                        c.set_y(asteroid.position.y);
+                        c.set_x_vel(asteroid.velocity.x);
+                        c.set_y_vel(asteroid.velocity.y);
+                        c.set_size(asteroid.size);
+                    }
+                }
+            } else {
+                rx.set_running(false);
             }
         }
 
-        thread::sleep(std::time::Duration::from_millis(40)); // simulate latency
-
-        // if let Err(_) = serialize::write_message(&mut stream, &message) {break;} // changed to avoid buffering, not ideal
+        // let r = data.read().unwrap();
         let mut out: Vec<u8> = Vec::new();
         capnp::serialize::write_message(&mut out, &message).unwrap();
         stream.write_all(out.as_slice()).unwrap();
+
+
     }
-    let mut w = data.write().unwrap();
-    // w.players.remove(&addr);
-    Ok(())
+    if gameid >= 0 {
+        let mut w = data.write().unwrap();
+        w.games[gameid as usize].players.remove(&addr);
+    }
 }
 
-/*/
-pub fn net_thread(data: Arc<RwLock<game::Game>>) {
-    let l = std::net::TcpListener::bind("0.0.0.0:5002").unwrap();
+pub fn net_thread(data: Arc<RwLock<GlobalState>>) {
+    let l = std::net::TcpListener::bind("0.0.0.0:5000").unwrap();
 
     for stream in l.incoming() {
         let stream = stream.unwrap();
@@ -115,24 +128,5 @@ pub fn net_thread(data: Arc<RwLock<game::Game>>) {
         thread::spawn(move || {
             handle_conn(stream, data);
         });
-    }
-}
-*/
-
-pub fn create_match(players: Vec<std::net::SocketAddr>){
-    println!("creating game");
-    let gamestate: Arc<RwLock<game::Game>> = Arc::new(RwLock::new(game::Game::new()));
-
-    for p in players{
-        let data = Arc::clone(&gamestate);
-        let addr = std::net::SocketAddr::new(p.ip(),5004);
-        thread::spawn(move || {create_conn(addr, data);});
-        //TODO: spawn net thread that reaches out to clients game thread
-    }
-    loop {
-        let start = std::time::Instant::now();
-        gamestate.write().unwrap().tick(crate::TICKRATE);
-        thread::sleep(std::time::Duration::from_millis(crate::TICKRATE as u64));
-        //println!("tick [{}ms] - {} players", start.elapsed().as_millis(),  &gamestate.read().unwrap().players.len());
     }
 }

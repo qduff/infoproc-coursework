@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from threading import Lock
 
 @dataclass
 class State:
@@ -12,4 +13,5 @@ rx = None
 rtt = 0
 pollrate = 0
 
-in_game = False
+commands_lock = Lock()
+commands = []

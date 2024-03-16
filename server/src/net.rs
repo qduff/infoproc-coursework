@@ -1,4 +1,4 @@
-use capnp::message::ReaderOptions;
+use capnp::message::{Builder, ReaderOptions, ScratchSpaceHeapAllocator};
 use capnp::serialize;
 // use std::collections::HashMap;
 // use std::io::prelude::*;
@@ -14,6 +14,10 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
     let addr = stream.peer_addr().unwrap();
     let mut gameid :i32 = -1; // not in a game
     let mut uid = -1;
+
+    let mut scratch_space: &mut [u8] = &mut [0; 1024];
+    let mut allocator = ScratchSpaceHeapAllocator::new(&mut scratch_space);
+
     loop {
 
         // reader
@@ -21,8 +25,10 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
         let tx = reader.get_root::<crate::schema_capnp::tx::Reader>().unwrap();
 
         // writer
-        let mut message = ::capnp::message::Builder::new_default();
-        let mut rx = message.init_root::<crate::schema_capnp::rx::Builder>();
+        let mut message_builder = ::capnp::message::Builder::new(&mut allocator);
+        // let mut message_builder = ::capnp::message::Builder::new_default();
+        let mut rx_root = message_builder.init_root::<crate::schema_capnp::rx::Builder>();
+
         let mut messages: Vec<String> = Vec::new(); // maybe slow initializing every loop
 
         {
@@ -74,6 +80,30 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                         }
                         "join" => {
                             if uid != -1{
+                                if let Some(name) = sp.next() {
+                                    if let Some(num) = w.games.iter().position(|g| g.name == name){
+                                            if w.games[num].players.get(&addr).is_none() {
+                                                if gameid >= 0{
+                                                    if gameid < w.games.len() as i32 {
+                                                        messages.push(format!("Leaving {}", gameid));
+                                                        w.games[gameid as usize].players.remove(&addr);
+                                                    }
+                                                }
+                                                gameid = num as i32;
+                                                w.games[num].players.insert(addr, crate::game::Player::new());
+                                                messages.push(format!("Joining {}", gameid))
+
+                                            } else { messages.push("already there".into()) }
+                                    } else{ messages.push("Lobby not found".into())
+                                    }
+
+                                } else{ messages.push("name needed".into()) }
+                            } else {
+                            messages.push("Login first!".into())
+                            }
+                        }
+                        "join_id" => {
+                            if uid != -1{
                                 if let Some(num_st) = sp.next() {
                                     if let Ok(num) = num_st.parse::<usize>(){
                                         if num < w.games.len() {
@@ -96,19 +126,21 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                             messages.push("Login first!".into())
                             }
                         }
-                        "start" => {
-                            if gameid >= 0{
-                                if w.games[gameid as usize].is_running == false {
-                                    w.games[gameid as usize].is_running = true;
-
-                                    messages.push("Starting!".into())
-                                } else { messages.push("already running!".into()) }
-                            } else { messages.push("not in lobby!".into()) }
-                        }
                         "create" => {
                             if uid != -1{
                                 if let Some(name) = sp.next() {
-                                    w.games.push(Game::new(name.into()));
+                                    if w.games.iter().position(|g| g.name == name).is_none(){
+                                        w.games.push(Game::new(name.into()));
+                                        if gameid >= 0 { //leave old lobby before joining new lobby
+                                            if gameid < w.games.len() as i32 {
+                                                messages.push(format!("Leaving {}", gameid));
+                                                w.games[gameid as usize].players.remove(&addr);
+                                            }
+                                        }
+                                        gameid = (w.games.len() - 1) as i32;
+                                        w.games[gameid as usize].players.insert(addr, crate::game::Player::new());
+                                        messages.push("Success!".into())
+                                    } else { messages.push("Name must be unique".into())  }
                                 }
                             } else {
                                 messages.push("Login first!".into());
@@ -123,6 +155,15 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                 }
                             }
                         }
+                        "start" => {
+                            if gameid >= 0{
+                                if w.games[gameid as usize].is_running == false {
+                                    w.games[gameid as usize].is_running = true;
+
+                                    messages.push("Starting!".into())
+                                } else { messages.push("already running!".into()) }
+                            } else { messages.push("not in lobby!".into()) }
+                        }
                         _ => println!("Unknown command!")
                     }
                     None => println!("Nothing..?")
@@ -133,9 +174,9 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
 
             if gameid >= 0 {
                 let game = &w.games[gameid as usize];
-                rx.reborrow().set_running(game.is_running);
+                rx_root.reborrow().set_running(game.is_running);
                 if game.is_running{
-                    let mut players = rx.reborrow().init_players(game.players.len() as u32);
+                    let mut players = rx_root.reborrow().init_players(game.players.len() as u32);
                     for (i, player) in game.players.iter().enumerate() {
                         let mut p = players.reborrow().get(i as u32);
                         p.set_x(player.1.position.x);
@@ -163,7 +204,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                             b.set_lifetime(bullet.lifetime);
                         }
                     }
-                    let mut asteroids = rx.reborrow().init_asteroids(w.games[gameid as usize].asteroids.len() as u32);
+                    let mut asteroids = rx_root.reborrow().init_asteroids(w.games[gameid as usize].asteroids.len() as u32);
                     for (i, asteroid) in w.games[gameid as usize].asteroids.iter().enumerate() {
                         let mut c = asteroids.reborrow().get(i as u32);
                         c.set_x(asteroid.position.x);
@@ -175,7 +216,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                     }
                 }
             } else {
-                rx.set_running(false);
+                rx_root.set_running(false);
             }
 
             for message in messages{
@@ -186,7 +227,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
         }
         // let r = data.read().unwrap();
         let mut out: Vec<u8> = Vec::new();
-        capnp::serialize::write_message(&mut out, &message).unwrap();
+        capnp::serialize::write_message(&mut out, &message_builder).unwrap();
         std::io::Write::write_all(&mut stream, out.as_slice()).unwrap();
     }
     if gameid >= 0 {

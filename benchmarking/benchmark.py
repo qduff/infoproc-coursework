@@ -11,9 +11,8 @@ NUM_USERS = 5000
 
 async def tcp_echo_client(i):
 
-    commands = [f"login {i} {i}", f"create {i}", f"join {i}", "start"]
+    commands = [f"login {i} {i}", f"create {i}", "start"]
     reader, writer = await asyncio.open_connection('127.0.0.1', 5000)
-    asyncio.sleep(0.05) # 50ms target, as in original
     while True:
         tx = schema_capnp.Tx.new_message()
         tx.angle = 0
@@ -23,10 +22,11 @@ async def tcp_echo_client(i):
         commands.clear()
         writer.write(tx.to_bytes())
 
-        data = await reader.read(4096)
+        _ = await reader.read(4096)
         # with schema_capnp.Rx.from_bytes(data) as rx:
         #     # print(rx)
         #     ...
+        await asyncio.sleep(0.05) # 50ms target, as in original
 
 
 

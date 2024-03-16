@@ -29,6 +29,10 @@ fn main() {
 
     loop {
         thread::sleep(std::time::Duration::from_secs(1));
-        println!("[GLOBAL] {} connections, {} games", Arc::strong_count(&gamestate) - 3, gamestate.read().unwrap().games.len());
+        println!("[GLOBAL] {} connections, {} lobbies ({} running)",
+        Arc::strong_count(&gamestate) - 3,
+        gamestate.read().unwrap().games.len(),
+        gamestate.read().unwrap().games.iter().filter(|g| g.is_running).count()
+    );
     }
 }

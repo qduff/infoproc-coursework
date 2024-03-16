@@ -14,7 +14,7 @@ impl Bullet {
         Bullet {
             lifetime: 1000, // 1 second
             velocity: Vec2 {
-                x: -bullet_speed * (-rotation).sin(),
+                x: bullet_speed * rotation.sin(),
                 y: -bullet_speed * rotation.cos(),
             },
             position: location.clone(),

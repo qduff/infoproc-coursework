@@ -1,7 +1,5 @@
-use capnp::message::{Builder, ReaderOptions, ScratchSpaceHeapAllocator};
+use capnp::message::{ReaderOptions, ScratchSpaceHeapAllocator};
 use capnp::serialize;
-// use std::collections::HashMap;
-// use std::io::prelude::*;
 use std::sync::{Arc, RwLock};
 use std::thread;
 use r2d2_sqlite::SqliteConnectionManager;
@@ -14,6 +12,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
     let addr = stream.peer_addr().unwrap();
     let mut gameid :i32 = -1; // not in a game
     let mut uid = -1;
+    let mut uname = String::new();
 
     let mut scratch_space: &mut [u8] = &mut [0; 1024];
     let mut allocator = ScratchSpaceHeapAllocator::new(&mut scratch_space);
@@ -26,7 +25,6 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
 
         // writer
         let mut message_builder = ::capnp::message::Builder::new(&mut allocator);
-        // let mut message_builder = ::capnp::message::Builder::new_default();
         let mut rx_root = message_builder.init_root::<crate::schema_capnp::rx::Builder>();
 
         let mut messages: Vec<String> = Vec::new(); // maybe slow initializing every loop
@@ -57,6 +55,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                     } else{
                                         messages.push("Succeeded!".into());
                                         uid = pool.get().unwrap().last_insert_rowid();
+                                        uname = username.to_owned();
                                         println!("{}", uid);
                                     }
 
@@ -71,6 +70,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                     let mut rows = prep.query(&[&username, &password]).unwrap();
                                     if let Ok(Some(row)) = rows.next() {
                                         messages.push("Success!".into());
+                                        uname = username.to_owned();
                                         uid = row.get(0).unwrap(); // Assuming the first column contains user data (modify index based on your table)
                                       }else{
                                         messages.push("Failed!".into())
@@ -90,7 +90,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                                     }
                                                 }
                                                 gameid = num as i32;
-                                                w.games[num].players.insert(addr, crate::game::Player::new());
+                                                w.games[num].players.insert(addr, crate::game::Player::new(uname.to_owned()));
                                                 messages.push(format!("Joining {}", gameid))
 
                                             } else { messages.push("already there".into()) }
@@ -115,7 +115,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                                     }
                                                 }
                                                 gameid = num as i32;
-                                                w.games[num].players.insert(addr, crate::game::Player::new());
+                                                w.games[num].players.insert(addr, crate::game::Player::new(uname.to_owned()));
                                                 messages.push(format!("Joining {}", gameid))
 
                                             } else { messages.push("already there".into()) }
@@ -138,7 +138,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                             }
                                         }
                                         gameid = (w.games.len() - 1) as i32;
-                                        w.games[gameid as usize].players.insert(addr, crate::game::Player::new());
+                                        w.games[gameid as usize].players.insert(addr, crate::game::Player::new(uname.to_owned()));
                                         messages.push("Success!".into())
                                     } else { messages.push("Name must be unique".into())  }
                                 }
@@ -155,6 +155,16 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                 }
                             }
                         }
+                        "info" => {
+                            if uid != -1{
+                                if gameid >= 0{
+                                    messages.push(format!("Name: {}, {} players",
+                                        w.games[gameid as usize].name,
+                                        w.games[gameid as usize].players.len()))
+                                } else { messages.push("not in lobby!".into()) }
+                            } else { messages.push("Login first!".into()); }
+                        }
+
                         "start" => {
                             if gameid >= 0{
                                 if w.games[gameid as usize].is_running == false {
@@ -179,6 +189,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                     let mut players = rx_root.reborrow().init_players(game.players.len() as u32);
                     for (i, player) in game.players.iter().enumerate() {
                         let mut p = players.reborrow().get(i as u32);
+                        p.set_name(&player.1.name);
                         p.set_x(player.1.position.x);
                         p.set_y(player.1.position.y);
                         p.set_x_vel(player.1.velocity.x);
@@ -226,9 +237,11 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
 
         }
         // let r = data.read().unwrap();
-        let mut out: Vec<u8> = Vec::new();
-        capnp::serialize::write_message(&mut out, &message_builder).unwrap();
-        std::io::Write::write_all(&mut stream, out.as_slice()).unwrap();
+        // let mut out: Vec<u8> = Vec::new();
+        // capnp::serialize::write_message(&mut out, &message_builder).unwrap();
+        // std::io::Write::write_all(&mut stream, out.as_slice()).unwrap();
+        capnp::serialize_packed::write_message(&mut stream, &message_builder).unwrap();
+        std::io::Write::write(&mut stream, "EOI".as_bytes());
     }
     if gameid >= 0 {
         let mut w = data.write().unwrap();

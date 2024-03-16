@@ -26,6 +26,7 @@ struct Player {
     invincabilityTimer @8 :UInt32;
     bullets @9 :List(Bullet);
     score @10 :UInt32 = 0;
+    name @11 :Text;
 
     enum PlayerType {
         player @0;
@@ -45,7 +46,7 @@ struct Asteroid {
 struct Bullet {
     x @0 :Float32;
     y @1 :Float32;
-    xVel @2: Float32;
-    yVel @3: Float32;
-    lifetime @4: UInt32;
+    xVel @2 :Float32;
+    yVel @3 :Float32;
+    lifetime @4 :UInt32;
 }

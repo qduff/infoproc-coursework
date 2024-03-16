@@ -8,7 +8,7 @@ import state
 from interfaces.server import schema_capnp, POLLRATE as pollrate
 from interfaces.fpga import FPGA_ENABLED
 
-DEBUG = False
+DEBUG = True
 
 WIDTH = 1000
 HEIGHT = 1000
@@ -121,19 +121,19 @@ def _run():
                     draw_text("WASTED", 150, 400, 150, RED)
                 else:
                     col = GREEN
-                draw_text(f"Me: {player.lives}", 10, 90 + i * 20, 20, col)
+                draw_text(f"Me ({player.name}): {player.lives}", 10, 90 + i * 20, 20, col)
             else:
                 if player.lives == 0:
                     col = RED
                 else:
                     col = WHITE
-                draw_text(f"Player {i+1}: {player.lives}", 10, 90 + i * 20, 20, col)
+                draw_text(f"Player {player.name}: {player.lives}", 10, 90 + i * 20, 20, col)
             if player.invincabilityTimer % 200 > 100:
                 col = RED
 
             if player.lives > 0:
-                if DEBUG:
-                    draw_circle(player.x*WIDTH, player.y*HEIGHT, 0.03*WIDTH, DARKGRAY)
+                # if DEBUG:
+                #     draw_circle(player.x*WIDTH, player.y*HEIGHT, 0.03*WIDTH, DARKGRAY)
                 draw_shape(ARROW, [player.x, player.y], player.rotation, 1, col)
                 if player.propelling:
                     draw_shape(PROPEL, [player.x, player.y], player.rotation, 1, col)

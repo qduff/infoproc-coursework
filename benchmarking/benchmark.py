@@ -1,3 +1,4 @@
+import random
 import capnp
 import asyncio
 
@@ -6,18 +7,18 @@ PORT = 5000
 
 schema_capnp = capnp.load('schema.capnp')
 
-NUM_USERS = 5000
+NUM_USERS = 100
 
 
 async def tcp_echo_client(i):
 
-    commands = [f"login {i} {i}", f"create {i}", "start"]
+    commands = [f"login {i} {i}", "join lobby"]
     reader, writer = await asyncio.open_connection('127.0.0.1', 5000)
     while True:
         tx = schema_capnp.Tx.new_message()
-        tx.angle = 0
+        tx.angle = random.uniform(-1, 1)
         tx.propulsion = True
-        tx.shoot = True
+        tx.shoot = False
         tx.commands = commands
         commands.clear()
         writer.write(tx.to_bytes())

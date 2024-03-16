@@ -47,9 +47,12 @@ class ServerInterface:
         tx.write(self.sock)
 
         # read
-        rx = self.sock.recv(2048)
-        with schema_capnp.Rx.from_bytes(rx) as rx:
-            state.rx = rx
+        rx = bytes()
+        while len(rx) == 0 or rx[-3:] != b"EOI":
+            rx += self.sock.recv(2048)
+        rx = rx[:-3]
+
+        state.rx =schema_capnp.Rx.from_bytes_packed(rx)
         if state.rx.messages:
             print("\n".join(state.rx.messages))
 

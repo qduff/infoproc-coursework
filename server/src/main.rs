@@ -17,7 +17,6 @@ pub mod schema_capnp {
 
 fn main() {
     let gamestate: Arc<RwLock<GlobalState>> = Arc::new(RwLock::new(GlobalState::new()));
-    gamestate.write().unwrap().games.push(Game::new());
 
     let game_arc = Arc::clone(&gamestate);
     thread::spawn(move || tickthread(game_arc));

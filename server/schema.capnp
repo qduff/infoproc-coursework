@@ -11,6 +11,7 @@ struct Rx {
     players @0 :List(Player);
     asteroids @1 :List(Asteroid);
     running @2 : Bool;
+    messages @3 :List(Text);
 }
 
 struct Player {

@@ -27,7 +27,7 @@ impl GlobalState{
 
 pub fn tickthread(gamestate: Arc<RwLock<GlobalState>>){
     loop{ // global ticker
-        let start = std::time::Instant::now();
+        // let start = std::time::Instant::now();
         // gamestate.write().unwrap().tick(TICKRATE);
         {
             let mut handle = gamestate.write().unwrap();

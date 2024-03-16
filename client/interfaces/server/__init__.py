@@ -45,12 +45,13 @@ class ServerInterface:
             tx.commands = state.commands
             state.commands.clear()
         tx.write(self.sock)
-        # print("")
 
         # read
         rx = self.sock.recv(2048)
         with schema_capnp.Rx.from_bytes(rx) as rx:
             state.rx = rx
+        if state.rx.messages:
+            print("\n".join(state.rx.messages))
 
 
 serverinterface = ServerInterface()

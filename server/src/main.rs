@@ -4,34 +4,14 @@ use std::thread;
 pub mod game;
 use game::{tickthread, GlobalState};
 mod net;
+mod db;
+use db::db_init;
 
 use r2d2_sqlite::SqliteConnectionManager;
 use r2d2::Pool;
-use rusqlite::params;
 
 pub mod schema_capnp {
     include!(concat!(env!("OUT_DIR"), "/schema_capnp.rs"));
-}
-
-fn db_init(pool: Arc<Pool<SqliteConnectionManager>> ){
-    pool.get()
-        .unwrap()
-        .execute("
-        CREATE TABLE  IF NOT EXISTS Players (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL
-        );
-
-        CREATE TABLE  IF NOT EXISTS CompletedGames (
-            completed_game_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            player_id INTEGER NOT NULL,
-            game_name TEXT NOT NULL,
-            score INTEGER,
-            FOREIGN KEY(id) REFERENCES Players(id)
-        );
-        ", params![])
-        .unwrap();
 }
 
 fn main() {

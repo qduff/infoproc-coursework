@@ -76,9 +76,6 @@ def draw_stars(stars):
     for star in stars:
         draw_pixel(int(star[0]), int(star[1]), WHITE)
 
-# custom_font = load_font("./game/fonts/lato.ttf") # causes segfault lol
-
-
 
 def run():
     while True:
@@ -143,8 +140,6 @@ def _run():
 
             for bullet in player.bullets:
                 draw_circle(bullet.x*WIDTH, bullet.y*HEIGHT, 0.004*WIDTH, WHITE)
-                # draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.4, WHITE)
-                # draw_shape(generate_asteroid(None, 0.015, 0.004,0.2, 12, 0.05), [bullet.x, bullet.y], 0, 0.3, WHITE) # TODO: generating asteroids like this tanks fps
 
         for asteroid in state.rx.asteroids:
             if DEBUG:
@@ -164,5 +159,4 @@ def _run():
 
 
         end_drawing()
-    # unload_font(custom_font)
     close_window()

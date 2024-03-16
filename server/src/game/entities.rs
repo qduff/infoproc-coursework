@@ -1,6 +1,5 @@
 use crate::game::lib::Vec2;
 use rand::Rng;
-use std::f32::consts::PI;
 
 #[derive(Default)]
 pub struct Bullet {

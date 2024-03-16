@@ -1,8 +1,7 @@
 use capnp::message::ReaderOptions;
 use capnp::serialize;
 // use std::collections::HashMap;
-use std::io::prelude::*;
-// use std::net::SocketAddr;
+// use std::io::prelude::*;
 use std::sync::{Arc, RwLock};
 use std::thread;
 use r2d2_sqlite::SqliteConnectionManager;
@@ -73,7 +72,6 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                 } else{ messages.push("No password!".into()) }
                             } else{ messages.push("No username!".into()) }
                         }
-
                         "join" => {
                             if uid != -1{
                                 if let Some(num_st) = sp.next() {
@@ -108,8 +106,12 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                             } else { messages.push("not in lobby!".into()) }
                         }
                         "create" => {
-                            if let Some(name) = sp.next() {
-                                w.games.push(Game::new(name.into()));
+                            if uid != -1{
+                                if let Some(name) = sp.next() {
+                                    w.games.push(Game::new(name.into()));
+                                }
+                            } else {
+                                messages.push("Login first!".into());
                             }
                         }
                         "lobbies" => {
@@ -182,13 +184,10 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
             }
 
         }
-
         // let r = data.read().unwrap();
         let mut out: Vec<u8> = Vec::new();
         capnp::serialize::write_message(&mut out, &message).unwrap();
-        stream.write_all(out.as_slice()).unwrap();
-
-
+        std::io::Write::write_all(&mut stream, out.as_slice()).unwrap();
     }
     if gameid >= 0 {
         let mut w = data.write().unwrap();

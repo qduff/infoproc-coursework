@@ -10,12 +10,8 @@ pub use entities::*;
 use crate::game::lib::Vec2;
 pub const TICKRATE : u32 = 15; // ms
 
-
-
-
 #[derive(Default)]
 pub struct GlobalState {
-    // pub players: Vec<SocketAddr>, // players that arent in a lobby
     pub games : Vec<Game>
 }
 
@@ -26,10 +22,9 @@ impl GlobalState{
 }
 
 pub fn tickthread(gamestate: Arc<RwLock<GlobalState>>){
-    loop{ // global ticker
-        // let start = std::time::Instant::now();
-        // gamestate.write().unwrap().tick(TICKRATE);
+    loop {
         {
+            // keep handle only while ticking
             let mut handle = gamestate.write().unwrap();
             for game in handle.games.iter_mut() {
                 if game.is_running{
@@ -38,7 +33,6 @@ pub fn tickthread(gamestate: Arc<RwLock<GlobalState>>){
             }
         }
         thread::sleep(std::time::Duration::from_millis(TICKRATE as u64));
-        // println!("game ticker tick [{}ms]", start.elapsed().as_millis());
     }
 }
 
@@ -88,7 +82,6 @@ impl Game {
                 life_count, new_chance, random_number
             );
         }
-        //println!("new asteroid: {} : {} > {}", life_count, new_chance, random_number);
     }
 
     fn step_motion(&mut self, dt: u32) {
@@ -112,7 +105,6 @@ impl Game {
                             player.lives -= 1;
                             player.position = Vec2 { x: 0.5, y: 0.5 };
                             player.velocity = Vec2 { x: 0.0, y: 0.0 };
-                            // leave rotation
                             player.invincability_timer = 3000;
                         }
                     }
@@ -121,9 +113,6 @@ impl Game {
 
             // bullet collisions
             for bullet in &mut player.bullets {
-
-
-
                 // bullet asteroid collisions
                 let mut i = 0;
                 while i < self.asteroids.len() {

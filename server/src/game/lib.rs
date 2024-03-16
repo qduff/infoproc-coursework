@@ -8,12 +8,11 @@ pub struct Vec2 {
 }
 
 impl Vec2 {
-    pub fn add_modulo(&mut self, rhs: &Vec2) {
+    pub fn add_modulo(&mut self, rhs: &Vec2) { // modulo with f32 does not do what you want
         self.x = self.x + rhs.x;
         if self.x <= 0f32 {
             self.x += 1f32
         }
-        // modulo with f32 does not do what you want
         else if self.x > 1f32 {
             self.x -= 1f32
         }
@@ -32,13 +31,6 @@ impl Vec2 {
         }
     }
 
-    pub fn scale(&self, scale: f32) -> Vec2 {
-        Vec2 {
-            x: self.x * scale,
-            y: self.y * scale,
-        }
-    }
-
     pub fn negate(&self) -> Vec2 {
         Vec2 {
             x: -self.x,
@@ -49,7 +41,6 @@ impl Vec2 {
     pub fn dot_product(&self, point2: &Vec2) -> f32 {
              self.x * point2.x +
              self.y * point2.y
-
     }
 
     pub fn distance_to(&self, point2: &Vec2) -> f32 {
@@ -87,60 +78,18 @@ impl Vec2 {
         self.y += prop_factor * rotation.cos();
     }
 
-    pub fn random_pos() -> Self {
+    pub fn random_pos() -> Vec2 {
         let mut rng = rand::thread_rng();
-        Self {
+        Vec2 {
             x: rng.gen_range(0.0..1.0),
             y: rng.gen_range(0.0..1.0),
         }
     }
-    pub fn random_vel() -> Self {
+    pub fn random_vel() -> Vec2 {
         let mut rng = rand::thread_rng();
-        Self {
+        Vec2 {
             x: rng.gen_range(-0.00005..0.00005),
             y: rng.gen_range(-0.00005..0.00005),
         }
     }
-    pub fn from_polar(magnitude: f32, rotation: f32) -> Self{
-        Vec2{
-            x: magnitude * rotation.sin(),
-            y: magnitude * rotation.cos(),
-        }
-    }
 }
-
-// #[derive(Debug, Copy, Clone)]
-// pub struct CoordInt {
-//     pub x: i64,
-//     pub y: i64,
-// }
-
-// impl CoordInt {
-//     pub fn mod_add(&mut self, rhs: Self, max: Self) {
-//         self.x = (self.x + rhs.x) % max.x;
-//         self.y = (self.y + rhs.y) % max.y;
-//     }
-
-//     pub fn mul(&mut self, rhs: i64) {
-//         self.x = self.x * rhs;
-//         self.y = self.y * rhs;
-//     }
-
-//     fn distance_to(&self, point2: &Coord) -> i64 {
-//         let dx = self.x - point2.x;
-//         let dy = self.y - point2.y;
-//         ((dy.pow(2) + dx.pow(2)) as f64).sqrt() as i64
-//     }
-
-//     fn set_polar(&mut self, mag: i64, arg: u8) {
-//         self.x = u8_to_degrees(arg).sin() as i64 * mag;
-//         self.y = u8_to_degrees(arg).cos() as i64 * mag;
-//     }
-//     //-TODO implement more advanced movement
-// }
-
-// pub fn u8_to_degrees(denom: u8) -> f64 {
-//     let frac: f64 = 1.0 / denom as f64;
-//     let output: f64 = std::f64::consts::PI * 2.0 * frac;
-//     output
-// }

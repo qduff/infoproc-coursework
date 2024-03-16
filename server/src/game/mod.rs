@@ -32,7 +32,7 @@ impl Game {
     }
 
     fn asteroid_gen(&mut self) {
-        let max_lives: u64 = 20;
+        let max_lives: u64 = 10;
         let mut rng = rand::thread_rng();
 
         let mut life_count: u64 = 0;

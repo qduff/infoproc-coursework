@@ -6,29 +6,26 @@ import subprocess
 
 
 
-if FPGA_ENABLED := False:
+if FPGA_ENABLED := True:
     proc = subprocess.Popen(
         "/home/qduff/Programs/intelFPGA_lite/18.1/quartus/bin/nios2-terminal",
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
     )
     def collect(out):
+        print("collecting!")
         while True:
-            l = out.readline().rstrip()
+            l = out.readline().decode("utf-8").rstrip()
             try:
-                l = l.split(",")
-                # button_val = int(l[0])
-                # accelerometer_val = int(l[1])
-                # gyroscope_val = int(l[2])
-                 #TODO: Update the follwoing thre lines with recieved values
-                accel = False
-                shoot = False
-                rotation_amount = 0.0
-                state.state = state.State(rotation_amount, shoot, accel)
+                s = l.split(",")
+                # print(rotation_amount, shoot, accel, s[1], s[2])
+                state.input.rotation_amount = float(float(s[6])/90)
+                state.input.accelerating = bool(int(s[2])==0)
+                state.input.shooting = bool(int(s[1])==0)
 
                 # update_state(button_val, accelerometer_val, gyroscope_val)
-            except Exception:
-                continue
+            except Exception as e:
+                print(e)
 
     fpga_thread = Thread(target=collect, args=[proc.stdout])
 

@@ -31,13 +31,6 @@ impl Vec2 {
         }
     }
 
-    pub fn negate(&self) -> Vec2 {
-        Vec2 {
-            x: -self.x,
-            y: -self.y,
-        }
-    }
-
     pub fn dot_product(&self, point2: &Vec2) -> f32 {
              self.x * point2.x +
              self.y * point2.y

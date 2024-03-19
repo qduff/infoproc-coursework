@@ -1,4 +1,3 @@
-import random
 import capnp
 import asyncio
 
@@ -7,34 +6,89 @@ PORT = 5000
 
 schema_capnp = capnp.load('schema.capnp')
 
-NUM_USERS = 100
+NUM_USERS = 16384
+LOBBY_SIZE = 8
 
-
-async def tcp_echo_client(i):
-
-    commands = [f"login {i} {i}", "join lobby"]
-    reader, writer = await asyncio.open_connection('127.0.0.1', 5000)
-    while True:
-        tx = schema_capnp.Tx.new_message()
-        tx.angle = random.uniform(-1, 1)
-        tx.propulsion = True
-        tx.shoot = False
+async def send(writer, commands):
+    tx = schema_capnp.Tx.new_message()
+    tx.angle = 0
+    tx.propulsion = True
+    tx.shoot = False
+    if commands is not None:
         tx.commands = commands
-        commands.clear()
-        writer.write(tx.to_bytes())
+    writer.write(tx.to_bytes())
 
-        _ = await reader.read(4096)
-        # with schema_capnp.Rx.from_bytes(data) as rx:
-        #     # print(rx)
-        #     ...
-        await asyncio.sleep(0.05) # 50ms target, as in original
+async def read(reader):
+    _ = await reader.read(4096)
+
+
+class BenchClass:
+    def __init__(self, i) -> None:
+        self.i = i
+
+    async def conn(self):
+        self.reader, self.writer = await asyncio.open_connection('127.0.0.1', 5000)
+
+    async def auth(self):
+        await send(self.writer, [f"register {self.i} {self.i}", f"login {self.i} {self.i}"]) # on clean db will register anew
+        await read(self.reader)
+
+    async def create_lobbies(self):
+        if self.i%LOBBY_SIZE==0:
+            await send(self.writer, [f"create lobby{self.i//8}"])
+            await read(self.reader)
+
+    async def join_lobbies(self):
+        if self.i%LOBBY_SIZE!=0  :
+            await send(self.writer, [f"join lobby{self.i//8}"])
+            await read(self.reader)
+
+    async def start(self):
+        if self.i%LOBBY_SIZE==0:
+            await send(self.writer, ["start"])
+            await read(self.reader)
+
+    async def loop(self):
+        while True:
+            await send(self.writer, None)
+            await read(self.reader)
 
 
 
 async def main():
+    tasks = []
+    for i in range(NUM_USERS):
+        tasks.append(BenchClass(i))
+
+    print("connecting")
     async with asyncio.TaskGroup() as tg:
-        for i in range(NUM_USERS):
-            tg.create_task(tcp_echo_client(i))
+        for task in tasks:
+            tg.create_task(task.conn())
+
+    print("authenticating")
+    async with asyncio.TaskGroup() as tg:
+        for task in tasks:
+            tg.create_task(task.auth())
+
+    print("creating lobbies")
+    async with asyncio.TaskGroup() as tg:
+        for task in tasks:
+            tg.create_task(task.create_lobbies())
+
+    print("joining lobbies")
+    async with asyncio.TaskGroup() as tg:
+        for task in tasks:
+            tg.create_task(task.join_lobbies())
+
+    print("starting lobbies")
+    async with asyncio.TaskGroup() as tg:
+        for task in tasks:
+            tg.create_task(task.start())
+
+    print("main loop")
+    async with asyncio.TaskGroup() as tg:
+        for task in tasks:
+            tg.create_task(task.loop())
 
 
 asyncio.run(main())

@@ -31,6 +31,7 @@ impl Bullet {
 #[derive(Default)]
 pub struct Player {
     pub name: String,
+    pub id: u64,
 
     pub position: Vec2,
     pub velocity: Vec2,
@@ -50,8 +51,9 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn new(name: String) -> Player {
+    pub fn new(id: u64, name: String) -> Player {
         Player {
+            id: id,
             name: name,
             lives: 3,
             position: Vec2 { x: 0.5, y: 0.5 },

@@ -14,7 +14,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
     let mut uid = -1;
     let mut uname = String::new();
 
-    let mut scratch_space: &mut [u8] = &mut [0; 1024];
+    let mut scratch_space: &mut [u8] = &mut [0; 512];
     let mut allocator = ScratchSpaceHeapAllocator::new(&mut scratch_space);
 
     loop {
@@ -71,7 +71,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                     if let Ok(Some(row)) = rows.next() {
                                         messages.push("Success!".into());
                                         uname = username.to_owned();
-                                        uid = row.get(0).unwrap(); // Assuming the first column contains user data (modify index based on your table)
+                                        uid = row.get(0).unwrap();
                                       }else{
                                         messages.push("Failed!".into())
                                       }
@@ -90,7 +90,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                                     }
                                                 }
                                                 gameid = num as i32;
-                                                w.games[num].players.insert(addr, crate::game::Player::new(uname.to_owned()));
+                                                w.games[num].players.insert(addr, crate::game::Player::new(uid as u64, uname.to_owned()));
                                                 messages.push(format!("Joining {}", gameid))
 
                                             } else { messages.push("already there".into()) }
@@ -115,7 +115,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                                     }
                                                 }
                                                 gameid = num as i32;
-                                                w.games[num].players.insert(addr, crate::game::Player::new(uname.to_owned()));
+                                                w.games[num].players.insert(addr, crate::game::Player::new(uid as u64, uname.to_owned()));
                                                 messages.push(format!("Joining {}", gameid))
 
                                             } else { messages.push("already there".into()) }
@@ -138,7 +138,7 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                             }
                                         }
                                         gameid = (w.games.len() - 1) as i32;
-                                        w.games[gameid as usize].players.insert(addr, crate::game::Player::new(uname.to_owned()));
+                                        w.games[gameid as usize].players.insert(addr, crate::game::Player::new(uid as u64, uname.to_owned()));
                                         messages.push("Success!".into())
                                     } else { messages.push("Name must be unique".into())  }
                                 }
@@ -155,7 +155,32 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                 }
                             }
                         }
-                        "info" => {
+                        "account" => {
+                            if uid != -1{
+                                let conn = pool.get().unwrap();
+                                let mut stmt = conn.prepare("
+                                    SELECT g.name, pg.score
+                                    FROM Players p
+                                    INNER JOIN PlayerGames pg ON p.id = pg.player_id
+                                    INNER JOIN Games g ON pg.game_id = g.id
+                                    WHERE p.id = ?
+                                ").unwrap();
+                                print!("eher");
+                                let results = stmt.query_map([uid], |row| {
+                                    let gamename: String = row.get(0).unwrap();
+                                    let score: i32 = row.get(1).unwrap();
+                                    Ok((gamename, score))
+                                });
+                                if let Ok(mut iter) = results {
+                                    while let Some(Ok(result)) = iter.next() {
+                                        let (game_name, score) = result;
+                                        messages.push(format!(" Game {}: {}", game_name, score));
+                                    }
+                                } else { println!("Error iterating over results!"); }
+                            } else { messages.push("Login first!".into()); }
+                        }
+
+                        "lobbyinfo" => {
                             if uid != -1{
                                 if gameid >= 0{
                                     messages.push(format!("Name: {}, {} players",
@@ -164,7 +189,6 @@ fn handle_conn(mut stream: std::net::TcpStream, data: Arc<RwLock<GlobalState>>, 
                                 } else { messages.push("not in lobby!".into()) }
                             } else { messages.push("Login first!".into()); }
                         }
-
                         "start" => {
                             if gameid >= 0{
                                 if w.games[gameid as usize].is_running == false {

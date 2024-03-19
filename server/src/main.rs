@@ -22,10 +22,12 @@ fn main() {
     db::db_init(pool.clone());
 
     let game_arc = Arc::clone(&gamestate);
-    thread::spawn(move || tickthread(game_arc));
+    let game_pool = Arc::clone(&pool);
+    thread::spawn(move || tickthread(game_arc, game_pool));
 
     let net_arc = Arc::clone(&gamestate);
-    thread::spawn(move || net::net_thread(net_arc, pool));
+    let net_pool = Arc::clone(&pool);
+    thread::spawn(move || net::net_thread(net_arc, net_pool));
 
     loop {
         thread::sleep(std::time::Duration::from_secs(1));

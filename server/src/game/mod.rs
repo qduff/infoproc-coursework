@@ -3,6 +3,8 @@ use std::net::SocketAddr;
 use std::sync::{Arc, RwLock};
 use std::thread;
 mod lib;
+use r2d2::Pool;
+use r2d2_sqlite::SqliteConnectionManager;
 use rand::Rng;
 mod entities;
 pub use entities::*;
@@ -21,14 +23,14 @@ impl GlobalState{
     }
 }
 
-pub fn tickthread(gamestate: Arc<RwLock<GlobalState>>){
+pub fn tickthread(gamestate: Arc<RwLock<GlobalState>>, pool: Arc<Pool<SqliteConnectionManager>>){
     loop {
         {
             // keep handle only while ticking
             let mut handle = gamestate.write().unwrap();
             for game in handle.games.iter_mut() {
                 if game.is_running{
-                    game.tick(TICKRATE);
+                    game.tick(TICKRATE, &pool);
                 }
             }
         }
@@ -54,12 +56,26 @@ impl Game {
     }
 
 
-    pub fn tick(&mut self, dt: u32) {
+    pub fn tick(&mut self, dt: u32, pool: &Arc<Pool<SqliteConnectionManager>>) {
         self.asteroid_gen();
         self.step_motion(dt);
         self.collisions(dt); // IDK if this not taking motion into account when calculating collisions is a good idea
         if self.players.values().all(|p| p.lives == 0){
-            self.is_running = false
+            self.is_running = false;
+
+            let conn = pool.get().unwrap();
+            conn.execute(
+                "INSERT INTO Games (name) VALUES (?)",
+                [&self.name]).unwrap();
+            let game_id = conn.last_insert_rowid() as u64;
+
+            for player in self.players.values_mut() {
+                conn.execute("INSERT INTO PlayerGames (player_id, game_id, score) VALUES (?, ?, ?)",
+                [player.id, game_id, player.score.into()]).unwrap();
+            }
+
+
+            // do db stuff here
         }
     }
 

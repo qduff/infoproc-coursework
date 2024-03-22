@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="SUB_sim/SUB.vo" type="VERILOG" />
+ <topLevel name="SUB" />
+ <deviceFamily name="max10" />
+</simPackage>

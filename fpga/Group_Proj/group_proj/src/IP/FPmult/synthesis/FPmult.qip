@@ -1,0 +1,42 @@
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_TOOL_NAME "Qsys"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_TOOL_VERSION "18.1"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -library "FPmult" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../FPmult.sopcinfo"]
+set_global_assignment -entity "FPmult" -library "FPmult" -name SLD_INFO "QSYS_NAME FPmult HAS_SOPCINFO 1 GENERATION_ID 1709684173"
+set_global_assignment -library "FPmult" -name MISC_FILE [file join $::quartus(qip_path) "../FPmult.cmp"]
+set_global_assignment -library "FPmult" -name SLD_FILE [file join $::quartus(qip_path) "FPmult.debuginfo"]
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_TARGETED_DEVICE_FAMILY "MAX 10"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_GENERATED_DEVICE_FAMILY "{MAX 10}"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_QSYS_MODE "STANDALONE"
+set_global_assignment -name SYNTHESIS_ONLY_QIP ON
+set_global_assignment -library "FPmult" -name MISC_FILE [file join $::quartus(qip_path) "../../FPmult.qsys"]
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_COMPONENT_NAME "RlBtdWx0"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_COMPONENT_DISPLAY_NAME "RlBtdWx0"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_COMPONENT_REPORT_HIERARCHY "On"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_COMPONENT_VERSION "MS4w"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTcwOTY4NDE3Mw==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::TUFYIDEw::QXV0byBERVZJQ0VfRkFNSUxZ"
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::MTBNNTBEQUY0ODRDN0c=::QXV0byBERVZJQ0U="
+set_global_assignment -entity "FPmult" -library "FPmult" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::Nw==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_NAME "ZnBvaW50Ml9jb21iaQ=="
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_DISPLAY_NAME "RmxvYXRpbmcgUG9pbnQgSGFyZHdhcmUgMiBDb21iaW5hdG9yaWFs"
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_AUTHOR "QWx0ZXJhIENvcnBvcmF0aW9u"
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_VERSION "MTguMQ=="
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_DESCRIPTION "VGhpcyBjb21wb25lbnQgcmVwcmVzZW50cyBwYXJ0IG9mIHRoZSBGbG9hdGluZyBQb2ludCBIYXJkd2FyZSAyIHdoZXJlIHRoZSBBcml0aG1ldGljIGFuZCBDb21wYXJpc29uIG9wZXJhdGlvbnMgYXJlIHBlcmZvcm1lZA=="
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_PARAMETER "YXJpdGhtZXRpY19wcmVzZW50::MQ==::YXJpdGhtZXRpYw=="
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_PARAMETER "Y29tcGFyaXNvbl9wcmVzZW50::MQ==::Y29tcGFyaXNvbg=="
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_COMPONENT_PARAMETER "ZGV2aWNlRmFtaWx5::TUFYIDEw::ZGV2aWNlRmFtaWx5"
+
+set_global_assignment -library "FPmult" -name VERILOG_FILE [file join $::quartus(qip_path) "FPmult.v"]
+set_global_assignment -library "FPmult" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/fpoint2_combi.vhd"]
+set_global_assignment -library "FPmult" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/FPMinMaxFused/FPMinMaxFused.vhd"]
+set_global_assignment -library "FPmult" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/FPCompareFused/FPCompareFused.vhd"]
+set_global_assignment -library "FPmult" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/FPNeg_Abs/FPNeg.vhd"]
+set_global_assignment -library "FPmult" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/FPNeg_Abs/FPAbs.vhd"]
+
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_TOOL_NAME "altera_nios_custom_instr_floating_point_2_combi"
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_TOOL_VERSION "18.1"
+set_global_assignment -entity "fpoint2_combi" -library "FPmult" -name IP_TOOL_ENV "Qsys"

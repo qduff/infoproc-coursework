@@ -1,0 +1,51 @@
+# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
+# 
+preplace inst unsaved.led -pg 1 -lvl 6 -y 1770
+preplace inst unsaved.i2c_miso -pg 1 -lvl 5 -y 770
+preplace inst unsaved.cpu.clock_bridge -pg 1
+preplace inst unsaved.in_L -pg 1 -lvl 6 -y 610
+preplace inst unsaved.i2c_rst -pg 1 -lvl 5 -y 1110
+preplace inst unsaved.jtag_uart -pg 1 -lvl 6 -y 1390
+preplace inst unsaved.i2c_reg_addr -pg 1 -lvl 5 -y 1010
+preplace inst unsaved.i2c_mosi -pg 1 -lvl 5 -y 890
+preplace inst unsaved.cpu.cpu -pg 1
+preplace inst unsaved.i2c_busy -pg 1 -lvl 5 -y 430
+preplace inst unsaved.cpu -pg 1 -lvl 4 -y 1070
+preplace inst unsaved.clk -pg 1 -lvl 1 -y 1550
+preplace inst unsaved.atan2_a -pg 1 -lvl 5 -y 30
+preplace inst unsaved.i2c_en -pg 1 -lvl 5 -y 650
+preplace inst unsaved.atan2_b -pg 1 -lvl 5 -y 130
+preplace inst unsaved.out0 -pg 1 -lvl 6 -y 710
+preplace inst unsaved.onchip_memory -pg 1 -lvl 5 -y 1380
+preplace inst unsaved.out1 -pg 1 -lvl 6 -y 850
+preplace inst unsaved.i2c_rw -pg 1 -lvl 5 -y 1220
+preplace inst unsaved.atan2_q -pg 1 -lvl 5 -y 230
+preplace inst unsaved.i2c_dev_addr -pg 1 -lvl 5 -y 530
+preplace inst unsaved.in_H -pg 1 -lvl 6 -y 510
+preplace inst unsaved.cpu.reset_bridge -pg 1
+preplace inst unsaved.sample_clk -pg 1 -lvl 6 -y 950
+preplace inst unsaved -pg 1 -lvl 1 -y 40 -regy -20
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)i2c_rst.external_connection,(SLAVE)unsaved.i2c_rst_external_connection) 1 0 5 NJ 1300 NJ 1300 NJ 1300 NJ 1300 NJ
+preplace netloc POINT_TO_POINT<net_container>unsaved</net_container>(MASTER)cpu.irq,(SLAVE)jtag_uart.irq) 1 4 2 1770 1470 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.atan2_q_external_connection,(SLAVE)atan2_q.external_connection) 1 0 5 NJ 260 NJ 260 NJ 260 NJ 260 NJ
+preplace netloc INTERCONNECT<net_container>unsaved</net_container>(SLAVE)i2c_miso.s1,(SLAVE)i2c_dev_addr.s1,(SLAVE)atan2_a.s1,(SLAVE)atan2_q.s1,(SLAVE)led.s1,(SLAVE)in_H.s1,(SLAVE)out1.s1,(SLAVE)out0.s1,(SLAVE)i2c_mosi.s1,(SLAVE)onchip_memory.s1,(SLAVE)i2c_rw.s1,(SLAVE)atan2_b.s1,(SLAVE)i2c_rst.s1,(SLAVE)jtag_uart.avalon_jtag_slave,(SLAVE)in_L.s1,(SLAVE)i2c_reg_addr.s1,(SLAVE)cpu.debug_mem_slave,(SLAVE)i2c_busy.s1,(MASTER)cpu.data_master,(MASTER)cpu.instruction_master,(SLAVE)sample_clk.s1,(SLAVE)i2c_en.s1) 1 3 3 1100 1210 1850 1370 2120
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.i2c_dev_addr_external_connection,(SLAVE)i2c_dev_addr.external_connection) 1 0 5 NJ 560 NJ 560 NJ 560 NJ 560 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)out0.external_connection,(SLAVE)unsaved.out0_external_connection) 1 0 6 NJ 760 NJ 760 NJ 760 NJ 760 NJ 760 NJ
+preplace netloc FAN_OUT<net_container>unsaved</net_container>(SLAVE)i2c_en.reset,(SLAVE)i2c_miso.reset,(SLAVE)in_H.reset,(SLAVE)jtag_uart.reset,(SLAVE)cpu.reset,(SLAVE)led.reset,(SLAVE)i2c_dev_addr.reset,(SLAVE)sample_clk.reset,(SLAVE)atan2_a.reset,(SLAVE)atan2_b.reset,(SLAVE)atan2_q.reset,(SLAVE)i2c_rst.reset,(SLAVE)onchip_memory.reset1,(SLAVE)i2c_reg_addr.reset,(SLAVE)in_L.reset,(SLAVE)i2c_mosi.reset,(SLAVE)out1.reset,(SLAVE)out0.reset,(SLAVE)i2c_rw.reset,(MASTER)clk.clk_reset,(SLAVE)i2c_busy.reset) 1 1 5 NJ 1580 NJ 1580 1080 1360 1830 1350 2100
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)in_L.external_connection,(SLAVE)unsaved.in_l_external_connection) 1 0 6 NJ 640 NJ 640 NJ 640 NJ 640 NJ 640 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)sample_clk.external_connection,(SLAVE)unsaved.sample_clk_external_connection) 1 0 6 NJ 1000 NJ 1000 NJ 1000 NJ 1000 NJ 1000 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)atan2_a.external_connection,(SLAVE)unsaved.atan2_a_external_connection) 1 0 5 NJ 60 NJ 60 NJ 60 NJ 60 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.i2c_rw_external_connection,(SLAVE)i2c_rw.external_connection) 1 0 5 NJ 1320 NJ 1320 NJ 1320 NJ 1320 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.i2c_reg_addr_external_connection,(SLAVE)i2c_reg_addr.external_connection) 1 0 5 NJ 1230 NJ 1230 NJ 1230 NJ 1230 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.clk,(SLAVE)clk.clk_in) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)i2c_mosi.external_connection,(SLAVE)unsaved.i2c_mosi_external_connection) 1 0 5 NJ 920 NJ 920 NJ 920 NJ 920 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)i2c_busy.external_connection,(SLAVE)unsaved.i2c_busy_external_connection) 1 0 5 NJ 460 NJ 460 NJ 460 NJ 460 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)atan2_b.external_connection,(SLAVE)unsaved.atan2_b_external_connection) 1 0 5 NJ 160 NJ 160 NJ 160 NJ 160 NJ
+preplace netloc FAN_OUT<net_container>unsaved</net_container>(SLAVE)cpu.clk,(SLAVE)onchip_memory.clk1,(SLAVE)in_H.clk,(SLAVE)i2c_dev_addr.clk,(SLAVE)i2c_miso.clk,(SLAVE)led.clk,(SLAVE)i2c_busy.clk,(SLAVE)i2c_rw.clk,(MASTER)clk.clk,(SLAVE)out1.clk,(SLAVE)i2c_reg_addr.clk,(SLAVE)i2c_rst.clk,(SLAVE)i2c_mosi.clk,(SLAVE)atan2_q.clk,(SLAVE)atan2_b.clk,(SLAVE)in_L.clk,(SLAVE)jtag_uart.clk,(SLAVE)i2c_en.clk,(SLAVE)out0.clk,(SLAVE)sample_clk.clk,(SLAVE)atan2_a.clk) 1 1 5 NJ 1560 NJ 1560 1060 1340 1810 1330 2080
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)clk.clk_in_reset,(SLAVE)unsaved.reset) 1 0 1 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.i2c_miso_external_connection,(SLAVE)i2c_miso.external_connection) 1 0 5 NJ 800 NJ 800 NJ 800 NJ 800 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)i2c_en.external_connection,(SLAVE)unsaved.i2c_en_external_connection) 1 0 5 NJ 680 NJ 680 NJ 680 NJ 680 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.out1_external_connection,(SLAVE)out1.external_connection) 1 0 6 NJ 880 NJ 880 NJ 880 NJ 880 NJ 880 NJ
+preplace netloc EXPORT<net_container>unsaved</net_container>(SLAVE)unsaved.led_external_connection,(SLAVE)led.external_connection) 1 0 6 NJ 1800 NJ 1800 NJ 1800 NJ 1800 NJ 1800 NJ
+levelinfo -pg 1 0 200 2310
+levelinfo -hier unsaved 210 240 630 1040 1530 1910 2150 2300

@@ -1,0 +1,18 @@
+Fitter Status : Successful - Fri Mar 22 15:20:45 2024
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : DE10_LITE_Golden_Top
+Top-level Entity Name : DE10_LITE_Golden_Top
+Family : MAX 10
+Device : 10M50DAF484C6GES
+Timing Models : Preliminary
+Total logic elements : 6,167 / 49,760 ( 12 % )
+    Total combinational functions : 4,377 / 49,760 ( 9 % )
+    Dedicated logic registers : 4,353 / 49,760 ( 9 % )
+Total registers : 4353
+Total pins : 185 / 360 ( 51 % )
+Total virtual pins : 0
+Total memory bits : 600,475 / 1,677,312 ( 36 % )
+Embedded Multiplier 9-bit elements : 27 / 288 ( 9 % )
+Total PLLs : 0 / 4 ( 0 % )
+UFM blocks : 0 / 1 ( 0 % )
+ADC blocks : 0 / 2 ( 0 % )

@@ -1,0 +1,28 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate D:\Uni\Year-2\InfoProc\Group_Proj\group_proj\src\IP\FPmult.qsys --block-symbol-file --output-directory=D:\Uni\Year-2\InfoProc\Group_Proj\group_proj\src\IP\FPmult --family="MAX 10" --part=10M50DAF484C7G
+Progress: Loading IP/FPmult.qsys
+Progress: Reading input file
+Progress: Adding nios_custom_instr_floating_point_2_combi_0 [altera_nios_custom_instr_floating_point_2_combi 18.1]
+Progress: Parameterizing module nios_custom_instr_floating_point_2_combi_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate D:\Uni\Year-2\InfoProc\Group_Proj\group_proj\src\IP\FPmult.qsys --synthesis=VERILOG --output-directory=D:\Uni\Year-2\InfoProc\Group_Proj\group_proj\src\IP\FPmult\synthesis --family="MAX 10" --part=10M50DAF484C7G
+Progress: Loading IP/FPmult.qsys
+Progress: Reading input file
+Progress: Adding nios_custom_instr_floating_point_2_combi_0 [altera_nios_custom_instr_floating_point_2_combi 18.1]
+Progress: Parameterizing module nios_custom_instr_floating_point_2_combi_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: FPmult: Generating FPmult "FPmult" for QUARTUS_SYNTH
+Info: nios_custom_instr_floating_point_2_combi_0: "FPmult" instantiated altera_nios_custom_instr_floating_point_2_combi "nios_custom_instr_floating_point_2_combi_0"
+Info: FPmult: Done "FPmult" with 2 modules, 6 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

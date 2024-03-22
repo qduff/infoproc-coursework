@@ -1,0 +1,4198 @@
+
+SRAM.elf:     file format elf32-littlenios2
+SRAM.elf
+architecture: nios2:r1, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x00000020
+
+Program Header:
+    LOAD off    0x00001000 vaddr 0x00000000 paddr 0x00000000 align 2**12
+         filesz 0x00000020 memsz 0x00000020 flags r-x
+    LOAD off    0x00001020 vaddr 0x00000020 paddr 0x00000020 align 2**12
+         filesz 0x00001904 memsz 0x00001904 flags r-x
+    LOAD off    0x00002924 vaddr 0x00001924 paddr 0x00001a08 align 2**12
+         filesz 0x000000e4 memsz 0x000000e4 flags rw-
+    LOAD off    0x00002aec vaddr 0x00001aec paddr 0x00001aec align 2**12
+         filesz 0x00000000 memsz 0x00000014 flags rw-
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .entry        00000020  00000000  00000000  00001000  2**5
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .exceptions   00000000  00000020  00000020  00002a08  2**0
+                  CONTENTS
+  2 .text         000018c0  00000020  00000020  00001020  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .rodata       00000044  000018e0  000018e0  000028e0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .rwdata       000000e4  00001924  00001a08  00002924  2**2
+                  CONTENTS, ALLOC, LOAD, DATA, SMALL_DATA
+  5 .bss          00000014  00001aec  00001aec  00002aec  2**2
+                  ALLOC, SMALL_DATA
+  6 .sdram        00000000  00001b00  00001b00  00002a08  2**0
+                  CONTENTS
+  7 .comment      00000023  00000000  00000000  00002a08  2**0
+                  CONTENTS, READONLY
+  8 .debug_aranges 000002d8  00000000  00000000  00002a30  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_info   00003960  00000000  00000000  00002d08  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_abbrev 00001310  00000000  00000000  00006668  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_line   0000141d  00000000  00000000  00007978  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_frame  000007a0  00000000  00000000  00008d98  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_str    00001506  00000000  00000000  00009538  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_loc    00001db4  00000000  00000000  0000aa3e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_alt_sim_info 00000060  00000000  00000000  0000c7f4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 16 .debug_ranges 00000180  00000000  00000000  0000c858  2**3
+                  CONTENTS, READONLY, DEBUGGING
+ 17 .thread_model 00000003  00000000  00000000  0000e241  2**0
+                  CONTENTS, READONLY
+ 18 .cpu          00000003  00000000  00000000  0000e244  2**0
+                  CONTENTS, READONLY
+ 19 .qsys         00000001  00000000  00000000  0000e247  2**0
+                  CONTENTS, READONLY
+ 20 .simulation_enabled 00000001  00000000  00000000  0000e248  2**0
+                  CONTENTS, READONLY
+ 21 .sysid_hash   00000004  00000000  00000000  0000e249  2**0
+                  CONTENTS, READONLY
+ 22 .sysid_base   00000004  00000000  00000000  0000e24d  2**0
+                  CONTENTS, READONLY
+ 23 .sysid_time   00000004  00000000  00000000  0000e251  2**0
+                  CONTENTS, READONLY
+ 24 .stderr_dev   00000009  00000000  00000000  0000e255  2**0
+                  CONTENTS, READONLY
+ 25 .stdin_dev    00000009  00000000  00000000  0000e25e  2**0
+                  CONTENTS, READONLY
+ 26 .stdout_dev   00000009  00000000  00000000  0000e267  2**0
+                  CONTENTS, READONLY
+ 27 .sopc_system_name 00000007  00000000  00000000  0000e270  2**0
+                  CONTENTS, READONLY
+ 28 .quartus_project_dir 0000002c  00000000  00000000  0000e277  2**0
+                  CONTENTS, READONLY
+ 29 .sopcinfo     0005ec75  00000000  00000000  0000e2a3  2**0
+                  CONTENTS, READONLY
+SYMBOL TABLE:
+00000000 l    d  .entry	00000000 .entry
+00000020 l    d  .exceptions	00000000 .exceptions
+00000020 l    d  .text	00000000 .text
+000018e0 l    d  .rodata	00000000 .rodata
+00001924 l    d  .rwdata	00000000 .rwdata
+00001aec l    d  .bss	00000000 .bss
+00001b00 l    d  .sdram	00000000 .sdram
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_frame	00000000 .debug_frame
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    d  .debug_loc	00000000 .debug_loc
+00000000 l    d  .debug_alt_sim_info	00000000 .debug_alt_sim_info
+00000000 l    d  .debug_ranges	00000000 .debug_ranges
+00000000 l    df *ABS*	00000000 ../SRAM_bsp//obj/HAL/src/crt0.o
+000000a8 l       .text	00000000 alt_after_alt_main
+00000000 l    df *ABS*	00000000 hello_world_small.c
+00000000 l    df *ABS*	00000000 alt_load.c
+00000000 l    df *ABS*	00000000 alt_main.c
+00000000 l    df *ABS*	00000000 alt_putstr.c
+00000000 l    df *ABS*	00000000 alt_sys_init.c
+0000195c l     O .rwdata	0000009c vic_0
+00001924 l     O .rwdata	00000038 i2c_0
+00000000 l    df *ABS*	00000000 altera_avalon_i2c.c
+00000ad4 l     F .text	000000b8 optional_irq_callback
+00000a14 l     F .text	00000078 alt_avalon_i2c_irq
+00000000 l    df *ABS*	00000000 altera_avalon_jtag_uart_write.c
+00000000 l    df *ABS*	00000000 altera_vic_irq_init.c
+00001904 l     O .rodata	00000020 VEC_SIZE_ARRAY.1850
+00000000 l    df *ABS*	00000000 altera_vic_isr_register.c
+00000000 l    df *ABS*	00000000 alt_busy_sleep.c
+00000000 l    df *ABS*	00000000 alt_dcache_flush_all.c
+00000000 l    df *ABS*	00000000 alt_dev_llist_insert.c
+00000000 l    df *ABS*	00000000 alt_errno.c
+00000000 l    df *ABS*	00000000 alt_find_dev.c
+00000000 l    df *ABS*	00000000 alt_icache_flush_all.c
+00000000 l    df *ABS*	00000000 alt_icache_flush.c
+00000000 l    df *ABS*	00000000 int_errno.c
+00000000 l    df *ABS*	00000000 memcmp.c
+00000000 l    df *ABS*	00000000 strlen.c
+00000000 l    df *ABS*	00000000 lib2-divmod.c
+000001a4 g     F .text	0000002c alt_main
+00001a08 g       *ABS*	00000000 __flash_rwdata_start
+00000494 g     F .text	00000080 alt_avalon_i2c_rx_read
+000009b4 g     F .text	00000014 alt_avalon_i2c_enabled_ints_get
+00000374 g     F .text	0000004c alt_avalon_i2c_master_config_speed_get
+0000100c g     F .text	00000170 alt_avalon_i2c_master_transmit_using_interrupts
+000001d0 g     F .text	00000038 alt_putstr
+000019f8 g     O .rwdata	00000004 jtag_uart
+00000000 g     F .entry	0000001c __reset
+00000020 g       *ABS*	00000000 __flash_exceptions_start
+00001afc g     O .bss	00000004 errno
+00001af0 g     O .bss	00000004 alt_argv
+000099f8 g       *ABS*	00000000 _gp
+00000c70 g     F .text	00000018 alt_avalon_i2c_rx_fifo_threshold_get
+0000044c g     F .text	00000010 alt_avalon_i2c_is_busy
+0000031c g     F .text	00000058 alt_avalon_i2c_master_config_set
+000013ac g       .text	00000000 VIC_0_VECTOR_TABLE
+00001628 g     F .text	00000074 alt_find_dev
+000006a0 g     F .text	00000138 alt_avalon_i2c_master_transmit
+00001824 g     F .text	00000064 .hidden __udivsi3
+000016a8 g     F .text	00000038 alt_icache_flush
+00000274 g     F .text	00000048 alt_avalon_i2c_enable
+000009c8 g     F .text	0000004c alt_avalon_i2c_int_disable
+000007d8 g     F .text	000001a8 alt_avalon_i2c_master_receive
+00000a8c g     F .text	00000048 alt_avalon_i2c_int_enable
+00001b00 g       *ABS*	00000000 __bss_end
+00000980 g     F .text	00000018 alt_avalon_i2c_int_status_get
+0000025c g     F .text	00000010 alt_avalon_i2c_register_callback
+00000f5c g     F .text	000000b0 alt_avalon_i2c_init
+000015a4 g     F .text	00000018 alt_dcache_flush_all
+000013ec g       .text	00000000 alt_shadow_non_preemptive_interrupt
+00001a08 g       *ABS*	00000000 __ram_rwdata_end
+00000544 g     F .text	0000001c alt_avalon_i2c_check_arblost
+000009a8 g     F .text	0000000c alt_avalon_i2c_int_clear
+00001924 g       *ABS*	00000000 __ram_rodata_end
+000019fc g     O .rwdata	00000008 alt_avalon_i2c_list
+00001888 g     F .text	00000058 .hidden __umodsi3
+00001b00 g       *ABS*	00000000 end
+0000026c g     F .text	00000008 alt_avalon_i2c_open
+00800000 g       *ABS*	00000000 __alt_stack_pointer
+0000117c g     F .text	000000c4 alt_avalon_i2c_master_tx
+00001378 g     F .text	00000034 altera_avalon_jtag_uart_write
+00000240 g     F .text	0000001c alt_avalon_i2c_register_optional_irq_handler
+00000020 g     F .text	0000008c _start
+00000cb0 g     F .text	00000180 alt_avalon_i2c_master_receive_using_interrupts
+00000c88 g     F .text	00000028 alt_avalon_i2c_rx_fifo_threshold_set
+00000234 g     F .text	0000000c alt_sys_init
+00001240 g     F .text	00000138 alt_avalon_i2c_master_tx_rx
+00001924 g       *ABS*	00000000 __ram_rwdata_start
+000018e0 g       *ABS*	00000000 __ram_rodata_start
+0000152c g     F .text	00000078 alt_busy_sleep
+000016e0 g     F .text	00000030 memcmp
+0000045c g     F .text	00000038 alt_avalon_i2c_rx_read_available
+00001b00 g       *ABS*	00000000 __alt_stack_base
+000015bc g     F .text	0000006c alt_dev_llist_insert
+00000b8c g     F .text	000000e4 alt_avalon_i2c_interrupt_transaction_status
+00000528 g     F .text	0000001c alt_avalon_i2c_check_nack
+00001aec g       *ABS*	00000000 __bss_start
+000000ac g     F .text	00000018 main
+00000520 g     F .text	00000008 alt_avalon_i2c_master_target_set
+00001aec g     O .bss	00000004 alt_envp
+00000998 g     F .text	00000010 alt_avalon_i2c_int_raw_status_get
+00001a04 g     O .rwdata	00000004 alt_errno
+0000172c g     F .text	00000084 .hidden __divsi3
+00001af8 g     O .bss	00000004 alt_vic_dev_list
+000018e0 g       *ABS*	00000000 __flash_rodata_start
+00000208 g     F .text	0000002c alt_irq_init
+00001af4 g     O .bss	00000004 alt_argc
+00000514 g     F .text	0000000c alt_avalon_i2c_master_target_get
+00000628 g     F .text	00000078 alt_avalon_i2c_send_address
+00001404 g     F .text	000000b0 alt_vic_irq_init
+00000020 g       *ABS*	00000000 __ram_exceptions_start
+00000f30 g     F .text	0000002c alt_avalon_i2c_tfr_cmd_fifo_threshold_set
+000014b4 g     F .text	00000078 alt_ic_isr_register
+000002bc g     F .text	0000001c alt_avalon_i2c_disable
+00001a08 g       *ABS*	00000000 _edata
+00001b00 g       *ABS*	00000000 _end
+00000020 g       *ABS*	00000000 __ram_exceptions_end
+000002d8 g     F .text	00000044 alt_avalon_i2c_master_config_get
+000017b0 g     F .text	00000074 .hidden __modsi3
+00800000 g       *ABS*	00000000 __alt_data_end
+00000000 g       *ABS*	00000000 __alt_mem_sdram
+000003c0 g     F .text	0000008c alt_avalon_i2c_master_config_speed_set
+00000560 g     F .text	000000c8 alt_avalon_i2c_cmd_write
+0000001c g       .entry	00000000 _exit
+00001710 g     F .text	0000001c strlen
+0000169c g     F .text	0000000c alt_icache_flush_all
+00000f18 g     F .text	00000018 alt_avalon_i2c_tfr_cmd_fifo_threshold_get
+000000c4 g     F .text	000000e0 alt_load
+00000e30 g     F .text	000000e8 alt_avalon_i2c_master_rx
+
+
+
+Disassembly of section .entry:
+
+00000000 <__reset>:
+#if NIOS2_ICACHE_SIZE > 0 && defined(ALT_ALLOW_CODE_AT_RESET) && (!defined(ALT_SIM_OPTIMIZE) || defined(NIOS2_ECC_PRESENT))
+    /* Assume the instruction cache size is always a power of two. */
+#if NIOS2_ICACHE_SIZE > 0x8000
+    movhi r2, %hi(NIOS2_ICACHE_SIZE)
+#else
+    movui r2, NIOS2_ICACHE_SIZE
+   0:	00840014 	movui	r2,4096
+#endif
+
+0:
+    initi r2
+   4:	1001483a 	initi	r2
+    addi r2, r2, -NIOS2_ICACHE_LINE_SIZE
+   8:	10bff804 	addi	r2,r2,-32
+    bgt r2, zero, 0b
+   c:	00bffd16 	blt	zero,r2,4 <__alt_data_end+0xff800004>
+ * Jump to the _start entry point in the .text section if reset code
+ * is allowed or if optimizing for RTL simulation.
+ */
+#if defined(ALT_ALLOW_CODE_AT_RESET) || defined(ALT_SIM_OPTIMIZE)
+    /* Jump to the _start entry point in the .text section. */
+    movhi r1, %hi(_start)
+  10:	00400034 	movhi	at,0
+    ori r1, r1, %lo(_start)
+  14:	08400814 	ori	at,at,32
+    jmp r1
+  18:	0800683a 	jmp	at
+
+0000001c <_exit>:
+  1c:	00000000 	call	0 <__reset>
+
+Disassembly of section .text:
+
+00000020 <_start>:
+     * writing zero to SSTATUS register and executing an ERET instruction
+     * to set STATUS.CRS to 0.
+     */
+    
+    /* Get the current register set number (STATUS.CRS). */
+    rdctl r2, status
+      20:	0005303a 	rdctl	r2,status
+    andi r2, r2, NIOS2_STATUS_CRS_MSK
+      24:	10bf000c 	andi	r2,r2,64512
+    
+    /* Skip switching register set if STATUS.CRS is 0.  */
+    beq r2, zero, 0f
+      28:	10000426 	beq	r2,zero,3c <_start+0x1c>
+
+    /* Set SSTATUS to 0 to get to set SSTATUS.PRS to 0. */
+    .set nobreak
+    movui sstatus, 0
+      2c:	07800014 	movui	sstatus,0
+    .set break
+
+    /* Switch to register set 0 and jump to label. */
+    movhi ea, %hi(0f)
+      30:	07400034 	movhi	ea,0
+    ori ea, ea, %lo(0f)
+      34:	ef400f14 	ori	ea,ea,60
+    eret
+      38:	ef80083a 	eret
+
+    /* Assume the data cache size is always a power of two. */
+#if NIOS2_DCACHE_SIZE > 0x8000
+    movhi r2, %hi(NIOS2_DCACHE_SIZE)
+#else
+    movui r2, NIOS2_DCACHE_SIZE
+      3c:	00820014 	movui	r2,2048
+#endif
+
+0:
+    initd 0(r2)
+      40:	10000033 	initd	0(r2)
+#ifdef NIOS2_ECC_PRESENT
+    addi r2, r2, -4
+#else
+    addi r2, r2, -NIOS2_DCACHE_LINE_SIZE
+      44:	10bff804 	addi	r2,r2,-32
+#endif
+    bgt r2, zero, 0b
+      48:	00bffd16 	blt	zero,r2,40 <__alt_data_end+0xff800040>
+
+    /*
+     * Now that the caches are initialized, set up the stack pointer and global pointer.
+     * The values provided by the linker are assumed to be correctly aligned.
+     */
+    movhi sp, %hi(__alt_stack_pointer)
+      4c:	06c02034 	movhi	sp,128
+    ori sp, sp, %lo(__alt_stack_pointer)
+      50:	dec00014 	ori	sp,sp,0
+    movhi gp, %hi(_gp)
+      54:	06800034 	movhi	gp,0
+    ori gp, gp, %lo(_gp)
+      58:	d6a67e14 	ori	gp,gp,39416
+    /* 
+     * Setup registers in shadow register sets
+     * from 1 to NIOS2_NUM_OF_SHADOW_REG_SETS.
+     */
+
+    movui r2, 0     /* Contains value written into STATUS */
+      5c:	00800014 	movui	r2,0
+    movui r3, NIOS2_NUM_OF_SHADOW_REG_SETS  /* counter */
+      60:	00c00114 	movui	r3,4
+    movhi r4, 1     /* Constant to increment STATUS.PRS */
+      64:	01000074 	movhi	r4,1
+    
+.Linitialize_shadow_registers:
+    /* Increment STATUS.PRS */
+    add r2, r2, r4
+      68:	1105883a 	add	r2,r2,r4
+    wrctl status, r2
+      6c:	1001703a 	wrctl	status,r2
+
+    /* Clear r0 in the shadow register set (not done by hardware) */
+    wrprs r0, r0
+      70:	0000a03a 	wrprs	zero,zero
+
+    /* Write the GP in previous register set */
+    wrprs gp, gp
+      74:	d034a03a 	wrprs	gp,gp
+    wrprs r30, r0    /* ba */
+    wrprs r31, r0    /* ra */
+#endif /* NIOS2_ECC_PRESENT */
+
+    /* Decrement shadow register set counter */
+    addi r3, r3, -1
+      78:	18ffffc4 	addi	r3,r3,-1
+
+    /* Done if index is 0. */
+    bne r3, zero, .Linitialize_shadow_registers
+      7c:	183ffa1e 	bne	r3,zero,68 <__alt_data_end+0xff800068>
+ */
+#ifndef ALT_SIM_OPTIMIZE
+    /* Log that the BSS is about to be cleared. */
+    ALT_LOG_PUTS(alt_log_msg_bss)
+
+    movhi r2, %hi(__bss_start)
+      80:	00800034 	movhi	r2,0
+    ori r2, r2, %lo(__bss_start)
+      84:	1086bb14 	ori	r2,r2,6892
+
+    movhi r3, %hi(__bss_end)
+      88:	00c00034 	movhi	r3,0
+    ori r3, r3, %lo(__bss_end)
+      8c:	18c6c014 	ori	r3,r3,6912
+
+    beq r2, r3, 1f
+      90:	10c00326 	beq	r2,r3,a0 <_start+0x80>
+
+0:
+    stw zero, (r2)
+      94:	10000015 	stw	zero,0(r2)
+    addi r2, r2, 4
+      98:	10800104 	addi	r2,r2,4
+    bltu r2, r3, 0b
+      9c:	10fffd36 	bltu	r2,r3,94 <__alt_data_end+0xff800094>
+     * section aren't defined until alt_load() has been called).
+     */
+    mov   et, zero
+#endif
+
+    call alt_load
+      a0:	00000c40 	call	c4 <alt_load>
+
+    /* Log that alt_main is about to be called. */
+    ALT_LOG_PUTS(alt_log_msg_alt_main)
+
+    /* Call the C entry point. It should never return. */
+    call alt_main
+      a4:	00001a40 	call	1a4 <alt_main>
+
+000000a8 <alt_after_alt_main>:
+
+    /* Wait in infinite loop in case alt_main does return. */
+alt_after_alt_main:
+    br alt_after_alt_main
+      a8:	003fff06 	br	a8 <__alt_data_end+0xff8000a8>
+
+000000ac <main>:
+
+#include "sys/alt_stdio.h"
+
+int main()
+{ 
+  alt_putstr("Hello from Nios II!\n");
+      ac:	01000034 	movhi	r4,0
+ */
+
+#include "sys/alt_stdio.h"
+
+int main()
+{ 
+      b0:	deffff04 	addi	sp,sp,-4
+  alt_putstr("Hello from Nios II!\n");
+      b4:	21063804 	addi	r4,r4,6368
+ */
+
+#include "sys/alt_stdio.h"
+
+int main()
+{ 
+      b8:	dfc00015 	stw	ra,0(sp)
+  alt_putstr("Hello from Nios II!\n");
+      bc:	00001d00 	call	1d0 <alt_putstr>
+      c0:	003fff06 	br	c0 <__alt_data_end+0xff8000c0>
+
+000000c4 <alt_load>:
+ * there is no bootloader, so this application is responsible for loading to
+ * RAM any sections that are required.
+ */  
+
+void alt_load (void)
+{
+      c4:	deffff04 	addi	sp,sp,-4
+      c8:	01000034 	movhi	r4,0
+      cc:	01400034 	movhi	r5,0
+      d0:	dfc00015 	stw	ra,0(sp)
+      d4:	21064904 	addi	r4,r4,6436
+      d8:	29468204 	addi	r5,r5,6664
+
+static void ALT_INLINE alt_load_section (alt_u32* from, 
+                                         alt_u32* to, 
+                                         alt_u32* end)
+{
+  if (to != from)
+      dc:	2140061e 	bne	r4,r5,f8 <alt_load+0x34>
+      e0:	01000034 	movhi	r4,0
+      e4:	01400034 	movhi	r5,0
+      e8:	21000804 	addi	r4,r4,32
+      ec:	29400804 	addi	r5,r5,32
+      f0:	2140121e 	bne	r4,r5,13c <alt_load+0x78>
+      f4:	00000b06 	br	124 <alt_load+0x60>
+      f8:	00c00034 	movhi	r3,0
+      fc:	18c68204 	addi	r3,r3,6664
+     100:	1907c83a 	sub	r3,r3,r4
+     104:	0005883a 	mov	r2,zero
+  {
+    while( to != end )
+     108:	10fff526 	beq	r2,r3,e0 <__alt_data_end+0xff8000e0>
+    {
+      *to++ = *from++;
+     10c:	114f883a 	add	r7,r2,r5
+     110:	39c00017 	ldw	r7,0(r7)
+     114:	110d883a 	add	r6,r2,r4
+     118:	10800104 	addi	r2,r2,4
+     11c:	31c00015 	stw	r7,0(r6)
+     120:	003ff906 	br	108 <__alt_data_end+0xff800108>
+     124:	01000034 	movhi	r4,0
+     128:	01400034 	movhi	r5,0
+     12c:	21063804 	addi	r4,r4,6368
+     130:	29463804 	addi	r5,r5,6368
+
+static void ALT_INLINE alt_load_section (alt_u32* from, 
+                                         alt_u32* to, 
+                                         alt_u32* end)
+{
+  if (to != from)
+     134:	2140101e 	bne	r4,r5,178 <alt_load+0xb4>
+     138:	00000b06 	br	168 <alt_load+0xa4>
+     13c:	00c00034 	movhi	r3,0
+     140:	18c00804 	addi	r3,r3,32
+     144:	1907c83a 	sub	r3,r3,r4
+     148:	0005883a 	mov	r2,zero
+  {
+    while( to != end )
+     14c:	10fff526 	beq	r2,r3,124 <__alt_data_end+0xff800124>
+    {
+      *to++ = *from++;
+     150:	114f883a 	add	r7,r2,r5
+     154:	39c00017 	ldw	r7,0(r7)
+     158:	110d883a 	add	r6,r2,r4
+     15c:	10800104 	addi	r2,r2,4
+     160:	31c00015 	stw	r7,0(r6)
+     164:	003ff906 	br	14c <__alt_data_end+0xff80014c>
+  
+  /*
+   * Now ensure that the caches are in synch.
+   */
+  
+  alt_dcache_flush_all();
+     168:	00015a40 	call	15a4 <alt_dcache_flush_all>
+  alt_icache_flush_all();
+}
+     16c:	dfc00017 	ldw	ra,0(sp)
+     170:	dec00104 	addi	sp,sp,4
+  /*
+   * Now ensure that the caches are in synch.
+   */
+  
+  alt_dcache_flush_all();
+  alt_icache_flush_all();
+     174:	000169c1 	jmpi	169c <alt_icache_flush_all>
+     178:	00c00034 	movhi	r3,0
+     17c:	18c64904 	addi	r3,r3,6436
+     180:	1907c83a 	sub	r3,r3,r4
+
+static void ALT_INLINE alt_load_section (alt_u32* from, 
+                                         alt_u32* to, 
+                                         alt_u32* end)
+{
+  if (to != from)
+     184:	0005883a 	mov	r2,zero
+  {
+    while( to != end )
+     188:	18bff726 	beq	r3,r2,168 <__alt_data_end+0xff800168>
+    {
+      *to++ = *from++;
+     18c:	114f883a 	add	r7,r2,r5
+     190:	39c00017 	ldw	r7,0(r7)
+     194:	110d883a 	add	r6,r2,r4
+     198:	10800104 	addi	r2,r2,4
+     19c:	31c00015 	stw	r7,0(r6)
+     1a0:	003ff906 	br	188 <__alt_data_end+0xff800188>
+
+000001a4 <alt_main>:
+ * devices/filesystems/components in the system; and call the entry point for
+ * the users application, i.e. main().
+ */
+
+void alt_main (void)
+{
+     1a4:	deffff04 	addi	sp,sp,-4
+#endif
+
+  /* ALT LOG - please see HAL/sys/alt_log_printf.h for details */
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Entering alt_main, calling alt_irq_init.\r\n");
+  /* Initialize the interrupt controller. */
+  alt_irq_init (NULL);
+     1a8:	0009883a 	mov	r4,zero
+ * devices/filesystems/components in the system; and call the entry point for
+ * the users application, i.e. main().
+ */
+
+void alt_main (void)
+{
+     1ac:	dfc00015 	stw	ra,0(sp)
+#endif
+
+  /* ALT LOG - please see HAL/sys/alt_log_printf.h for details */
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Entering alt_main, calling alt_irq_init.\r\n");
+  /* Initialize the interrupt controller. */
+  alt_irq_init (NULL);
+     1b0:	00002080 	call	208 <alt_irq_init>
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Done OS Init, calling alt_sem_create.\r\n");
+  ALT_SEM_CREATE (&alt_fd_list_lock, 1);
+
+  /* Initialize the device drivers/software components. */
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Calling alt_sys_init.\r\n");
+  alt_sys_init();
+     1b4:	00002340 	call	234 <alt_sys_init>
+   */
+
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Calling main.\r\n");
+
+#ifdef ALT_NO_EXIT
+  main (alt_argc, alt_argv, alt_envp);
+     1b8:	d1a03d17 	ldw	r6,-32524(gp)
+     1bc:	d1603e17 	ldw	r5,-32520(gp)
+     1c0:	d1203f17 	ldw	r4,-32516(gp)
+  close(STDOUT_FILENO);
+  exit (result);
+#endif
+
+  ALT_LOG_PRINT_BOOT("[alt_main.c] After main - we should not be here?.\r\n");
+}
+     1c4:	dfc00017 	ldw	ra,0(sp)
+     1c8:	dec00104 	addi	sp,sp,4
+   */
+
+  ALT_LOG_PRINT_BOOT("[alt_main.c] Calling main.\r\n");
+
+#ifdef ALT_NO_EXIT
+  main (alt_argc, alt_argv, alt_envp);
+     1cc:	00000ac1 	jmpi	ac <main>
+
+000001d0 <alt_putstr>:
+ * Uses the ALT_DRIVER_WRITE() macro to call directly to driver if available.
+ * Otherwise, uses newlib provided fputs() routine.
+ */
+int 
+alt_putstr(const char* str)
+{
+     1d0:	defffe04 	addi	sp,sp,-8
+     1d4:	dc000015 	stw	r16,0(sp)
+     1d8:	dfc00115 	stw	ra,4(sp)
+     1dc:	2021883a 	mov	r16,r4
+#ifdef ALT_SEMIHOSTING
+    return write(STDOUT_FILENO,str,strlen(str));
+#else
+#ifdef ALT_USE_DIRECT_DRIVERS
+    ALT_DRIVER_WRITE_EXTERNS(ALT_STDOUT_DEV);
+    return ALT_DRIVER_WRITE(ALT_STDOUT_DEV, str, strlen(str), 0);
+     1e0:	00017100 	call	1710 <strlen>
+     1e4:	01000034 	movhi	r4,0
+     1e8:	000f883a 	mov	r7,zero
+     1ec:	100d883a 	mov	r6,r2
+     1f0:	800b883a 	mov	r5,r16
+     1f4:	21067e04 	addi	r4,r4,6648
+#else
+    return fputs(str, stdout);
+#endif
+#endif
+}
+     1f8:	dfc00117 	ldw	ra,4(sp)
+     1fc:	dc000017 	ldw	r16,0(sp)
+     200:	dec00204 	addi	sp,sp,8
+#ifdef ALT_SEMIHOSTING
+    return write(STDOUT_FILENO,str,strlen(str));
+#else
+#ifdef ALT_USE_DIRECT_DRIVERS
+    ALT_DRIVER_WRITE_EXTERNS(ALT_STDOUT_DEV);
+    return ALT_DRIVER_WRITE(ALT_STDOUT_DEV, str, strlen(str), 0);
+     204:	00013781 	jmpi	1378 <altera_avalon_jtag_uart_write>
+
+00000208 <alt_irq_init>:
+ * present for backwards-compatibility.
+ */
+
+void alt_irq_init ( const void* base )
+{
+    ALTERA_VIC_IRQ_INIT ( VIC_0, vic_0);
+     208:	01000034 	movhi	r4,0
+ * The "base" parameter is ignored and only
+ * present for backwards-compatibility.
+ */
+
+void alt_irq_init ( const void* base )
+{
+     20c:	deffff04 	addi	sp,sp,-4
+    ALTERA_VIC_IRQ_INIT ( VIC_0, vic_0);
+     210:	21065704 	addi	r4,r4,6492
+ * The "base" parameter is ignored and only
+ * present for backwards-compatibility.
+ */
+
+void alt_irq_init ( const void* base )
+{
+     214:	dfc00015 	stw	ra,0(sp)
+    ALTERA_VIC_IRQ_INIT ( VIC_0, vic_0);
+     218:	00014040 	call	1404 <alt_vic_irq_init>
+ * alt_irq_cpu_enable_interrupts() enables the CPU to start taking interrupts.
+ */
+static ALT_INLINE void ALT_ALWAYS_INLINE 
+       alt_irq_cpu_enable_interrupts (void)
+{
+    NIOS2_WRITE_STATUS(NIOS2_STATUS_PIE_MSK
+     21c:	00802034 	movhi	r2,128
+     220:	10800044 	addi	r2,r2,1
+     224:	1001703a 	wrctl	status,r2
+    alt_irq_cpu_enable_interrupts();
+}
+     228:	dfc00017 	ldw	ra,0(sp)
+     22c:	dec00104 	addi	sp,sp,4
+     230:	f800283a 	ret
+
+00000234 <alt_sys_init>:
+ * Called after alt_irq_init().
+ */
+
+void alt_sys_init( void )
+{
+    ALTERA_AVALON_I2C_INIT ( I2C_0, i2c_0);
+     234:	01000034 	movhi	r4,0
+     238:	21064904 	addi	r4,r4,6436
+     23c:	0000f5c1 	jmpi	f5c <alt_avalon_i2c_init>
+
+00000240 <alt_avalon_i2c_register_optional_irq_handler>:
+    ALT_AVALON_I2C_DEV_t *dev,
+    alt_avalon_i2c_callback callback,
+    alt_u32 control,
+    void *context)
+{
+    dev->callback         = callback;
+     240:	00800034 	movhi	r2,0
+    irq->irq_busy=0;
+}
+
+void alt_avalon_i2c_register_optional_irq_handler(ALT_AVALON_I2C_DEV_t *i2c_dev,IRQ_DATA_t * irq_data)
+{
+   irq_data->irq_busy=0;
+     244:	28000215 	stw	zero,8(r5)
+    ALT_AVALON_I2C_DEV_t *dev,
+    alt_avalon_i2c_callback callback,
+    alt_u32 control,
+    void *context)
+{
+    dev->callback         = callback;
+     248:	1082b504 	addi	r2,r2,2772
+     24c:	20800615 	stw	r2,24(r4)
+    dev->callback_context = context;
+     250:	21400715 	stw	r5,28(r4)
+    dev->control          = control;
+     254:	20000815 	stw	zero,32(r4)
+     258:	f800283a 	ret
+
+0000025c <alt_avalon_i2c_register_callback>:
+    ALT_AVALON_I2C_DEV_t *dev,
+    alt_avalon_i2c_callback callback,
+    alt_u32 control,
+    void *context)
+{
+    dev->callback         = callback;
+     25c:	21400615 	stw	r5,24(r4)
+    dev->callback_context = context;
+     260:	21c00715 	stw	r7,28(r4)
+    dev->control          = control;
+     264:	21800815 	stw	r6,32(r4)
+     268:	f800283a 	ret
+
+0000026c <alt_avalon_i2c_open>:
+/*  Retrieve a pointer to the i2c instance */
+ALT_AVALON_I2C_DEV_t* alt_avalon_i2c_open(const char* name)
+{
+    ALT_AVALON_I2C_DEV_t* dev = NULL;
+
+    dev = (ALT_AVALON_I2C_DEV_t*) alt_find_dev (name, &alt_avalon_i2c_list);
+     26c:	d1600104 	addi	r5,gp,-32764
+     270:	00016281 	jmpi	1628 <alt_find_dev>
+
+00000274 <alt_avalon_i2c_enable>:
+}
+
+/* enable the avalon i2c ip */
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_enable(ALT_AVALON_I2C_DEV_t *i2c_dev)
+{
+   IRQ_DATA_t *irq_data = i2c_dev->callback_context;
+     274:	21400717 	ldw	r5,28(r4)
+   alt_u32 enable_status;
+       
+   /*if the ip is already enabled, return a busy status*/
+   enable_status = (IORD_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base) & ALT_AVALON_I2C_CTRL_EN_MSK) >> ALT_AVALON_I2C_CTRL_EN_OFST;
+     278:	20800317 	ldw	r2,12(r4)
+     27c:	10c00237 	ldwio	r3,8(r2)
+   if (enable_status)
+     280:	18c0004c 	andi	r3,r3,1
+     284:	18000b1e 	bne	r3,zero,2b4 <alt_avalon_i2c_enable+0x40>
+   {
+     return ALT_AVALON_I2C_BUSY;
+   }
+   
+   /*if the optional irq callback is registered ensure irq_busy is 0*/
+   if (i2c_dev->callback == optional_irq_callback)
+     288:	21000617 	ldw	r4,24(r4)
+     28c:	00c00034 	movhi	r3,0
+     290:	18c2b504 	addi	r3,r3,2772
+     294:	20c0011e 	bne	r4,r3,29c <alt_avalon_i2c_enable+0x28>
+   {
+     irq_data->irq_busy=0;
+     298:	28000215 	stw	zero,8(r5)
+   }
+   
+   /* enable ip */
+   IORMW_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base,ALT_AVALON_I2C_CTRL_EN_MSK,ALT_AVALON_I2C_CTRL_EN_MSK);
+     29c:	10800204 	addi	r2,r2,8
+     2a0:	10c00037 	ldwio	r3,0(r2)
+     2a4:	18c00054 	ori	r3,r3,1
+     2a8:	10c00035 	stwio	r3,0(r2)
+     2ac:	0005883a 	mov	r2,zero
+     2b0:	f800283a 	ret
+       
+   /*if the ip is already enabled, return a busy status*/
+   enable_status = (IORD_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base) & ALT_AVALON_I2C_CTRL_EN_MSK) >> ALT_AVALON_I2C_CTRL_EN_OFST;
+   if (enable_status)
+   {
+     return ALT_AVALON_I2C_BUSY;
+     2b4:	00bffe44 	movi	r2,-7
+   
+   /* enable ip */
+   IORMW_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base,ALT_AVALON_I2C_CTRL_EN_MSK,ALT_AVALON_I2C_CTRL_EN_MSK);
+
+   return ALT_AVALON_I2C_SUCCESS;
+}
+     2b8:	f800283a 	ret
+
+000002bc <alt_avalon_i2c_disable>:
+
+/* disable the avalon i2c ip */
+void alt_avalon_i2c_disable(ALT_AVALON_I2C_DEV_t *i2c_dev)
+{
+   /* disable ip */
+   IORMW_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base,0,ALT_AVALON_I2C_CTRL_EN_MSK);
+     2bc:	20800317 	ldw	r2,12(r4)
+     2c0:	10800204 	addi	r2,r2,8
+     2c4:	11000037 	ldwio	r4,0(r2)
+     2c8:	00ffff84 	movi	r3,-2
+     2cc:	20c6703a 	and	r3,r4,r3
+     2d0:	10c00035 	stwio	r3,0(r2)
+     2d4:	f800283a 	ret
+
+000002d8 <alt_avalon_i2c_master_config_get>:
+/* populate the the master config structure from the register values */
+void alt_avalon_i2c_master_config_get(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                          ALT_AVALON_I2C_MASTER_CONFIG_t* cfg)
+{
+
+    cfg->addr_mode = i2c_dev->address_mode;
+     2d8:	20800d17 	ldw	r2,52(r4)
+     2dc:	28800015 	stw	r2,0(r5)
+    cfg->speed_mode = (IORD_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base) & ALT_AVALON_I2C_CTRL_BUS_SPEED_MSK) >> ALT_AVALON_I2C_CTRL_BUS_SPEED_OFST;    
+     2e0:	20800317 	ldw	r2,12(r4)
+     2e4:	10800237 	ldwio	r2,8(r2)
+     2e8:	1080008c 	andi	r2,r2,2
+     2ec:	1005d07a 	srai	r2,r2,1
+     2f0:	28800115 	stw	r2,4(r5)
+
+    cfg->scl_hcnt = (IORD_ALT_AVALON_I2C_SCL_HIGH(i2c_dev->i2c_base) & ALT_AVALON_I2C_SCL_HIGH_COUNT_PERIOD_MSK) >> ALT_AVALON_I2C_SCL_HIGH_COUNT_PERIOD_OFST;    
+     2f4:	20800317 	ldw	r2,12(r4)
+     2f8:	10800937 	ldwio	r2,36(r2)
+     2fc:	2880020d 	sth	r2,8(r5)
+    cfg->scl_lcnt = (IORD_ALT_AVALON_I2C_SCL_LOW(i2c_dev->i2c_base) & ALT_AVALON_I2C_SCL_LOW_COUNT_PERIOD_MSK) >> ALT_AVALON_I2C_SCL_LOW_COUNT_PERIOD_OFST;    
+     300:	20800317 	ldw	r2,12(r4)
+     304:	10800837 	ldwio	r2,32(r2)
+     308:	2880028d 	sth	r2,10(r5)
+    cfg->sda_cnt = (IORD_ALT_AVALON_I2C_SDA_HOLD(i2c_dev->i2c_base) & ALT_AVALON_I2C_SDA_HOLD_COUNT_PERIOD_MSK) >> ALT_AVALON_I2C_SDA_HOLD_COUNT_PERIOD_OFST;    
+     30c:	20800317 	ldw	r2,12(r4)
+     310:	10800a37 	ldwio	r2,40(r2)
+     314:	2880030d 	sth	r2,12(r5)
+     318:	f800283a 	ret
+
+0000031c <alt_avalon_i2c_master_config_set>:
+/* set the registers from the master config structure */
+void alt_avalon_i2c_master_config_set(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                          const ALT_AVALON_I2C_MASTER_CONFIG_t* cfg)
+{
+    i2c_dev->address_mode   =   cfg->addr_mode;
+    IORMW_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base,(cfg->speed_mode) << ALT_AVALON_I2C_CTRL_BUS_SPEED_OFST,ALT_AVALON_I2C_CTRL_BUS_SPEED_MSK);
+     31c:	21800317 	ldw	r6,12(r4)
+
+/* set the registers from the master config structure */
+void alt_avalon_i2c_master_config_set(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                          const ALT_AVALON_I2C_MASTER_CONFIG_t* cfg)
+{
+    i2c_dev->address_mode   =   cfg->addr_mode;
+     320:	28800017 	ldw	r2,0(r5)
+    IORMW_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base,(cfg->speed_mode) << ALT_AVALON_I2C_CTRL_BUS_SPEED_OFST,ALT_AVALON_I2C_CTRL_BUS_SPEED_MSK);
+     324:	31800204 	addi	r6,r6,8
+
+/* set the registers from the master config structure */
+void alt_avalon_i2c_master_config_set(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                          const ALT_AVALON_I2C_MASTER_CONFIG_t* cfg)
+{
+    i2c_dev->address_mode   =   cfg->addr_mode;
+     328:	20800d15 	stw	r2,52(r4)
+    IORMW_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base,(cfg->speed_mode) << ALT_AVALON_I2C_CTRL_BUS_SPEED_OFST,ALT_AVALON_I2C_CTRL_BUS_SPEED_MSK);
+     32c:	31c00037 	ldwio	r7,0(r6)
+     330:	00ffff44 	movi	r3,-3
+     334:	28800117 	ldw	r2,4(r5)
+     338:	38c6703a 	and	r3,r7,r3
+     33c:	1085883a 	add	r2,r2,r2
+     340:	1080008c 	andi	r2,r2,2
+     344:	10c4b03a 	or	r2,r2,r3
+     348:	30800035 	stwio	r2,0(r6)
+
+    IOWR_ALT_AVALON_I2C_SCL_HIGH(i2c_dev->i2c_base,cfg->scl_hcnt);
+     34c:	20800317 	ldw	r2,12(r4)
+     350:	28c0020b 	ldhu	r3,8(r5)
+     354:	10c00935 	stwio	r3,36(r2)
+    IOWR_ALT_AVALON_I2C_SCL_LOW(i2c_dev->i2c_base,cfg->scl_lcnt);
+     358:	20800317 	ldw	r2,12(r4)
+     35c:	28c0028b 	ldhu	r3,10(r5)
+     360:	10c00835 	stwio	r3,32(r2)
+    IOWR_ALT_AVALON_I2C_SDA_HOLD(i2c_dev->i2c_base,cfg->sda_cnt);
+     364:	20800317 	ldw	r2,12(r4)
+     368:	28c0030b 	ldhu	r3,12(r5)
+     36c:	10c00a35 	stwio	r3,40(r2)
+     370:	f800283a 	ret
+
+00000374 <alt_avalon_i2c_master_config_speed_get>:
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_config_speed_get(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                                const ALT_AVALON_I2C_MASTER_CONFIG_t* cfg,
+                                                alt_u32 * speed_in_hz)
+{
+
+   if ((cfg->scl_lcnt == 0) || (cfg->scl_hcnt == 0))
+     374:	28c0028b 	ldhu	r3,10(r5)
+     378:	18000f26 	beq	r3,zero,3b8 <alt_avalon_i2c_master_config_speed_get+0x44>
+     37c:	2940020b 	ldhu	r5,8(r5)
+     380:	28000d26 	beq	r5,zero,3b8 <alt_avalon_i2c_master_config_speed_get+0x44>
+   {
+       return ALT_AVALON_I2C_BAD_ARG;
+   }
+    
+   *speed_in_hz = (i2c_dev->ip_freq_in_hz) / (cfg->scl_lcnt + cfg->scl_hcnt);
+     384:	21000c17 	ldw	r4,48(r4)
+ * I2C master configuration.
+*/
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_config_speed_get(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                                const ALT_AVALON_I2C_MASTER_CONFIG_t* cfg,
+                                                alt_u32 * speed_in_hz)
+{
+     388:	defffe04 	addi	sp,sp,-8
+   if ((cfg->scl_lcnt == 0) || (cfg->scl_hcnt == 0))
+   {
+       return ALT_AVALON_I2C_BAD_ARG;
+   }
+    
+   *speed_in_hz = (i2c_dev->ip_freq_in_hz) / (cfg->scl_lcnt + cfg->scl_hcnt);
+     38c:	194b883a 	add	r5,r3,r5
+ * I2C master configuration.
+*/
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_config_speed_get(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                                const ALT_AVALON_I2C_MASTER_CONFIG_t* cfg,
+                                                alt_u32 * speed_in_hz)
+{
+     390:	dc000015 	stw	r16,0(sp)
+     394:	dfc00115 	stw	ra,4(sp)
+     398:	3021883a 	mov	r16,r6
+   if ((cfg->scl_lcnt == 0) || (cfg->scl_hcnt == 0))
+   {
+       return ALT_AVALON_I2C_BAD_ARG;
+   }
+    
+   *speed_in_hz = (i2c_dev->ip_freq_in_hz) / (cfg->scl_lcnt + cfg->scl_hcnt);
+     39c:	00018240 	call	1824 <__udivsi3>
+     3a0:	80800015 	stw	r2,0(r16)
+
+   return ALT_AVALON_I2C_SUCCESS;
+     3a4:	0005883a 	mov	r2,zero
+}
+     3a8:	dfc00117 	ldw	ra,4(sp)
+     3ac:	dc000017 	ldw	r16,0(sp)
+     3b0:	dec00204 	addi	sp,sp,8
+     3b4:	f800283a 	ret
+                                                alt_u32 * speed_in_hz)
+{
+
+   if ((cfg->scl_lcnt == 0) || (cfg->scl_hcnt == 0))
+   {
+       return ALT_AVALON_I2C_BAD_ARG;
+     3b8:	00bfff44 	movi	r2,-3
+     3bc:	f800283a 	ret
+
+000003c0 <alt_avalon_i2c_master_config_speed_set>:
+                                                alt_u32 speed_in_hz)
+{
+    alt_u32 scl_lcnt,scl_hcnt;
+
+    /* If speed is not standard or fast return range error */
+    if ((speed_in_hz > ALT_AVALON_I2C_FS_MAX_HZ) || (speed_in_hz < ALT_AVALON_I2C_SS_MIN_HZ) || (speed_in_hz == 0))
+     3c0:	00c001b4 	movhi	r3,6
+     3c4:	30bfffc4 	addi	r2,r6,-1
+     3c8:	18c69fc4 	addi	r3,r3,6783
+     3cc:	18801d36 	bltu	r3,r2,444 <alt_avalon_i2c_master_config_speed_set+0x84>
+    {
+        return ALT_AVALON_I2C_RANGE;
+    }
+
+     /* <lcount> = <internal clock> / 2 * <speed, Hz> */
+    scl_lcnt = (i2c_dev->ip_freq_in_hz) / (speed_in_hz << 1);
+     3d0:	21000c17 	ldw	r4,48(r4)
+/*This is a utility function that computes parameters for the I2C master
+ * configuration that best matches the speed requested. */
+ ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_config_speed_set(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                                ALT_AVALON_I2C_MASTER_CONFIG_t * cfg,
+                                                alt_u32 speed_in_hz)
+{
+     3d4:	defffd04 	addi	sp,sp,-12
+     3d8:	dc000015 	stw	r16,0(sp)
+     3dc:	2821883a 	mov	r16,r5
+    {
+        return ALT_AVALON_I2C_RANGE;
+    }
+
+     /* <lcount> = <internal clock> / 2 * <speed, Hz> */
+    scl_lcnt = (i2c_dev->ip_freq_in_hz) / (speed_in_hz << 1);
+     3e0:	318b883a 	add	r5,r6,r6
+/*This is a utility function that computes parameters for the I2C master
+ * configuration that best matches the speed requested. */
+ ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_config_speed_set(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                                ALT_AVALON_I2C_MASTER_CONFIG_t * cfg,
+                                                alt_u32 speed_in_hz)
+{
+     3e4:	dc400115 	stw	r17,4(sp)
+     3e8:	dfc00215 	stw	ra,8(sp)
+     3ec:	3023883a 	mov	r17,r6
+    {
+        return ALT_AVALON_I2C_RANGE;
+    }
+
+     /* <lcount> = <internal clock> / 2 * <speed, Hz> */
+    scl_lcnt = (i2c_dev->ip_freq_in_hz) / (speed_in_hz << 1);
+     3f0:	00018240 	call	1824 <__udivsi3>
+
+    /* adjust h/l by predetermined amount */
+    scl_hcnt = scl_lcnt + ALT_AVALON_I2C_DIFF_LCNT_HCNT;
+    scl_lcnt = scl_lcnt - ALT_AVALON_I2C_DIFF_LCNT_HCNT;
+
+    if (speed_in_hz > ALT_AVALON_I2C_FS_MIN_HZ)
+     3f4:	010000b4 	movhi	r4,2
+     3f8:	2121a804 	addi	r4,r4,-31072
+
+     /* <lcount> = <internal clock> / 2 * <speed, Hz> */
+    scl_lcnt = (i2c_dev->ip_freq_in_hz) / (speed_in_hz << 1);
+
+    /* adjust h/l by predetermined amount */
+    scl_hcnt = scl_lcnt + ALT_AVALON_I2C_DIFF_LCNT_HCNT;
+     3fc:	10c00f04 	addi	r3,r2,60
+    scl_lcnt = scl_lcnt - ALT_AVALON_I2C_DIFF_LCNT_HCNT;
+     400:	10bff104 	addi	r2,r2,-60
+
+    if (speed_in_hz > ALT_AVALON_I2C_FS_MIN_HZ)
+     404:	2440032e 	bgeu	r4,r17,414 <alt_avalon_i2c_master_config_speed_set+0x54>
+    {
+       cfg->speed_mode = ALT_AVALON_I2C_SPEED_FAST;
+     408:	01000044 	movi	r4,1
+     40c:	81000115 	stw	r4,4(r16)
+     410:	00000106 	br	418 <alt_avalon_i2c_master_config_speed_set+0x58>
+    }
+    else 
+    {
+       cfg->speed_mode = ALT_AVALON_I2C_SPEED_STANDARD;    
+     414:	80000115 	stw	zero,4(r16)
+    }
+
+    cfg->scl_lcnt = scl_lcnt;
+    cfg->scl_hcnt = scl_hcnt;
+     418:	80c0020d 	sth	r3,8(r16)
+    cfg->sda_cnt  = scl_lcnt - (scl_lcnt / 2);
+     41c:	1006d07a 	srli	r3,r2,1
+    else 
+    {
+       cfg->speed_mode = ALT_AVALON_I2C_SPEED_STANDARD;    
+    }
+
+    cfg->scl_lcnt = scl_lcnt;
+     420:	8080028d 	sth	r2,10(r16)
+    cfg->scl_hcnt = scl_hcnt;
+    cfg->sda_cnt  = scl_lcnt - (scl_lcnt / 2);
+     424:	10c5c83a 	sub	r2,r2,r3
+     428:	8080030d 	sth	r2,12(r16)
+     42c:	0005883a 	mov	r2,zero
+
+    return ALT_AVALON_I2C_SUCCESS;
+
+}
+     430:	dfc00217 	ldw	ra,8(sp)
+     434:	dc400117 	ldw	r17,4(sp)
+     438:	dc000017 	ldw	r16,0(sp)
+     43c:	dec00304 	addi	sp,sp,12
+     440:	f800283a 	ret
+    alt_u32 scl_lcnt,scl_hcnt;
+
+    /* If speed is not standard or fast return range error */
+    if ((speed_in_hz > ALT_AVALON_I2C_FS_MAX_HZ) || (speed_in_hz < ALT_AVALON_I2C_SS_MIN_HZ) || (speed_in_hz == 0))
+    {
+        return ALT_AVALON_I2C_RANGE;
+     444:	00bfff04 	movi	r2,-4
+     448:	f800283a 	ret
+
+0000044c <alt_avalon_i2c_is_busy>:
+/*Returns ALT_AVALON_I2C_TRUE if the I2C controller is busy. The I2C controller is busy if
+ * not in the IDLE state */
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_is_busy(ALT_AVALON_I2C_DEV_t *i2c_dev)
+{
+
+    if (IORD_ALT_AVALON_I2C_STATUS(i2c_dev->i2c_base) & ALT_AVALON_I2C_STATUS_CORE_STATUS_MSK)
+     44c:	20800317 	ldw	r2,12(r4)
+     450:	10800537 	ldwio	r2,20(r2)
+    {
+       return ALT_AVALON_I2C_TRUE;
+    }
+
+    return ALT_AVALON_I2C_FALSE;
+}
+     454:	1080004c 	andi	r2,r2,1
+     458:	f800283a 	ret
+
+0000045c <alt_avalon_i2c_rx_read_available>:
+
+/*Read all available bytes from the receive FIFO up to max_bytes_to_read.  If max_bytes_to_read = 0 then read all available */
+void alt_avalon_i2c_rx_read_available(ALT_AVALON_I2C_DEV_t *i2c_dev, alt_u8 *buffer, alt_u32 max_bytes_to_read, alt_u32 *bytes_read)
+{
+    *bytes_read = 0;
+     45c:	38000015 	stw	zero,0(r7)
+    
+    while (IORD_ALT_AVALON_I2C_RX_DATA_FIFO_LVL(i2c_dev->i2c_base))
+     460:	20c00317 	ldw	r3,12(r4)
+     464:	18800737 	ldwio	r2,28(r3)
+     468:	10000926 	beq	r2,zero,490 <alt_avalon_i2c_rx_read_available+0x34>
+    {
+       buffer[*bytes_read] = (alt_u8)IORD_ALT_AVALON_I2C_RX_DATA(i2c_dev->i2c_base);
+     46c:	38800017 	ldw	r2,0(r7)
+     470:	2885883a 	add	r2,r5,r2
+     474:	18c00137 	ldwio	r3,4(r3)
+     478:	10c00005 	stb	r3,0(r2)
+       *bytes_read+=1; 
+     47c:	38800017 	ldw	r2,0(r7)
+     480:	10800044 	addi	r2,r2,1
+     484:	38800015 	stw	r2,0(r7)
+       if ((*bytes_read == max_bytes_to_read) && (max_bytes_to_read != 0)) break;       
+     488:	11bff51e 	bne	r2,r6,460 <__alt_data_end+0xff800460>
+     48c:	303ff426 	beq	r6,zero,460 <__alt_data_end+0xff800460>
+     490:	f800283a 	ret
+
+00000494 <alt_avalon_i2c_rx_read>:
+    }
+}
+
+/*when a byte is available, reads a single data byte from the receive FIFO. */
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_rx_read(ALT_AVALON_I2C_DEV_t *i2c_dev, alt_u8 *val)
+{
+     494:	defffb04 	addi	sp,sp,-20
+     498:	dc000015 	stw	r16,0(sp)
+    alt_u32 status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout = 100000;
+
+
+    while (IORD_ALT_AVALON_I2C_RX_DATA_FIFO_LVL(i2c_dev->i2c_base) == 0)
+     49c:	040000b4 	movhi	r16,2
+    }
+}
+
+/*when a byte is available, reads a single data byte from the receive FIFO. */
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_rx_read(ALT_AVALON_I2C_DEV_t *i2c_dev, alt_u8 *val)
+{
+     4a0:	dcc00315 	stw	r19,12(sp)
+     4a4:	dc800215 	stw	r18,8(sp)
+     4a8:	dc400115 	stw	r17,4(sp)
+     4ac:	dfc00415 	stw	ra,16(sp)
+     4b0:	2023883a 	mov	r17,r4
+     4b4:	2825883a 	mov	r18,r5
+    alt_u32 status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout = 100000;
+
+
+    while (IORD_ALT_AVALON_I2C_RX_DATA_FIFO_LVL(i2c_dev->i2c_base) == 0)
+     4b8:	8421a804 	addi	r16,r16,-31072
+    {
+      if (timeout<10) alt_busy_sleep(10000);
+     4bc:	04c00244 	movi	r19,9
+{
+    alt_u32 status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout = 100000;
+
+
+    while (IORD_ALT_AVALON_I2C_RX_DATA_FIFO_LVL(i2c_dev->i2c_base) == 0)
+     4c0:	88800317 	ldw	r2,12(r17)
+     4c4:	10800737 	ldwio	r2,28(r2)
+     4c8:	1000071e 	bne	r2,zero,4e8 <alt_avalon_i2c_rx_read+0x54>
+    {
+      if (timeout<10) alt_busy_sleep(10000);
+     4cc:	9c000236 	bltu	r19,r16,4d8 <alt_avalon_i2c_rx_read+0x44>
+     4d0:	0109c404 	movi	r4,10000
+     4d4:	000152c0 	call	152c <alt_busy_sleep>
+     4d8:	843fffc4 	addi	r16,r16,-1
+      if (--timeout == 0)
+     4dc:	803ff81e 	bne	r16,zero,4c0 <__alt_data_end+0xff8004c0>
+      {
+        status = ALT_AVALON_I2C_TIMEOUT;
+     4e0:	00bfff84 	movi	r2,-2
+     4e4:	00000106 	br	4ec <alt_avalon_i2c_rx_read+0x58>
+}
+
+/*when a byte is available, reads a single data byte from the receive FIFO. */
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_rx_read(ALT_AVALON_I2C_DEV_t *i2c_dev, alt_u8 *val)
+{
+    alt_u32 status = ALT_AVALON_I2C_SUCCESS;
+     4e8:	0005883a 	mov	r2,zero
+        status = ALT_AVALON_I2C_TIMEOUT;
+        break;
+      }
+    }
+
+    *val = (alt_u8)IORD_ALT_AVALON_I2C_RX_DATA(i2c_dev->i2c_base);
+     4ec:	88c00317 	ldw	r3,12(r17)
+     4f0:	18c00137 	ldwio	r3,4(r3)
+     4f4:	90c00005 	stb	r3,0(r18)
+        
+    return status;
+}
+     4f8:	dfc00417 	ldw	ra,16(sp)
+     4fc:	dcc00317 	ldw	r19,12(sp)
+     500:	dc800217 	ldw	r18,8(sp)
+     504:	dc400117 	ldw	r17,4(sp)
+     508:	dc000017 	ldw	r16,0(sp)
+     50c:	dec00504 	addi	sp,sp,20
+     510:	f800283a 	ret
+
+00000514 <alt_avalon_i2c_master_target_get>:
+}
+
+/* This function returns the current target address. */
+void alt_avalon_i2c_master_target_get(ALT_AVALON_I2C_DEV_t * i2c_dev, alt_u32 * target_addr)
+{
+    *target_addr=i2c_dev->master_target_address;
+     514:	20800917 	ldw	r2,36(r4)
+     518:	28800015 	stw	r2,0(r5)
+     51c:	f800283a 	ret
+
+00000520 <alt_avalon_i2c_master_target_set>:
+}
+
+/* This function updates the target address for any upcoming I2C bus IO. */
+void alt_avalon_i2c_master_target_set(ALT_AVALON_I2C_DEV_t * i2c_dev, alt_u32 target_addr)
+{
+    i2c_dev->master_target_address=target_addr;
+     520:	21400915 	stw	r5,36(r4)
+     524:	f800283a 	ret
+
+00000528 <alt_avalon_i2c_check_nack>:
+}
+
+/*if nack detected, status is set to ALT_AVALON_I2C_NACK_ERR*/
+void alt_avalon_i2c_check_nack(ALT_AVALON_I2C_DEV_t *i2c_dev,ALT_AVALON_I2C_STATUS_CODE * status)
+{    
+    if (IORD_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base) & ALT_AVALON_I2C_ISR_NACK_DET_MSK)
+     528:	20800317 	ldw	r2,12(r4)
+     52c:	10800437 	ldwio	r2,16(r2)
+     530:	1080010c 	andi	r2,r2,4
+     534:	10000226 	beq	r2,zero,540 <alt_avalon_i2c_check_nack+0x18>
+    {
+      *status=ALT_AVALON_I2C_NACK_ERR;
+     538:	00bffec4 	movi	r2,-5
+     53c:	28800015 	stw	r2,0(r5)
+     540:	f800283a 	ret
+
+00000544 <alt_avalon_i2c_check_arblost>:
+}
+
+/*if arb lost is detected, status is set to ALT_AVALON_I2C_ARB_LOST_ERR*/
+void alt_avalon_i2c_check_arblost(ALT_AVALON_I2C_DEV_t *i2c_dev,ALT_AVALON_I2C_STATUS_CODE * status)
+{      
+    if (IORD_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base) & ALT_AVALON_I2C_ISR_ARBLOST_DET_MSK)
+     544:	20800317 	ldw	r2,12(r4)
+     548:	10800437 	ldwio	r2,16(r2)
+     54c:	1080020c 	andi	r2,r2,8
+     550:	10000226 	beq	r2,zero,55c <alt_avalon_i2c_check_arblost+0x18>
+    {
+      *status=ALT_AVALON_I2C_ARB_LOST_ERR;
+     554:	00bffe84 	movi	r2,-6
+     558:	28800015 	stw	r2,0(r5)
+     55c:	f800283a 	ret
+
+00000560 <alt_avalon_i2c_cmd_write>:
+/* When space is available, writes the Transfer Command FIFO. */
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_cmd_write(ALT_AVALON_I2C_DEV_t *i2c_dev, 
+                                                      alt_u8 val,
+                                                      alt_u8 issue_restart,
+                                                      alt_u8 issue_stop)
+{
+     560:	defff804 	addi	sp,sp,-32
+     564:	dd400615 	stw	r21,24(sp)
+     568:	dd000515 	stw	r20,20(sp)
+     56c:	dcc00415 	stw	r19,16(sp)
+     570:	dc800315 	stw	r18,12(sp)
+     574:	dc400215 	stw	r17,8(sp)
+     578:	dc000115 	stw	r16,4(sp)
+     57c:	dfc00715 	stw	ra,28(sp)
+     580:	2029883a 	mov	r20,r4
+     584:	2823883a 	mov	r17,r5
+     588:	3025883a 	mov	r18,r6
+     58c:	3821883a 	mov	r16,r7
+    alt_u32 timeout = 10000;
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+     590:	d8000015 	stw	zero,0(sp)
+
+
+    while ((IORD_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base) & ALT_AVALON_I2C_ISR_TX_READY_MSK)==0) 
+     594:	04c9c404 	movi	r19,10000
+    {
+      if (timeout<10) alt_busy_sleep(10000);    
+     598:	05400244 	movi	r21,9
+{
+    alt_u32 timeout = 10000;
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+
+
+    while ((IORD_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base) & ALT_AVALON_I2C_ISR_TX_READY_MSK)==0) 
+     59c:	a0c00317 	ldw	r3,12(r20)
+     5a0:	18800437 	ldwio	r2,16(r3)
+     5a4:	1080004c 	andi	r2,r2,1
+     5a8:	1000071e 	bne	r2,zero,5c8 <alt_avalon_i2c_cmd_write+0x68>
+    {
+      if (timeout<10) alt_busy_sleep(10000);    
+     5ac:	acc00236 	bltu	r21,r19,5b8 <alt_avalon_i2c_cmd_write+0x58>
+     5b0:	0109c404 	movi	r4,10000
+     5b4:	000152c0 	call	152c <alt_busy_sleep>
+     5b8:	9cffffc4 	addi	r19,r19,-1
+      if (--timeout == 0)
+     5bc:	983ff71e 	bne	r19,zero,59c <__alt_data_end+0xff80059c>
+      {
+        return ALT_AVALON_I2C_TIMEOUT;
+     5c0:	00bfff84 	movi	r2,-2
+     5c4:	00000f06 	br	604 <alt_avalon_i2c_cmd_write+0xa4>
+      }
+    }
+
+    IOWR_ALT_AVALON_I2C_TFR_CMD(i2c_dev->i2c_base,val |
+     5c8:	94803fcc 	andi	r18,r18,255
+     5cc:	9024927a 	slli	r18,r18,9
+     5d0:	84003fcc 	andi	r16,r16,255
+     5d4:	8020923a 	slli	r16,r16,8
+     5d8:	8c403fcc 	andi	r17,r17,255
+     5dc:	9462b03a 	or	r17,r18,r17
+     5e0:	8c20b03a 	or	r16,r17,r16
+     5e4:	1c000035 	stwio	r16,0(r3)
+                                     (issue_restart << ALT_AVALON_I2C_TFR_CMD_STA_OFST) |
+                                     (issue_stop << ALT_AVALON_I2C_TFR_CMD_STO_OFST));
+
+
+    /*check for nack error*/
+    alt_avalon_i2c_check_nack(i2c_dev,&status);
+     5e8:	d80b883a 	mov	r5,sp
+     5ec:	a009883a 	mov	r4,r20
+     5f0:	00005280 	call	528 <alt_avalon_i2c_check_nack>
+    
+    /*check for arb lost*/
+    alt_avalon_i2c_check_arblost(i2c_dev,&status);
+     5f4:	d80b883a 	mov	r5,sp
+     5f8:	a009883a 	mov	r4,r20
+     5fc:	00005440 	call	544 <alt_avalon_i2c_check_arblost>
+    
+    return status;
+     600:	d8800017 	ldw	r2,0(sp)
+}
+     604:	dfc00717 	ldw	ra,28(sp)
+     608:	dd400617 	ldw	r21,24(sp)
+     60c:	dd000517 	ldw	r20,20(sp)
+     610:	dcc00417 	ldw	r19,16(sp)
+     614:	dc800317 	ldw	r18,12(sp)
+     618:	dc400217 	ldw	r17,8(sp)
+     61c:	dc000117 	ldw	r16,4(sp)
+     620:	dec00804 	addi	sp,sp,32
+     624:	f800283a 	ret
+
+00000628 <alt_avalon_i2c_send_address>:
+                                                       const alt_u32 rw_bit,
+                                                       const alt_u8 issue_restart)
+{
+    alt_u32 status;
+        
+    if (i2c_dev->address_mode == ALT_AVALON_I2C_ADDR_MODE_10_BIT)
+     628:	22000d17 	ldw	r8,52(r4)
+     62c:	01c00044 	movi	r7,1
+     630:	31803fcc 	andi	r6,r6,255
+     634:	20800917 	ldw	r2,36(r4)
+     638:	41c0141e 	bne	r8,r7,68c <alt_avalon_i2c_send_address+0x64>
+    {
+       status = alt_avalon_i2c_cmd_write(i2c_dev,(((i2c_dev->master_target_address | TARGET_ADDR_MASK_10BIT) >> 7) & 0xfe) | rw_bit,issue_restart,ALT_AVALON_I2C_NO_STOP);
+     63c:	10de0014 	ori	r3,r2,30720
+     640:	1806d1fa 	srli	r3,r3,7
+     644:	00bfff84 	movi	r2,-2
+
+/*send 7 or 10 bit i2c address to cmd fifo*/
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_send_address(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                                       const alt_u32 rw_bit,
+                                                       const alt_u8 issue_restart)
+{
+     648:	defffe04 	addi	sp,sp,-8
+    alt_u32 status;
+        
+    if (i2c_dev->address_mode == ALT_AVALON_I2C_ADDR_MODE_10_BIT)
+    {
+       status = alt_avalon_i2c_cmd_write(i2c_dev,(((i2c_dev->master_target_address | TARGET_ADDR_MASK_10BIT) >> 7) & 0xfe) | rw_bit,issue_restart,ALT_AVALON_I2C_NO_STOP);
+     64c:	1886703a 	and	r3,r3,r2
+     650:	194ab03a 	or	r5,r3,r5
+     654:	000f883a 	mov	r7,zero
+     658:	29403fcc 	andi	r5,r5,255
+
+/*send 7 or 10 bit i2c address to cmd fifo*/
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_send_address(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                                       const alt_u32 rw_bit,
+                                                       const alt_u8 issue_restart)
+{
+     65c:	dc000015 	stw	r16,0(sp)
+     660:	dfc00115 	stw	ra,4(sp)
+     664:	2021883a 	mov	r16,r4
+    alt_u32 status;
+        
+    if (i2c_dev->address_mode == ALT_AVALON_I2C_ADDR_MODE_10_BIT)
+    {
+       status = alt_avalon_i2c_cmd_write(i2c_dev,(((i2c_dev->master_target_address | TARGET_ADDR_MASK_10BIT) >> 7) & 0xfe) | rw_bit,issue_restart,ALT_AVALON_I2C_NO_STOP);
+     668:	00005600 	call	560 <alt_avalon_i2c_cmd_write>
+       status = alt_avalon_i2c_cmd_write(i2c_dev,i2c_dev->master_target_address & 0xff,ALT_AVALON_I2C_NO_RESTART,ALT_AVALON_I2C_NO_STOP);      
+     66c:	81400903 	ldbu	r5,36(r16)
+     670:	000f883a 	mov	r7,zero
+     674:	000d883a 	mov	r6,zero
+     678:	8009883a 	mov	r4,r16
+    {
+       status = alt_avalon_i2c_cmd_write(i2c_dev,(i2c_dev->master_target_address << 1) | rw_bit,issue_restart,ALT_AVALON_I2C_NO_STOP);
+    }
+    
+    return status;
+}
+     67c:	dfc00117 	ldw	ra,4(sp)
+     680:	dc000017 	ldw	r16,0(sp)
+     684:	dec00204 	addi	sp,sp,8
+     688:	00000406 	br	69c <alt_avalon_i2c_send_address+0x74>
+       status = alt_avalon_i2c_cmd_write(i2c_dev,(((i2c_dev->master_target_address | TARGET_ADDR_MASK_10BIT) >> 7) & 0xfe) | rw_bit,issue_restart,ALT_AVALON_I2C_NO_STOP);
+       status = alt_avalon_i2c_cmd_write(i2c_dev,i2c_dev->master_target_address & 0xff,ALT_AVALON_I2C_NO_RESTART,ALT_AVALON_I2C_NO_STOP);      
+    }
+    else
+    {
+       status = alt_avalon_i2c_cmd_write(i2c_dev,(i2c_dev->master_target_address << 1) | rw_bit,issue_restart,ALT_AVALON_I2C_NO_STOP);
+     68c:	1085883a 	add	r2,r2,r2
+     690:	114ab03a 	or	r5,r2,r5
+     694:	000f883a 	mov	r7,zero
+     698:	29403fcc 	andi	r5,r5,255
+     69c:	00005601 	jmpi	560 <alt_avalon_i2c_cmd_write>
+
+000006a0 <alt_avalon_i2c_master_transmit>:
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_transmit(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                        const alt_u8 * buffer,
+                                        alt_u32 size,
+                                        const alt_u8 issue_restart,
+                                        const alt_u8 issue_stop)
+{
+     6a0:	defff904 	addi	sp,sp,-28
+     6a4:	dcc00415 	stw	r19,16(sp)
+     6a8:	dfc00615 	stw	ra,24(sp)
+     6ac:	dd000515 	stw	r20,20(sp)
+     6b0:	dc800315 	stw	r18,12(sp)
+     6b4:	dc400215 	stw	r17,8(sp)
+     6b8:	dc000115 	stw	r16,4(sp)
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+     6bc:	d8000015 	stw	zero,0(sp)
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_transmit(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                        const alt_u8 * buffer,
+                                        alt_u32 size,
+                                        const alt_u8 issue_restart,
+                                        const alt_u8 issue_stop)
+{
+     6c0:	dcc00717 	ldw	r19,28(sp)
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout=size * 10000;
+    
+    if (size==0)
+     6c4:	30003b26 	beq	r6,zero,7b4 <alt_avalon_i2c_master_transmit+0x114>
+    {
+      return ALT_AVALON_I2C_SUCCESS;
+    }
+    
+    /*if a new transaction, enable ip and clear int status*/
+    if (!issue_restart) 
+     6c8:	3d003fcc 	andi	r20,r7,255
+     6cc:	2023883a 	mov	r17,r4
+     6d0:	2825883a 	mov	r18,r5
+     6d4:	3021883a 	mov	r16,r6
+     6d8:	a000061e 	bne	r20,zero,6f4 <alt_avalon_i2c_master_transmit+0x54>
+    {
+      /*enable the ip.  The ip is disabled and enabled for each transaction.*/
+      status = alt_avalon_i2c_enable(i2c_dev);
+     6dc:	00002740 	call	274 <alt_avalon_i2c_enable>
+     6e0:	d8800015 	stw	r2,0(sp)
+      if (status != ALT_AVALON_I2C_SUCCESS)
+     6e4:	1000341e 	bne	r2,zero,7b8 <alt_avalon_i2c_master_transmit+0x118>
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+     6e8:	88800317 	ldw	r2,12(r17)
+     6ec:	00c00704 	movi	r3,28
+     6f0:	10c00435 	stwio	r3,16(r2)
+      /*Clear the ISR reg*/
+      alt_avalon_i2c_int_clear(i2c_dev,ALT_AVALON_I2C_ISR_ALL_CLEARABLE_INTS_MSK);
+    }
+
+    /*Start Write, transmit address. */
+    status = alt_avalon_i2c_send_address(i2c_dev,ALT_AVALON_I2C_WRITE,issue_restart);
+     6f4:	a00d883a 	mov	r6,r20
+     6f8:	000b883a 	mov	r5,zero
+     6fc:	8809883a 	mov	r4,r17
+     700:	00006280 	call	628 <alt_avalon_i2c_send_address>
+     704:	d8800015 	stw	r2,0(sp)
+      
+    if (status == ALT_AVALON_I2C_SUCCESS)
+     708:	1000171e 	bne	r2,zero,768 <alt_avalon_i2c_master_transmit+0xc8>
+     70c:	853fffc4 	addi	r20,r16,-1
+     710:	9529883a 	add	r20,r18,r20
+     714:	d8800017 	ldw	r2,0(sp)
+    {
+        while ((size > 1) && (status == ALT_AVALON_I2C_SUCCESS))
+     718:	95000926 	beq	r18,r20,740 <alt_avalon_i2c_master_transmit+0xa0>
+     71c:	1000081e 	bne	r2,zero,740 <alt_avalon_i2c_master_transmit+0xa0>
+        {
+            status = alt_avalon_i2c_cmd_write(i2c_dev, *buffer, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_NO_STOP);
+     720:	91400003 	ldbu	r5,0(r18)
+     724:	000f883a 	mov	r7,zero
+     728:	000d883a 	mov	r6,zero
+     72c:	8809883a 	mov	r4,r17
+     730:	00005600 	call	560 <alt_avalon_i2c_cmd_write>
+     734:	d8800015 	stw	r2,0(sp)
+            
+            ++buffer;
+     738:	94800044 	addi	r18,r18,1
+     73c:	003ff506 	br	714 <__alt_data_end+0xff800714>
+            --size;
+        }
+
+        /* Last byte */
+        if (status == ALT_AVALON_I2C_SUCCESS)
+     740:	1000091e 	bne	r2,zero,768 <alt_avalon_i2c_master_transmit+0xc8>
+        {
+            status = alt_avalon_i2c_cmd_write(i2c_dev, *buffer, ALT_AVALON_I2C_NO_RESTART, issue_stop);
+     744:	91400003 	ldbu	r5,0(r18)
+     748:	9cc03fcc 	andi	r19,r19,255
+     74c:	980f883a 	mov	r7,r19
+     750:	000d883a 	mov	r6,zero
+     754:	8809883a 	mov	r4,r17
+     758:	00005600 	call	560 <alt_avalon_i2c_cmd_write>
+     75c:	d8800015 	stw	r2,0(sp)
+            --size;
+        }
+    }
+    
+    /*if end of transaction, wait until the ip is idle then disable the ip*/
+    if ((issue_stop) || (status != ALT_AVALON_I2C_SUCCESS)) 
+     760:	9800011e 	bne	r19,zero,768 <alt_avalon_i2c_master_transmit+0xc8>
+     764:	10001126 	beq	r2,zero,7ac <alt_avalon_i2c_master_transmit+0x10c>
+                                        alt_u32 size,
+                                        const alt_u8 issue_restart,
+                                        const alt_u8 issue_stop)
+{
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout=size * 10000;
+     768:	8409c424 	muli	r16,r16,10000
+    if ((issue_stop) || (status != ALT_AVALON_I2C_SUCCESS)) 
+    {
+
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+        {
+            if (timeout<10) alt_busy_sleep(10000);
+     76c:	04800244 	movi	r18,9
+    
+    /*if end of transaction, wait until the ip is idle then disable the ip*/
+    if ((issue_stop) || (status != ALT_AVALON_I2C_SUCCESS)) 
+    {
+
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+     770:	8809883a 	mov	r4,r17
+     774:	000044c0 	call	44c <alt_avalon_i2c_is_busy>
+     778:	10000726 	beq	r2,zero,798 <alt_avalon_i2c_master_transmit+0xf8>
+        {
+            if (timeout<10) alt_busy_sleep(10000);
+     77c:	94000236 	bltu	r18,r16,788 <alt_avalon_i2c_master_transmit+0xe8>
+     780:	0109c404 	movi	r4,10000
+     784:	000152c0 	call	152c <alt_busy_sleep>
+            if (--timeout == 0)
+     788:	843fffc4 	addi	r16,r16,-1
+     78c:	803ff81e 	bne	r16,zero,770 <__alt_data_end+0xff800770>
+            {
+               status = ALT_AVALON_I2C_TIMEOUT;
+     790:	00bfff84 	movi	r2,-2
+     794:	d8800015 	stw	r2,0(sp)
+               break;
+            }
+        }
+     
+        /*check for a nack error*/
+        alt_avalon_i2c_check_nack(i2c_dev,&status);
+     798:	8809883a 	mov	r4,r17
+     79c:	d80b883a 	mov	r5,sp
+     7a0:	00005280 	call	528 <alt_avalon_i2c_check_nack>
+        
+        /*disable the ip.  The ip is disabled and enabled for each transaction.*/
+        alt_avalon_i2c_disable(i2c_dev);
+     7a4:	8809883a 	mov	r4,r17
+     7a8:	00002bc0 	call	2bc <alt_avalon_i2c_disable>
+    }
+
+
+    return status;
+     7ac:	d8800017 	ldw	r2,0(sp)
+     7b0:	00000106 	br	7b8 <alt_avalon_i2c_master_transmit+0x118>
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout=size * 10000;
+    
+    if (size==0)
+    {
+      return ALT_AVALON_I2C_SUCCESS;
+     7b4:	0005883a 	mov	r2,zero
+        alt_avalon_i2c_disable(i2c_dev);
+    }
+
+
+    return status;
+}
+     7b8:	dfc00617 	ldw	ra,24(sp)
+     7bc:	dd000517 	ldw	r20,20(sp)
+     7c0:	dcc00417 	ldw	r19,16(sp)
+     7c4:	dc800317 	ldw	r18,12(sp)
+     7c8:	dc400217 	ldw	r17,8(sp)
+     7cc:	dc000117 	ldw	r16,4(sp)
+     7d0:	dec00704 	addi	sp,sp,28
+     7d4:	f800283a 	ret
+
+000007d8 <alt_avalon_i2c_master_receive>:
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_receive(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                       alt_u8 * buffer,
+                                       const alt_u32 size,
+                                       const alt_u8 issue_restart,
+                                       const alt_u8 issue_stop)
+{
+     7d8:	defff604 	addi	sp,sp,-40
+     7dc:	dd000615 	stw	r20,24(sp)
+     7e0:	dfc00915 	stw	ra,36(sp)
+     7e4:	dd800815 	stw	r22,32(sp)
+     7e8:	dd400715 	stw	r21,28(sp)
+     7ec:	dcc00515 	stw	r19,20(sp)
+     7f0:	dc800415 	stw	r18,16(sp)
+     7f4:	dc400315 	stw	r17,12(sp)
+     7f8:	dc000215 	stw	r16,8(sp)
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+     7fc:	d8000115 	stw	zero,4(sp)
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_receive(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                       alt_u8 * buffer,
+                                       const alt_u32 size,
+                                       const alt_u8 issue_restart,
+                                       const alt_u8 issue_stop)
+{
+     800:	dd000a17 	ldw	r20,40(sp)
+    alt_u32 timeout;
+    alt_u32 bytes_read=0;
+    alt_u32 bytes_written=0;
+    alt_u32 temp_bytes_read;
+    
+    if (size==0)
+     804:	30005326 	beq	r6,zero,954 <alt_avalon_i2c_master_receive+0x17c>
+    {
+      return ALT_AVALON_I2C_SUCCESS;
+    }
+    
+    /*if a new transaction, enable ip and clear int status*/
+    if (!issue_restart) 
+     808:	3cc03fcc 	andi	r19,r7,255
+     80c:	2023883a 	mov	r17,r4
+     810:	2821883a 	mov	r16,r5
+     814:	3025883a 	mov	r18,r6
+     818:	9800061e 	bne	r19,zero,834 <alt_avalon_i2c_master_receive+0x5c>
+    {
+       /*enable the ip.  The ip is disabled and enabled for each transaction.*/
+      status = alt_avalon_i2c_enable(i2c_dev);
+     81c:	00002740 	call	274 <alt_avalon_i2c_enable>
+     820:	d8800115 	stw	r2,4(sp)
+      if (status != ALT_AVALON_I2C_SUCCESS)
+     824:	10004c1e 	bne	r2,zero,958 <alt_avalon_i2c_master_receive+0x180>
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+     828:	88800317 	ldw	r2,12(r17)
+     82c:	00c00704 	movi	r3,28
+     830:	10c00435 	stwio	r3,16(r2)
+      /*Clear the ISR reg*/
+      alt_avalon_i2c_int_clear(i2c_dev,ALT_AVALON_I2C_ISR_ALL_CLEARABLE_INTS_MSK);
+    }
+
+    /*Start Write, transmit address. */
+    status = alt_avalon_i2c_send_address(i2c_dev,ALT_AVALON_I2C_READ,issue_restart);
+     834:	980d883a 	mov	r6,r19
+     838:	01400044 	movi	r5,1
+     83c:	8809883a 	mov	r4,r17
+     840:	00006280 	call	628 <alt_avalon_i2c_send_address>
+     844:	d8800115 	stw	r2,4(sp)
+
+    if (status == ALT_AVALON_I2C_SUCCESS)
+     848:	10001f1e 	bne	r2,zero,8c8 <alt_avalon_i2c_master_receive+0xf0>
+     84c:	002b883a 	mov	r21,zero
+     850:	0027883a 	mov	r19,zero
+    {
+        while ((bytes_written < (size-1)) && (status == ALT_AVALON_I2C_SUCCESS))
+     854:	95bfffc4 	addi	r22,r18,-1
+     858:	d8800117 	ldw	r2,4(sp)
+     85c:	ad800836 	bltu	r21,r22,880 <alt_avalon_i2c_master_receive+0xa8>
+               bytes_read+=temp_bytes_read;
+            }
+        }
+
+        /* Last byte */
+        if (status == ALT_AVALON_I2C_SUCCESS)
+     860:	10001a1e 	bne	r2,zero,8cc <alt_avalon_i2c_master_receive+0xf4>
+        {
+            status = alt_avalon_i2c_cmd_write(i2c_dev, 0, ALT_AVALON_I2C_NO_RESTART, issue_stop);
+     864:	a1c03fcc 	andi	r7,r20,255
+     868:	000d883a 	mov	r6,zero
+     86c:	000b883a 	mov	r5,zero
+     870:	8809883a 	mov	r4,r17
+     874:	00005600 	call	560 <alt_avalon_i2c_cmd_write>
+     878:	d8800115 	stw	r2,4(sp)
+     87c:	00001306 	br	8cc <alt_avalon_i2c_master_receive+0xf4>
+    /*Start Write, transmit address. */
+    status = alt_avalon_i2c_send_address(i2c_dev,ALT_AVALON_I2C_READ,issue_restart);
+
+    if (status == ALT_AVALON_I2C_SUCCESS)
+    {
+        while ((bytes_written < (size-1)) && (status == ALT_AVALON_I2C_SUCCESS))
+     880:	103ff71e 	bne	r2,zero,860 <__alt_data_end+0xff800860>
+        {
+            status = alt_avalon_i2c_cmd_write(i2c_dev, 0, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_NO_STOP);
+     884:	000f883a 	mov	r7,zero
+     888:	000d883a 	mov	r6,zero
+     88c:	000b883a 	mov	r5,zero
+     890:	8809883a 	mov	r4,r17
+     894:	00005600 	call	560 <alt_avalon_i2c_cmd_write>
+     898:	d8800115 	stw	r2,4(sp)
+            bytes_written++;
+     89c:	ad400044 	addi	r21,r21,1
+            if (status == ALT_AVALON_I2C_SUCCESS)
+     8a0:	103fed1e 	bne	r2,zero,858 <__alt_data_end+0xff800858>
+            {
+               alt_avalon_i2c_rx_read_available(i2c_dev, buffer,0,&temp_bytes_read);
+     8a4:	800b883a 	mov	r5,r16
+     8a8:	d80f883a 	mov	r7,sp
+     8ac:	000d883a 	mov	r6,zero
+     8b0:	8809883a 	mov	r4,r17
+     8b4:	000045c0 	call	45c <alt_avalon_i2c_rx_read_available>
+               buffer+=temp_bytes_read;
+     8b8:	d8800017 	ldw	r2,0(sp)
+     8bc:	80a1883a 	add	r16,r16,r2
+               bytes_read+=temp_bytes_read;
+     8c0:	98a7883a 	add	r19,r19,r2
+     8c4:	003fe406 	br	858 <__alt_data_end+0xff800858>
+                                       const alt_u8 issue_restart,
+                                       const alt_u8 issue_stop)
+{
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout;
+    alt_u32 bytes_read=0;
+     8c8:	0027883a 	mov	r19,zero
+     8cc:	9c27c83a 	sub	r19,r19,r16
+     8d0:	84c5883a 	add	r2,r16,r19
+        {
+            status = alt_avalon_i2c_cmd_write(i2c_dev, 0, ALT_AVALON_I2C_NO_RESTART, issue_stop);
+        }
+    }
+    
+    while ((bytes_read < size) && (status==ALT_AVALON_I2C_SUCCESS)) 
+     8d4:	1480082e 	bgeu	r2,r18,8f8 <alt_avalon_i2c_master_receive+0x120>
+     8d8:	d8800117 	ldw	r2,4(sp)
+     8dc:	10000a1e 	bne	r2,zero,908 <alt_avalon_i2c_master_receive+0x130>
+    {
+        status=alt_avalon_i2c_rx_read(i2c_dev, buffer);
+     8e0:	800b883a 	mov	r5,r16
+     8e4:	8809883a 	mov	r4,r17
+     8e8:	00004940 	call	494 <alt_avalon_i2c_rx_read>
+     8ec:	d8800115 	stw	r2,4(sp)
+        buffer++;
+     8f0:	84000044 	addi	r16,r16,1
+     8f4:	003ff606 	br	8d0 <__alt_data_end+0xff8008d0>
+        bytes_read++;
+    }
+
+    /*if end of transaction, wait until the ip is idle then disable the ip*/
+    if ((issue_stop) || (status != ALT_AVALON_I2C_SUCCESS)) 
+     8f8:	a5003fcc 	andi	r20,r20,255
+     8fc:	a000021e 	bne	r20,zero,908 <alt_avalon_i2c_master_receive+0x130>
+     900:	d8800117 	ldw	r2,4(sp)
+     904:	10001126 	beq	r2,zero,94c <alt_avalon_i2c_master_receive+0x174>
+    {
+        timeout=10000 * size;
+     908:	9489c424 	muli	r18,r18,10000
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+        {
+            if (timeout<10) alt_busy_sleep(10000);
+     90c:	04000244 	movi	r16,9
+
+    /*if end of transaction, wait until the ip is idle then disable the ip*/
+    if ((issue_stop) || (status != ALT_AVALON_I2C_SUCCESS)) 
+    {
+        timeout=10000 * size;
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+     910:	8809883a 	mov	r4,r17
+     914:	000044c0 	call	44c <alt_avalon_i2c_is_busy>
+     918:	10000726 	beq	r2,zero,938 <alt_avalon_i2c_master_receive+0x160>
+        {
+            if (timeout<10) alt_busy_sleep(10000);
+     91c:	84800236 	bltu	r16,r18,928 <alt_avalon_i2c_master_receive+0x150>
+     920:	0109c404 	movi	r4,10000
+     924:	000152c0 	call	152c <alt_busy_sleep>
+            if (--timeout == 0)
+     928:	94bfffc4 	addi	r18,r18,-1
+     92c:	903ff81e 	bne	r18,zero,910 <__alt_data_end+0xff800910>
+            {
+               status = ALT_AVALON_I2C_TIMEOUT;
+     930:	00bfff84 	movi	r2,-2
+     934:	d8800115 	stw	r2,4(sp)
+               break;
+            }
+        }
+
+        /*check for nack error*/
+        alt_avalon_i2c_check_nack(i2c_dev,&status);    
+     938:	8809883a 	mov	r4,r17
+     93c:	d9400104 	addi	r5,sp,4
+     940:	00005280 	call	528 <alt_avalon_i2c_check_nack>
+        
+        /*disable the ip.  The ip is disabled and enabled for each transaction.*/
+        alt_avalon_i2c_disable(i2c_dev);
+     944:	8809883a 	mov	r4,r17
+     948:	00002bc0 	call	2bc <alt_avalon_i2c_disable>
+    }
+
+    return status;
+     94c:	d8800117 	ldw	r2,4(sp)
+     950:	00000106 	br	958 <alt_avalon_i2c_master_receive+0x180>
+    alt_u32 bytes_written=0;
+    alt_u32 temp_bytes_read;
+    
+    if (size==0)
+    {
+      return ALT_AVALON_I2C_SUCCESS;
+     954:	0005883a 	mov	r2,zero
+        /*disable the ip.  The ip is disabled and enabled for each transaction.*/
+        alt_avalon_i2c_disable(i2c_dev);
+    }
+
+    return status;
+}
+     958:	dfc00917 	ldw	ra,36(sp)
+     95c:	dd800817 	ldw	r22,32(sp)
+     960:	dd400717 	ldw	r21,28(sp)
+     964:	dd000617 	ldw	r20,24(sp)
+     968:	dcc00517 	ldw	r19,20(sp)
+     96c:	dc800417 	ldw	r18,16(sp)
+     970:	dc400317 	ldw	r17,12(sp)
+     974:	dc000217 	ldw	r16,8(sp)
+     978:	dec00a04 	addi	sp,sp,40
+     97c:	f800283a 	ret
+
+00000980 <alt_avalon_i2c_int_status_get>:
+
+/* Returns the current I2C controller interrupt status conditions. */
+void alt_avalon_i2c_int_status_get(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                       alt_u32 *status)
+{
+    *status = IORD_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base) & IORD_ALT_AVALON_I2C_ISER(i2c_dev->i2c_base);
+     980:	20c00317 	ldw	r3,12(r4)
+     984:	19000437 	ldwio	r4,16(r3)
+     988:	18800337 	ldwio	r2,12(r3)
+     98c:	2084703a 	and	r2,r4,r2
+     990:	28800015 	stw	r2,0(r5)
+     994:	f800283a 	ret
+
+00000998 <alt_avalon_i2c_int_raw_status_get>:
+/*Returns the I2C controller raw interrupt status conditions irrespective of
+ * the interrupt status condition enablement state. */
+void alt_avalon_i2c_int_raw_status_get(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                           alt_u32 *status)
+{
+    *status = IORD_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base);
+     998:	20800317 	ldw	r2,12(r4)
+     99c:	10800437 	ldwio	r2,16(r2)
+     9a0:	28800015 	stw	r2,0(r5)
+     9a4:	f800283a 	ret
+
+000009a8 <alt_avalon_i2c_int_clear>:
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+     9a8:	20800317 	ldw	r2,12(r4)
+     9ac:	11400435 	stwio	r5,16(r2)
+     9b0:	f800283a 	ret
+
+000009b4 <alt_avalon_i2c_enabled_ints_get>:
+}
+
+/*gets the enabled i2c interrupts. */
+void alt_avalon_i2c_enabled_ints_get(ALT_AVALON_I2C_DEV_t *i2c_dev, alt_u32 * enabled_ints)
+{
+    *enabled_ints=IORD_ALT_AVALON_I2C_ISER(i2c_dev->i2c_base) & ALT_AVALON_I2C_ISR_ALLINTS_MSK;
+     9b4:	20800317 	ldw	r2,12(r4)
+     9b8:	10800337 	ldwio	r2,12(r2)
+     9bc:	108007cc 	andi	r2,r2,31
+     9c0:	28800015 	stw	r2,0(r5)
+     9c4:	f800283a 	ret
+
+000009c8 <alt_avalon_i2c_int_disable>:
+}
+
+/*Disable the specified I2C controller interrupt status conditions identified in
+ * the mask. */
+void alt_avalon_i2c_int_disable(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+     9c8:	defffc04 	addi	sp,sp,-16
+     9cc:	dc000115 	stw	r16,4(sp)
+     9d0:	2821883a 	mov	r16,r5
+   alt_u32 enabled_ints;
+    
+   alt_avalon_i2c_enabled_ints_get(i2c_dev,&enabled_ints);
+     9d4:	d80b883a 	mov	r5,sp
+}
+
+/*Disable the specified I2C controller interrupt status conditions identified in
+ * the mask. */
+void alt_avalon_i2c_int_disable(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+     9d8:	dc400215 	stw	r17,8(sp)
+     9dc:	dfc00315 	stw	ra,12(sp)
+     9e0:	2023883a 	mov	r17,r4
+   alt_u32 enabled_ints;
+    
+   alt_avalon_i2c_enabled_ints_get(i2c_dev,&enabled_ints);
+     9e4:	00009b40 	call	9b4 <alt_avalon_i2c_enabled_ints_get>
+   enabled_ints &=  (~mask);
+     9e8:	d8800017 	ldw	r2,0(sp)
+     9ec:	040a303a 	nor	r5,zero,r16
+     9f0:	288a703a 	and	r5,r5,r2
+   IOWR_ALT_AVALON_I2C_ISER(i2c_dev->i2c_base,ALT_AVALON_I2C_ISR_ALLINTS_MSK & enabled_ints);
+     9f4:	88800317 	ldw	r2,12(r17)
+     9f8:	294007cc 	andi	r5,r5,31
+     9fc:	11400335 	stwio	r5,12(r2)
+}
+     a00:	dfc00317 	ldw	ra,12(sp)
+     a04:	dc400217 	ldw	r17,8(sp)
+     a08:	dc000117 	ldw	r16,4(sp)
+     a0c:	dec00404 	addi	sp,sp,16
+     a10:	f800283a 	ret
+
+00000a14 <alt_avalon_i2c_irq>:
+ALT_LLIST_HEAD(alt_avalon_i2c_list);
+
+/* Interrupt handler for the AVALON_I2C module. */
+/* Interrupts are not re-enabled in this handler */
+static void alt_avalon_i2c_irq(void *context)
+{
+     a14:	defffc04 	addi	sp,sp,-16
+    ALT_AVALON_I2C_DEV_t *dev = (ALT_AVALON_I2C_DEV_t *) context;
+    alt_irq_context cpu_sr;
+     
+    /*disable i2c interrupts*/
+    alt_avalon_i2c_int_disable(dev,ALT_AVALON_I2C_ISR_ALLINTS_MSK);
+     a18:	014007c4 	movi	r5,31
+ALT_LLIST_HEAD(alt_avalon_i2c_list);
+
+/* Interrupt handler for the AVALON_I2C module. */
+/* Interrupts are not re-enabled in this handler */
+static void alt_avalon_i2c_irq(void *context)
+{
+     a1c:	dc800215 	stw	r18,8(sp)
+     a20:	dfc00315 	stw	ra,12(sp)
+     a24:	2025883a 	mov	r18,r4
+     a28:	dc400115 	stw	r17,4(sp)
+     a2c:	dc000015 	stw	r16,0(sp)
+    ALT_AVALON_I2C_DEV_t *dev = (ALT_AVALON_I2C_DEV_t *) context;
+    alt_irq_context cpu_sr;
+     
+    /*disable i2c interrupts*/
+    alt_avalon_i2c_int_disable(dev,ALT_AVALON_I2C_ISR_ALLINTS_MSK);
+     a30:	00009c80 	call	9c8 <alt_avalon_i2c_int_disable>
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+     a34:	90800317 	ldw	r2,12(r18)
+     a38:	00c00704 	movi	r3,28
+     a3c:	10c00435 	stwio	r3,16(r2)
+    * Other interrupts are explicitly disabled if callbacks
+    * are registered because there is no guarantee that they are 
+    * pre-emption-safe. This allows the driver to support 
+    * interrupt pre-emption.
+    */
+    if(dev->callback) 
+     a40:	90800617 	ldw	r2,24(r18)
+     a44:	10000b26 	beq	r2,zero,a74 <alt_avalon_i2c_irq+0x60>
+static ALT_INLINE alt_irq_context ALT_ALWAYS_INLINE 
+       alt_irq_disable_all (void)
+{
+  alt_irq_context context;
+
+  NIOS2_READ_STATUS (context);
+     a48:	0023303a 	rdctl	r17,status
+
+  NIOS2_WRITE_STATUS (context & ~NIOS2_STATUS_PIE_MSK);
+     a4c:	043fff84 	movi	r16,-2
+     a50:	8c06703a 	and	r3,r17,r16
+     a54:	1801703a 	wrctl	status,r3
+    {
+        cpu_sr = alt_irq_disable_all();
+        dev->callback(dev);
+     a58:	9009883a 	mov	r4,r18
+     a5c:	103ee83a 	callr	r2
+{
+#if (NIOS2_NUM_OF_SHADOW_REG_SETS > 0) || (defined NIOS2_EIC_PRESENT) || \
+    (defined NIOS2_MMU_PRESENT) || (defined NIOS2_MPU_PRESENT)
+  alt_irq_context status;
+  
+  NIOS2_READ_STATUS (status);
+     a60:	0005303a 	rdctl	r2,status
+  
+  status &= ~NIOS2_STATUS_PIE_MSK;
+     a64:	1420703a 	and	r16,r2,r16
+  status |= (context & NIOS2_STATUS_PIE_MSK);
+  
+  NIOS2_WRITE_STATUS (status);
+     a68:	8c40004c 	andi	r17,r17,1
+     a6c:	8c20b03a 	or	r16,r17,r16
+     a70:	8001703a 	wrctl	status,r16
+        alt_irq_enable_all(cpu_sr);
+    }
+
+    return;
+}
+     a74:	dfc00317 	ldw	ra,12(sp)
+     a78:	dc800217 	ldw	r18,8(sp)
+     a7c:	dc400117 	ldw	r17,4(sp)
+     a80:	dc000017 	ldw	r16,0(sp)
+     a84:	dec00404 	addi	sp,sp,16
+     a88:	f800283a 	ret
+
+00000a8c <alt_avalon_i2c_int_enable>:
+}
+
+/*Enable the specified I2C controller interrupt status conditions identified in
+ * the mask. */
+void alt_avalon_i2c_int_enable(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+     a8c:	defffc04 	addi	sp,sp,-16
+     a90:	dc400215 	stw	r17,8(sp)
+     a94:	2823883a 	mov	r17,r5
+    alt_u32 enabled_ints;
+    
+    alt_avalon_i2c_enabled_ints_get(i2c_dev,&enabled_ints);
+     a98:	d80b883a 	mov	r5,sp
+}
+
+/*Enable the specified I2C controller interrupt status conditions identified in
+ * the mask. */
+void alt_avalon_i2c_int_enable(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+     a9c:	dc000115 	stw	r16,4(sp)
+     aa0:	dfc00315 	stw	ra,12(sp)
+     aa4:	2021883a 	mov	r16,r4
+    alt_u32 enabled_ints;
+    
+    alt_avalon_i2c_enabled_ints_get(i2c_dev,&enabled_ints);
+     aa8:	00009b40 	call	9b4 <alt_avalon_i2c_enabled_ints_get>
+    enabled_ints |= mask;
+     aac:	d9400017 	ldw	r5,0(sp)
+    IOWR_ALT_AVALON_I2C_ISER(i2c_dev->i2c_base,ALT_AVALON_I2C_ISR_ALLINTS_MSK & enabled_ints);
+     ab0:	80800317 	ldw	r2,12(r16)
+void alt_avalon_i2c_int_enable(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    alt_u32 enabled_ints;
+    
+    alt_avalon_i2c_enabled_ints_get(i2c_dev,&enabled_ints);
+    enabled_ints |= mask;
+     ab4:	894ab03a 	or	r5,r17,r5
+    IOWR_ALT_AVALON_I2C_ISER(i2c_dev->i2c_base,ALT_AVALON_I2C_ISR_ALLINTS_MSK & enabled_ints);
+     ab8:	294007cc 	andi	r5,r5,31
+     abc:	11400335 	stwio	r5,12(r2)
+}
+     ac0:	dfc00317 	ldw	ra,12(sp)
+     ac4:	dc400217 	ldw	r17,8(sp)
+     ac8:	dc000117 	ldw	r16,4(sp)
+     acc:	dec00404 	addi	sp,sp,16
+     ad0:	f800283a 	ret
+
+00000ad4 <optional_irq_callback>:
+
+/* for all functions in this file, see the altera_avalon_i2c.h file for more complete function descriptions. */
+
+/* optional irq callback */
+static void optional_irq_callback(void * context)
+{
+     ad4:	defffb04 	addi	sp,sp,-20
+     ad8:	dc000115 	stw	r16,4(sp)
+   int timeout=100000;
+   alt_u32 bytes_read;
+
+   ALT_AVALON_I2C_DEV_t *i2c_dev = context;
+   IRQ_DATA_t *irq = i2c_dev->callback_context;
+     adc:	24000717 	ldw	r16,28(r4)
+
+/* for all functions in this file, see the altera_avalon_i2c.h file for more complete function descriptions. */
+
+/* optional irq callback */
+static void optional_irq_callback(void * context)
+{
+     ae0:	dc800315 	stw	r18,12(sp)
+     ae4:	dc400215 	stw	r17,8(sp)
+   alt_u32 bytes_read;
+
+   ALT_AVALON_I2C_DEV_t *i2c_dev = context;
+   IRQ_DATA_t *irq = i2c_dev->callback_context;
+
+   if (irq->irq_busy==2)  /*receive request*/
+     ae8:	84800217 	ldw	r18,8(r16)
+
+/* for all functions in this file, see the altera_avalon_i2c.h file for more complete function descriptions. */
+
+/* optional irq callback */
+static void optional_irq_callback(void * context)
+{
+     aec:	dfc00415 	stw	ra,16(sp)
+   alt_u32 bytes_read;
+
+   ALT_AVALON_I2C_DEV_t *i2c_dev = context;
+   IRQ_DATA_t *irq = i2c_dev->callback_context;
+
+   if (irq->irq_busy==2)  /*receive request*/
+     af0:	00800084 	movi	r2,2
+
+/* for all functions in this file, see the altera_avalon_i2c.h file for more complete function descriptions. */
+
+/* optional irq callback */
+static void optional_irq_callback(void * context)
+{
+     af4:	2023883a 	mov	r17,r4
+   alt_u32 bytes_read;
+
+   ALT_AVALON_I2C_DEV_t *i2c_dev = context;
+   IRQ_DATA_t *irq = i2c_dev->callback_context;
+
+   if (irq->irq_busy==2)  /*receive request*/
+     af8:	90800326 	beq	r18,r2,b08 <optional_irq_callback+0x34>
+
+/* for all functions in this file, see the altera_avalon_i2c.h file for more complete function descriptions. */
+
+/* optional irq callback */
+static void optional_irq_callback(void * context)
+{
+     afc:	048000b4 	movhi	r18,2
+     b00:	94a1a804 	addi	r18,r18,-31072
+     b04:	00001506 	br	b5c <optional_irq_callback+0x88>
+   ALT_AVALON_I2C_DEV_t *i2c_dev = context;
+   IRQ_DATA_t *irq = i2c_dev->callback_context;
+
+   if (irq->irq_busy==2)  /*receive request*/
+   {
+       alt_avalon_i2c_rx_read_available(i2c_dev, irq->buffer, irq->size, &bytes_read);
+     b08:	81800117 	ldw	r6,4(r16)
+     b0c:	81400017 	ldw	r5,0(r16)
+     b10:	d80f883a 	mov	r7,sp
+     b14:	000045c0 	call	45c <alt_avalon_i2c_rx_read_available>
+       irq->size-=bytes_read;
+     b18:	d8c00017 	ldw	r3,0(sp)
+     b1c:	80800117 	ldw	r2,4(r16)
+       irq->buffer+=bytes_read;
+     b20:	81000017 	ldw	r4,0(r16)
+   IRQ_DATA_t *irq = i2c_dev->callback_context;
+
+   if (irq->irq_busy==2)  /*receive request*/
+   {
+       alt_avalon_i2c_rx_read_available(i2c_dev, irq->buffer, irq->size, &bytes_read);
+       irq->size-=bytes_read;
+     b24:	10c5c83a 	sub	r2,r2,r3
+       irq->buffer+=bytes_read;
+     b28:	20c7883a 	add	r3,r4,r3
+   IRQ_DATA_t *irq = i2c_dev->callback_context;
+
+   if (irq->irq_busy==2)  /*receive request*/
+   {
+       alt_avalon_i2c_rx_read_available(i2c_dev, irq->buffer, irq->size, &bytes_read);
+       irq->size-=bytes_read;
+     b2c:	80800115 	stw	r2,4(r16)
+       irq->buffer+=bytes_read;
+     b30:	80c00015 	stw	r3,0(r16)
+       if (irq->size > 0)
+     b34:	103ff126 	beq	r2,zero,afc <__alt_data_end+0xff800afc>
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+     b38:	88800317 	ldw	r2,12(r17)
+     b3c:	00c00704 	movi	r3,28
+     b40:	10c00435 	stwio	r3,16(r2)
+       if (irq->size > 0)
+       {
+         /* clear ISR register content */
+         alt_avalon_i2c_int_clear(i2c_dev,ALT_AVALON_I2C_ISR_ALL_CLEARABLE_INTS_MSK);
+         /* re-enable the RX_READY interrupt */
+         alt_avalon_i2c_int_enable(i2c_dev,ALT_AVALON_I2C_ISER_RX_READY_EN_MSK);
+     b44:	900b883a 	mov	r5,r18
+     b48:	8809883a 	mov	r4,r17
+     b4c:	0000a8c0 	call	a8c <alt_avalon_i2c_int_enable>
+     b50:	00000806 	br	b74 <optional_irq_callback+0xa0>
+     b54:	94bfffc4 	addi	r18,r18,-1
+    /*for a write, this code will only be reached after the cmd fifo is*/
+    /*empty (sent).  For a read this code will only be reached after all*/
+    /*bytes have been received.*/
+    while (alt_avalon_i2c_is_busy(i2c_dev)) 
+    { 
+      if (--timeout == 0)
+     b58:	90000326 	beq	r18,zero,b68 <optional_irq_callback+0x94>
+
+    /*transaction should be done so no or minimal looping should occur*/
+    /*for a write, this code will only be reached after the cmd fifo is*/
+    /*empty (sent).  For a read this code will only be reached after all*/
+    /*bytes have been received.*/
+    while (alt_avalon_i2c_is_busy(i2c_dev)) 
+     b5c:	8809883a 	mov	r4,r17
+     b60:	000044c0 	call	44c <alt_avalon_i2c_is_busy>
+     b64:	103ffb1e 	bne	r2,zero,b54 <__alt_data_end+0xff800b54>
+         break;
+      }
+    }
+
+    /*disable the ip.  The ip is disabled and enabled for each transaction.*/
+    alt_avalon_i2c_disable(i2c_dev);
+     b68:	8809883a 	mov	r4,r17
+     b6c:	00002bc0 	call	2bc <alt_avalon_i2c_disable>
+
+    irq->irq_busy=0;
+     b70:	80000215 	stw	zero,8(r16)
+}
+     b74:	dfc00417 	ldw	ra,16(sp)
+     b78:	dc800317 	ldw	r18,12(sp)
+     b7c:	dc400217 	ldw	r17,8(sp)
+     b80:	dc000117 	ldw	r16,4(sp)
+     b84:	dec00504 	addi	sp,sp,20
+     b88:	f800283a 	ret
+
+00000b8c <alt_avalon_i2c_interrupt_transaction_status>:
+      *status=ALT_AVALON_I2C_ARB_LOST_ERR;
+    }
+}
+
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_interrupt_transaction_status(ALT_AVALON_I2C_DEV_t *i2c_dev)
+{
+     b8c:	defff804 	addi	sp,sp,-32
+     b90:	dc800515 	stw	r18,20(sp)
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    IRQ_DATA_t *irq_data = i2c_dev->callback_context;
+     b94:	24800717 	ldw	r18,28(r4)
+    alt_u32 timeout=10000 * irq_data->size + 10000;
+    alt_u32 saveints,temp_bytes_read;
+    
+    /* save current enabled interrupts */
+    alt_avalon_i2c_enabled_ints_get(i2c_dev,&saveints);
+     b98:	d9400104 	addi	r5,sp,4
+      *status=ALT_AVALON_I2C_ARB_LOST_ERR;
+    }
+}
+
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_interrupt_transaction_status(ALT_AVALON_I2C_DEV_t *i2c_dev)
+{
+     b9c:	dfc00715 	stw	ra,28(sp)
+     ba0:	dc400415 	stw	r17,16(sp)
+     ba4:	dc000315 	stw	r16,12(sp)
+     ba8:	2023883a 	mov	r17,r4
+     bac:	dcc00615 	stw	r19,24(sp)
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+     bb0:	d8000215 	stw	zero,8(sp)
+    IRQ_DATA_t *irq_data = i2c_dev->callback_context;
+    alt_u32 timeout=10000 * irq_data->size + 10000;
+     bb4:	94000117 	ldw	r16,4(r18)
+    alt_u32 saveints,temp_bytes_read;
+    
+    /* save current enabled interrupts */
+    alt_avalon_i2c_enabled_ints_get(i2c_dev,&saveints);
+     bb8:	00009b40 	call	9b4 <alt_avalon_i2c_enabled_ints_get>
+    
+    /* disable the enabled interrupts */
+    alt_avalon_i2c_int_disable(i2c_dev,saveints);
+     bbc:	d9400117 	ldw	r5,4(sp)
+     bc0:	8809883a 	mov	r4,r17
+     bc4:	00009c80 	call	9c8 <alt_avalon_i2c_int_disable>
+    
+    alt_avalon_i2c_check_nack(i2c_dev,&status);
+     bc8:	d9400204 	addi	r5,sp,8
+     bcc:	8809883a 	mov	r4,r17
+     bd0:	00005280 	call	528 <alt_avalon_i2c_check_nack>
+
+    if (status!=ALT_AVALON_I2C_SUCCESS)
+     bd4:	d8c00217 	ldw	r3,8(sp)
+     bd8:	90800217 	ldw	r2,8(r18)
+     bdc:	18001826 	beq	r3,zero,c40 <alt_avalon_i2c_interrupt_transaction_status+0xb4>
+    {
+      if (irq_data->irq_busy)
+     be0:	10001526 	beq	r2,zero,c38 <alt_avalon_i2c_interrupt_transaction_status+0xac>
+
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_interrupt_transaction_status(ALT_AVALON_I2C_DEV_t *i2c_dev)
+{
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    IRQ_DATA_t *irq_data = i2c_dev->callback_context;
+    alt_u32 timeout=10000 * irq_data->size + 10000;
+     be4:	84000044 	addi	r16,r16,1
+     be8:	8409c424 	muli	r16,r16,10000
+    {
+      if (irq_data->irq_busy)
+      {
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+        {
+              if (timeout<10) alt_busy_sleep(10000);
+     bec:	04c00244 	movi	r19,9
+
+    if (status!=ALT_AVALON_I2C_SUCCESS)
+    {
+      if (irq_data->irq_busy)
+      {
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+     bf0:	8809883a 	mov	r4,r17
+     bf4:	000044c0 	call	44c <alt_avalon_i2c_is_busy>
+     bf8:	10000726 	beq	r2,zero,c18 <alt_avalon_i2c_interrupt_transaction_status+0x8c>
+        {
+              if (timeout<10) alt_busy_sleep(10000);
+     bfc:	9c000236 	bltu	r19,r16,c08 <alt_avalon_i2c_interrupt_transaction_status+0x7c>
+     c00:	0109c404 	movi	r4,10000
+     c04:	000152c0 	call	152c <alt_busy_sleep>
+              if (--timeout == 0)
+     c08:	843fffc4 	addi	r16,r16,-1
+     c0c:	803ff81e 	bne	r16,zero,bf0 <__alt_data_end+0xff800bf0>
+              {
+                 status = ALT_AVALON_I2C_TIMEOUT;
+     c10:	00bfff84 	movi	r2,-2
+     c14:	d8800215 	stw	r2,8(sp)
+                 break;
+              }
+        }
+          
+        /*clear any rx entries */
+        alt_avalon_i2c_rx_read_available(i2c_dev, irq_data->buffer,0,&temp_bytes_read);
+     c18:	91400017 	ldw	r5,0(r18)
+     c1c:	d80f883a 	mov	r7,sp
+     c20:	000d883a 	mov	r6,zero
+     c24:	8809883a 	mov	r4,r17
+     c28:	000045c0 	call	45c <alt_avalon_i2c_rx_read_available>
+       
+        /*disable the ip.  The ip is disabled and enabled for each transaction. */
+        alt_avalon_i2c_disable(i2c_dev);
+     c2c:	8809883a 	mov	r4,r17
+     c30:	00002bc0 	call	2bc <alt_avalon_i2c_disable>
+          
+        /*abort the transaction */
+        irq_data->irq_busy=0;
+     c34:	90000215 	stw	zero,8(r18)
+      }
+      
+      /*return nack error so transaction can be retried*/
+      return status;
+     c38:	d8800217 	ldw	r2,8(sp)
+     c3c:	00000506 	br	c54 <alt_avalon_i2c_interrupt_transaction_status+0xc8>
+    }
+    
+    if (irq_data->irq_busy)
+     c40:	10000426 	beq	r2,zero,c54 <alt_avalon_i2c_interrupt_transaction_status+0xc8>
+    {
+        /*re-enable the interrupts*/
+        alt_avalon_i2c_int_enable(i2c_dev,saveints);
+     c44:	d9400117 	ldw	r5,4(sp)
+     c48:	8809883a 	mov	r4,r17
+     c4c:	0000a8c0 	call	a8c <alt_avalon_i2c_int_enable>
+        
+        /*return transaction still busy*/
+        return ALT_AVALON_I2C_BUSY;
+     c50:	00bffe44 	movi	r2,-7
+    }
+    
+    /*return transaction completed status, ok to do another transaction*/
+    return ALT_AVALON_I2C_SUCCESS;
+}
+     c54:	dfc00717 	ldw	ra,28(sp)
+     c58:	dcc00617 	ldw	r19,24(sp)
+     c5c:	dc800517 	ldw	r18,20(sp)
+     c60:	dc400417 	ldw	r17,16(sp)
+     c64:	dc000317 	ldw	r16,12(sp)
+     c68:	dec00804 	addi	sp,sp,32
+     c6c:	f800283a 	ret
+
+00000c70 <alt_avalon_i2c_rx_fifo_threshold_get>:
+
+/*Gets the current receive FIFO threshold level value. */
+void alt_avalon_i2c_rx_fifo_threshold_get(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                              ALT_AVALON_I2C_RX_DATA_FIFO_THRESHOLD_t *threshold)
+{
+    *threshold = (IORD_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base) & ALT_AVALON_I2C_CTRL_RX_DATA_FIFO_THD_MSK) >>  ALT_AVALON_I2C_CTRL_RX_DATA_FIFO_THD_OFST;
+     c70:	20800317 	ldw	r2,12(r4)
+     c74:	10800237 	ldwio	r2,8(r2)
+     c78:	10800c0c 	andi	r2,r2,48
+     c7c:	1005d13a 	srai	r2,r2,4
+     c80:	28800015 	stw	r2,0(r5)
+     c84:	f800283a 	ret
+
+00000c88 <alt_avalon_i2c_rx_fifo_threshold_set>:
+
+/*sets the current receive FIFO threshold level value. */
+void alt_avalon_i2c_rx_fifo_threshold_set(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                              const ALT_AVALON_I2C_RX_DATA_FIFO_THRESHOLD_t threshold)
+{
+    IORMW_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base,threshold << ALT_AVALON_I2C_CTRL_RX_DATA_FIFO_THD_OFST,ALT_AVALON_I2C_CTRL_RX_DATA_FIFO_THD_MSK);
+     c88:	20c00317 	ldw	r3,12(r4)
+     c8c:	18c00204 	addi	r3,r3,8
+     c90:	19000037 	ldwio	r4,0(r3)
+     c94:	00bff3c4 	movi	r2,-49
+     c98:	280a913a 	slli	r5,r5,4
+     c9c:	2084703a 	and	r2,r4,r2
+     ca0:	29400c0c 	andi	r5,r5,48
+     ca4:	288ab03a 	or	r5,r5,r2
+     ca8:	19400035 	stwio	r5,0(r3)
+     cac:	f800283a 	ret
+
+00000cb0 <alt_avalon_i2c_master_receive_using_interrupts>:
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_receive_using_interrupts(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                       alt_u8 * buffer,
+                                       const alt_u32 size,
+                                       const alt_u8 issue_restart,
+                                       const alt_u8 issue_stop)
+{
+     cb0:	defff704 	addi	sp,sp,-36
+     cb4:	dcc00315 	stw	r19,12(sp)
+     cb8:	dfc00815 	stw	ra,32(sp)
+     cbc:	ddc00715 	stw	r23,28(sp)
+     cc0:	dd800615 	stw	r22,24(sp)
+     cc4:	dd400515 	stw	r21,20(sp)
+     cc8:	dd000415 	stw	r20,16(sp)
+     ccc:	dc800215 	stw	r18,8(sp)
+     cd0:	dc400115 	stw	r17,4(sp)
+     cd4:	dc000015 	stw	r16,0(sp)
+     cd8:	dcc00917 	ldw	r19,36(sp)
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    IRQ_DATA_t *irq_data = i2c_dev->callback_context;    
+    alt_u32 timeout;
+    alt_u32 bytes_written=0;
+    
+    if (size==0)
+     cdc:	30004626 	beq	r6,zero,df8 <alt_avalon_i2c_master_receive_using_interrupts+0x148>
+    {
+      return ALT_AVALON_I2C_SUCCESS;
+    }
+    
+    /*Is the optional interrupt handler registered??*/
+    if (i2c_dev->callback != optional_irq_callback)
+     ce0:	20c00617 	ldw	r3,24(r4)
+     ce4:	00800034 	movhi	r2,0
+     ce8:	1082b504 	addi	r2,r2,2772
+     cec:	2023883a 	mov	r17,r4
+     cf0:	1880431e 	bne	r3,r2,e00 <alt_avalon_i2c_master_receive_using_interrupts+0x150>
+    {
+       return ALT_AVALON_I2C_BAD_ARG;    
+    }
+    
+    /*if a new transaction, enable ip and clear int status*/
+    if (!issue_restart) 
+     cf4:	3c003fcc 	andi	r16,r7,255
+     cf8:	3025883a 	mov	r18,r6
+     cfc:	282b883a 	mov	r21,r5
+                                       const alt_u32 size,
+                                       const alt_u8 issue_restart,
+                                       const alt_u8 issue_stop)
+{
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    IRQ_DATA_t *irq_data = i2c_dev->callback_context;    
+     d00:	25000717 	ldw	r20,28(r4)
+    {
+       return ALT_AVALON_I2C_BAD_ARG;    
+    }
+    
+    /*if a new transaction, enable ip and clear int status*/
+    if (!issue_restart) 
+     d04:	8000051e 	bne	r16,zero,d1c <alt_avalon_i2c_master_receive_using_interrupts+0x6c>
+    {
+      /*enable the ip.  The ip is disabled and enabled for each transaction.*/
+      status = alt_avalon_i2c_enable(i2c_dev);
+     d08:	00002740 	call	274 <alt_avalon_i2c_enable>
+      if (status != ALT_AVALON_I2C_SUCCESS)
+     d0c:	10003d1e 	bne	r2,zero,e04 <alt_avalon_i2c_master_receive_using_interrupts+0x154>
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+     d10:	88800317 	ldw	r2,12(r17)
+     d14:	00c00704 	movi	r3,28
+     d18:	10c00435 	stwio	r3,16(r2)
+      alt_avalon_i2c_int_clear(i2c_dev,ALT_AVALON_I2C_ISR_ALL_CLEARABLE_INTS_MSK);
+      
+    }
+
+    /*Start Write, transmit address. */
+    status = alt_avalon_i2c_send_address(i2c_dev,ALT_AVALON_I2C_READ,issue_restart);
+     d1c:	800d883a 	mov	r6,r16
+     d20:	01400044 	movi	r5,1
+     d24:	8809883a 	mov	r4,r17
+     d28:	00006280 	call	628 <alt_avalon_i2c_send_address>
+     d2c:	1021883a 	mov	r16,r2
+
+    if (status == ALT_AVALON_I2C_SUCCESS)
+     d30:	1000151e 	bne	r2,zero,d88 <alt_avalon_i2c_master_receive_using_interrupts+0xd8>
+     d34:	002d883a 	mov	r22,zero
+    {
+        while ((bytes_written < (size-1)) && (status == ALT_AVALON_I2C_SUCCESS))
+     d38:	95ffffc4 	addi	r23,r18,-1
+     d3c:	b5c0092e 	bgeu	r22,r23,d64 <alt_avalon_i2c_master_receive_using_interrupts+0xb4>
+     d40:	8000111e 	bne	r16,zero,d88 <alt_avalon_i2c_master_receive_using_interrupts+0xd8>
+        {
+            status = alt_avalon_i2c_cmd_write(i2c_dev, 0, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_NO_STOP);
+     d44:	000f883a 	mov	r7,zero
+     d48:	000d883a 	mov	r6,zero
+     d4c:	000b883a 	mov	r5,zero
+     d50:	8809883a 	mov	r4,r17
+     d54:	00005600 	call	560 <alt_avalon_i2c_cmd_write>
+     d58:	1021883a 	mov	r16,r2
+            bytes_written++;
+     d5c:	b5800044 	addi	r22,r22,1
+     d60:	003ff606 	br	d3c <__alt_data_end+0xff800d3c>
+        }
+
+        /* Last byte */
+        if (status == ALT_AVALON_I2C_SUCCESS)
+     d64:	8000081e 	bne	r16,zero,d88 <alt_avalon_i2c_master_receive_using_interrupts+0xd8>
+        {
+            status = alt_avalon_i2c_cmd_write(i2c_dev, 0, ALT_AVALON_I2C_NO_RESTART, issue_stop);
+     d68:	9cc03fcc 	andi	r19,r19,255
+     d6c:	980f883a 	mov	r7,r19
+     d70:	000d883a 	mov	r6,zero
+     d74:	000b883a 	mov	r5,zero
+     d78:	8809883a 	mov	r4,r17
+     d7c:	00005600 	call	560 <alt_avalon_i2c_cmd_write>
+     d80:	1021883a 	mov	r16,r2
+        }
+    }
+    
+    /*if error, wait until the ip is idle then disable the ip*/
+    if (status != ALT_AVALON_I2C_SUCCESS) 
+     d84:	10000f26 	beq	r2,zero,dc4 <alt_avalon_i2c_master_receive_using_interrupts+0x114>
+    {
+        timeout=10000 * size;
+     d88:	9489c424 	muli	r18,r18,10000
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+        {
+            if (timeout<10) alt_busy_sleep(10000);
+     d8c:	04c00244 	movi	r19,9
+    
+    /*if error, wait until the ip is idle then disable the ip*/
+    if (status != ALT_AVALON_I2C_SUCCESS) 
+    {
+        timeout=10000 * size;
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+     d90:	8809883a 	mov	r4,r17
+     d94:	000044c0 	call	44c <alt_avalon_i2c_is_busy>
+     d98:	10000626 	beq	r2,zero,db4 <alt_avalon_i2c_master_receive_using_interrupts+0x104>
+        {
+            if (timeout<10) alt_busy_sleep(10000);
+     d9c:	9c800236 	bltu	r19,r18,da8 <alt_avalon_i2c_master_receive_using_interrupts+0xf8>
+     da0:	0109c404 	movi	r4,10000
+     da4:	000152c0 	call	152c <alt_busy_sleep>
+            if (--timeout == 0)
+     da8:	94bfffc4 	addi	r18,r18,-1
+     dac:	903ff81e 	bne	r18,zero,d90 <__alt_data_end+0xff800d90>
+            {
+               status = ALT_AVALON_I2C_TIMEOUT;
+     db0:	043fff84 	movi	r16,-2
+               break;
+            }
+        }
+     
+        /*disable the ip.  The ip is disabled and enabled for each transaction.*/
+        alt_avalon_i2c_disable(i2c_dev);
+     db4:	8809883a 	mov	r4,r17
+     db8:	00002bc0 	call	2bc <alt_avalon_i2c_disable>
+     dbc:	8005883a 	mov	r2,r16
+     dc0:	00001006 	br	e04 <alt_avalon_i2c_master_receive_using_interrupts+0x154>
+    }
+    else
+    {
+       if (issue_stop)
+     dc4:	98000c26 	beq	r19,zero,df8 <alt_avalon_i2c_master_receive_using_interrupts+0x148>
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+     dc8:	88800317 	ldw	r2,12(r17)
+     dcc:	00c00704 	movi	r3,28
+     dd0:	10c00435 	stwio	r3,16(r2)
+       if (issue_stop)
+       {
+         /* clear ISR register content */
+         alt_avalon_i2c_int_clear(i2c_dev,ALT_AVALON_I2C_ISR_ALL_CLEARABLE_INTS_MSK);
+         /* set the cmd fifo threshold */
+         alt_avalon_i2c_rx_fifo_threshold_set(i2c_dev,ALT_AVALON_I2C_RX_DATA_FIFO_1_ENTRY);
+     dd4:	000b883a 	mov	r5,zero
+     dd8:	8809883a 	mov	r4,r17
+     ddc:	0000c880 	call	c88 <alt_avalon_i2c_rx_fifo_threshold_set>
+         /* set the interrupt transaction busy bit  2 = receive */
+         irq_data->irq_busy=2;
+     de0:	01400084 	movi	r5,2
+     de4:	a1400215 	stw	r5,8(r20)
+         
+         irq_data->buffer = buffer;
+     de8:	a5400015 	stw	r21,0(r20)
+         irq_data->size = size;
+     dec:	a4800115 	stw	r18,4(r20)
+         
+         /* enable the RX_READY interrupt */
+         alt_avalon_i2c_int_enable(i2c_dev,ALT_AVALON_I2C_ISER_RX_READY_EN_MSK);
+     df0:	8809883a 	mov	r4,r17
+     df4:	0000a8c0 	call	a8c <alt_avalon_i2c_int_enable>
+     df8:	0005883a 	mov	r2,zero
+     dfc:	00000106 	br	e04 <alt_avalon_i2c_master_receive_using_interrupts+0x154>
+    }
+    
+    /*Is the optional interrupt handler registered??*/
+    if (i2c_dev->callback != optional_irq_callback)
+    {
+       return ALT_AVALON_I2C_BAD_ARG;    
+     e00:	00bfff44 	movi	r2,-3
+         alt_avalon_i2c_int_enable(i2c_dev,ALT_AVALON_I2C_ISER_RX_READY_EN_MSK);
+       }
+    }
+
+    return status;
+}
+     e04:	dfc00817 	ldw	ra,32(sp)
+     e08:	ddc00717 	ldw	r23,28(sp)
+     e0c:	dd800617 	ldw	r22,24(sp)
+     e10:	dd400517 	ldw	r21,20(sp)
+     e14:	dd000417 	ldw	r20,16(sp)
+     e18:	dcc00317 	ldw	r19,12(sp)
+     e1c:	dc800217 	ldw	r18,8(sp)
+     e20:	dc400117 	ldw	r17,4(sp)
+     e24:	dc000017 	ldw	r16,0(sp)
+     e28:	dec00904 	addi	sp,sp,36
+     e2c:	f800283a 	ret
+
+00000e30 <alt_avalon_i2c_master_rx>:
+/*receive function with retry and optionally interrupts*/
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_rx(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                       alt_u8 * buffer,
+                                       const alt_u32 size,
+                                       const alt_u8 use_interrupts)
+{
+     e30:	defff604 	addi	sp,sp,-40
+     e34:	ddc00815 	stw	r23,32(sp)
+     e38:	dd800715 	stw	r22,28(sp)
+     e3c:	dd400615 	stw	r21,24(sp)
+     e40:	dd000515 	stw	r20,20(sp)
+     e44:	dcc00415 	stw	r19,16(sp)
+     e48:	dc800315 	stw	r18,12(sp)
+     e4c:	dc400215 	stw	r17,8(sp)
+     e50:	dc000115 	stw	r16,4(sp)
+     e54:	dfc00915 	stw	ra,36(sp)
+    ALT_AVALON_I2C_STATUS_CODE status;
+    alt_u32 retry=10000;  
+    
+    if (use_interrupts) 
+     e58:	39c03fcc 	andi	r7,r7,255
+/*receive function with retry and optionally interrupts*/
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_rx(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                       alt_u8 * buffer,
+                                       const alt_u32 size,
+                                       const alt_u8 use_interrupts)
+{
+     e5c:	2023883a 	mov	r17,r4
+     e60:	2825883a 	mov	r18,r5
+     e64:	3027883a 	mov	r19,r6
+     e68:	0409c404 	movi	r16,10000
+    ALT_AVALON_I2C_STATUS_CODE status;
+    alt_u32 retry=10000;  
+    
+    if (use_interrupts) 
+    {
+      while (retry--) 
+     e6c:	053fffc4 	movi	r20,-1
+      {
+        if (retry<10) alt_busy_sleep(10000);      
+     e70:	05400244 	movi	r21,9
+        status = alt_avalon_i2c_master_receive_using_interrupts(i2c_dev, buffer, size, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_STOP);     
+     e74:	05800044 	movi	r22,1
+        if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+     e78:	05c00084 	movi	r23,2
+                                       const alt_u8 use_interrupts)
+{
+    ALT_AVALON_I2C_STATUS_CODE status;
+    alt_u32 retry=10000;  
+    
+    if (use_interrupts) 
+     e7c:	38001926 	beq	r7,zero,ee4 <alt_avalon_i2c_master_rx+0xb4>
+    {
+      while (retry--) 
+     e80:	843fffc4 	addi	r16,r16,-1
+     e84:	85001926 	beq	r16,r20,eec <alt_avalon_i2c_master_rx+0xbc>
+      {
+        if (retry<10) alt_busy_sleep(10000);      
+     e88:	ac000236 	bltu	r21,r16,e94 <alt_avalon_i2c_master_rx+0x64>
+     e8c:	0109c404 	movi	r4,10000
+     e90:	000152c0 	call	152c <alt_busy_sleep>
+        status = alt_avalon_i2c_master_receive_using_interrupts(i2c_dev, buffer, size, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_STOP);     
+     e94:	dd800015 	stw	r22,0(sp)
+     e98:	000f883a 	mov	r7,zero
+     e9c:	980d883a 	mov	r6,r19
+     ea0:	900b883a 	mov	r5,r18
+     ea4:	8809883a 	mov	r4,r17
+     ea8:	0000cb00 	call	cb0 <alt_avalon_i2c_master_receive_using_interrupts>
+        if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+     eac:	10c001c4 	addi	r3,r2,7
+     eb0:	b8fff32e 	bgeu	r23,r3,e80 <__alt_data_end+0xff800e80>
+     eb4:	00000d06 	br	eec <alt_avalon_i2c_master_rx+0xbc>
+    }
+    else
+    {
+      while (retry--) 
+      {
+        if (retry<10) alt_busy_sleep(10000);      
+     eb8:	ac000236 	bltu	r21,r16,ec4 <alt_avalon_i2c_master_rx+0x94>
+     ebc:	0109c404 	movi	r4,10000
+     ec0:	000152c0 	call	152c <alt_busy_sleep>
+        status = alt_avalon_i2c_master_receive(i2c_dev, buffer, size, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_STOP);     
+     ec4:	dd800015 	stw	r22,0(sp)
+     ec8:	000f883a 	mov	r7,zero
+     ecc:	980d883a 	mov	r6,r19
+     ed0:	900b883a 	mov	r5,r18
+     ed4:	8809883a 	mov	r4,r17
+     ed8:	00007d80 	call	7d8 <alt_avalon_i2c_master_receive>
+        if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+     edc:	10c001c4 	addi	r3,r2,7
+     ee0:	b8c00236 	bltu	r23,r3,eec <alt_avalon_i2c_master_rx+0xbc>
+        break;
+      }
+    }
+    else
+    {
+      while (retry--) 
+     ee4:	843fffc4 	addi	r16,r16,-1
+     ee8:	853ff31e 	bne	r16,r20,eb8 <__alt_data_end+0xff800eb8>
+        break;
+      }
+    }
+    
+    return status;
+}        
+     eec:	dfc00917 	ldw	ra,36(sp)
+     ef0:	ddc00817 	ldw	r23,32(sp)
+     ef4:	dd800717 	ldw	r22,28(sp)
+     ef8:	dd400617 	ldw	r21,24(sp)
+     efc:	dd000517 	ldw	r20,20(sp)
+     f00:	dcc00417 	ldw	r19,16(sp)
+     f04:	dc800317 	ldw	r18,12(sp)
+     f08:	dc400217 	ldw	r17,8(sp)
+     f0c:	dc000117 	ldw	r16,4(sp)
+     f10:	dec00a04 	addi	sp,sp,40
+     f14:	f800283a 	ret
+
+00000f18 <alt_avalon_i2c_tfr_cmd_fifo_threshold_get>:
+
+/*Gets the current Transfer Command FIFO threshold level value.*/
+void alt_avalon_i2c_tfr_cmd_fifo_threshold_get(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                              ALT_AVALON_I2C_TFR_CMD_FIFO_THRESHOLD_t *threshold)
+{
+    *threshold = (IORD_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base) & ALT_AVALON_I2C_CTRL_TFR_CMD_FIFO_THD_MSK) >> ALT_AVALON_I2C_CTRL_TFR_CMD_FIFO_THD_OFST;
+     f18:	20800317 	ldw	r2,12(r4)
+     f1c:	10800237 	ldwio	r2,8(r2)
+     f20:	1080030c 	andi	r2,r2,12
+     f24:	1005d0ba 	srai	r2,r2,2
+     f28:	28800015 	stw	r2,0(r5)
+     f2c:	f800283a 	ret
+
+00000f30 <alt_avalon_i2c_tfr_cmd_fifo_threshold_set>:
+
+/*Sets the current Transfer Command FIFO threshold level value.*/
+void alt_avalon_i2c_tfr_cmd_fifo_threshold_set(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                              const ALT_AVALON_I2C_TFR_CMD_FIFO_THRESHOLD_t threshold)
+{
+  IORMW_ALT_AVALON_I2C_CTRL(i2c_dev->i2c_base,threshold << ALT_AVALON_I2C_CTRL_TFR_CMD_FIFO_THD_OFST,ALT_AVALON_I2C_CTRL_TFR_CMD_FIFO_THD_MSK);
+     f30:	20c00317 	ldw	r3,12(r4)
+     f34:	18c00204 	addi	r3,r3,8
+     f38:	19000037 	ldwio	r4,0(r3)
+     f3c:	00bffcc4 	movi	r2,-13
+     f40:	294b883a 	add	r5,r5,r5
+     f44:	294b883a 	add	r5,r5,r5
+     f48:	2084703a 	and	r2,r4,r2
+     f4c:	2940030c 	andi	r5,r5,12
+     f50:	288ab03a 	or	r5,r5,r2
+     f54:	19400035 	stwio	r5,0(r3)
+     f58:	f800283a 	ret
+
+00000f5c <alt_avalon_i2c_init>:
+
+ /* Initializes the I2C Module. This routine is called
+ * from the ALT_AVALON_I2C_INIT macro and is called automatically
+ * by alt_sys_init.c */
+void alt_avalon_i2c_init (ALT_AVALON_I2C_DEV_t *dev)
+{
+     f5c:	defff804 	addi	sp,sp,-32
+     f60:	dfc00715 	stw	ra,28(sp)
+     f64:	dc000515 	stw	r16,20(sp)
+     f68:	dc400615 	stw	r17,24(sp)
+     f6c:	2021883a 	mov	r16,r4
+    extern alt_llist alt_avalon_i2c_list;
+    ALT_AVALON_I2C_MASTER_CONFIG_t cfg;
+    int error;
+
+    /* disable ip */
+    alt_avalon_i2c_disable(dev);
+     f70:	00002bc0 	call	2bc <alt_avalon_i2c_disable>
+
+    /* Disable interrupts */
+    alt_avalon_i2c_int_disable(dev,ALT_AVALON_I2C_ISR_ALLINTS_MSK);
+     f74:	014007c4 	movi	r5,31
+     f78:	8009883a 	mov	r4,r16
+     f7c:	00009c80 	call	9c8 <alt_avalon_i2c_int_disable>
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+     f80:	80800317 	ldw	r2,12(r16)
+     f84:	00c00704 	movi	r3,28
+     f88:	10c00435 	stwio	r3,16(r2)
+
+    /* clear ISR register content */
+    alt_avalon_i2c_int_clear(dev,ALT_AVALON_I2C_ISR_ALL_CLEARABLE_INTS_MSK);
+    
+    /* set the cmd fifo threshold */
+    alt_avalon_i2c_tfr_cmd_fifo_threshold_set(dev,ALT_AVALON_I2C_TFR_CMD_FIFO_NOT_FULL);
+     f8c:	044000c4 	movi	r17,3
+     f90:	880b883a 	mov	r5,r17
+     f94:	8009883a 	mov	r4,r16
+     f98:	0000f300 	call	f30 <alt_avalon_i2c_tfr_cmd_fifo_threshold_set>
+    
+    /* set the tx fifo threshold */
+    alt_avalon_i2c_rx_fifo_threshold_set(dev,ALT_AVALON_I2C_RX_DATA_FIFO_FULL);
+     f9c:	880b883a 	mov	r5,r17
+     fa0:	8009883a 	mov	r4,r16
+     fa4:	0000c880 	call	c88 <alt_avalon_i2c_rx_fifo_threshold_set>
+    
+    /*set the address mode */
+    cfg.addr_mode = ALT_AVALON_I2C_ADDR_MODE_7_BIT;
+    
+    /* set the bus speed */
+    alt_avalon_i2c_master_config_speed_set(dev,&cfg,ALT_AVALON_I2C_SS_MAX_HZ);
+     fa8:	018000b4 	movhi	r6,2
+     fac:	31a1a804 	addi	r6,r6,-31072
+     fb0:	d9400104 	addi	r5,sp,4
+     fb4:	8009883a 	mov	r4,r16
+    
+    /* set the tx fifo threshold */
+    alt_avalon_i2c_rx_fifo_threshold_set(dev,ALT_AVALON_I2C_RX_DATA_FIFO_FULL);
+    
+    /* set the default bus speed */
+    cfg.speed_mode = ALT_AVALON_I2C_SPEED_STANDARD;
+     fb8:	d8000215 	stw	zero,8(sp)
+    
+    /*set the address mode */
+    cfg.addr_mode = ALT_AVALON_I2C_ADDR_MODE_7_BIT;
+     fbc:	d8000115 	stw	zero,4(sp)
+    
+    /* set the bus speed */
+    alt_avalon_i2c_master_config_speed_set(dev,&cfg,ALT_AVALON_I2C_SS_MAX_HZ);
+     fc0:	00003c00 	call	3c0 <alt_avalon_i2c_master_config_speed_set>
+    
+    /* write the cfg information */
+    alt_avalon_i2c_master_config_set(dev,&cfg);
+     fc4:	d9400104 	addi	r5,sp,4
+     fc8:	8009883a 	mov	r4,r16
+     fcc:	000031c0 	call	31c <alt_avalon_i2c_master_config_set>
+    
+    /* Register this instance of the i2c controller with HAL */
+    alt_dev_llist_insert((alt_dev_llist*) dev, &alt_avalon_i2c_list);
+     fd0:	8009883a 	mov	r4,r16
+     fd4:	d1600104 	addi	r5,gp,-32764
+     fd8:	00015bc0 	call	15bc <alt_dev_llist_insert>
+    error = ALT_SEM_CREATE (&dev->regs_lock, 1);
+
+    if (!error)
+    {        
+        /* Install IRQ handler */
+        alt_ic_isr_register(dev->irq_controller_ID, dev->irq_ID, alt_avalon_i2c_irq, dev, 0x0);
+     fdc:	81400517 	ldw	r5,20(r16)
+     fe0:	81000417 	ldw	r4,16(r16)
+     fe4:	01800034 	movhi	r6,0
+     fe8:	d8000015 	stw	zero,0(sp)
+     fec:	800f883a 	mov	r7,r16
+     ff0:	31828504 	addi	r6,r6,2580
+     ff4:	00014b40 	call	14b4 <alt_ic_isr_register>
+        alt_printf("failed to create semaphores\n");
+    }
+
+    return;
+
+}
+     ff8:	dfc00717 	ldw	ra,28(sp)
+     ffc:	dc400617 	ldw	r17,24(sp)
+    1000:	dc000517 	ldw	r16,20(sp)
+    1004:	dec00804 	addi	sp,sp,32
+    1008:	f800283a 	ret
+
+0000100c <alt_avalon_i2c_master_transmit_using_interrupts>:
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_transmit_using_interrupts(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                        const alt_u8 * buffer,
+                                        alt_u32 size,
+                                        const alt_u8 issue_restart,
+                                        const alt_u8 issue_stop)
+{
+    100c:	defff804 	addi	sp,sp,-32
+    1010:	dd000415 	stw	r20,16(sp)
+    1014:	dfc00715 	stw	ra,28(sp)
+    1018:	dd800615 	stw	r22,24(sp)
+    101c:	dd400515 	stw	r21,20(sp)
+    1020:	dcc00315 	stw	r19,12(sp)
+    1024:	dc800215 	stw	r18,8(sp)
+    1028:	dc400115 	stw	r17,4(sp)
+    102c:	dc000015 	stw	r16,0(sp)
+    1030:	dd000817 	ldw	r20,32(sp)
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout=size*10000;
+    IRQ_DATA_t *irq_data = i2c_dev->callback_context;    
+    
+    if (size==0)
+    1034:	30004426 	beq	r6,zero,1148 <alt_avalon_i2c_master_transmit_using_interrupts+0x13c>
+    {
+      return ALT_AVALON_I2C_SUCCESS;
+    }
+    
+    /*IS the optional interrupt handler registered??*/
+    if (i2c_dev->callback != optional_irq_callback)
+    1038:	20c00617 	ldw	r3,24(r4)
+    103c:	00800034 	movhi	r2,0
+    1040:	1082b504 	addi	r2,r2,2772
+    1044:	2023883a 	mov	r17,r4
+    1048:	1880411e 	bne	r3,r2,1150 <alt_avalon_i2c_master_transmit_using_interrupts+0x144>
+    {
+       return ALT_AVALON_I2C_BAD_ARG;    
+    }
+    
+    /*if a new transaction, enable ip and clear int status*/
+    if (!issue_restart) 
+    104c:	3c003fcc 	andi	r16,r7,255
+    1050:	2827883a 	mov	r19,r5
+    1054:	3025883a 	mov	r18,r6
+                                        const alt_u8 issue_restart,
+                                        const alt_u8 issue_stop)
+{
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout=size*10000;
+    IRQ_DATA_t *irq_data = i2c_dev->callback_context;    
+    1058:	25400717 	ldw	r21,28(r4)
+    {
+       return ALT_AVALON_I2C_BAD_ARG;    
+    }
+    
+    /*if a new transaction, enable ip and clear int status*/
+    if (!issue_restart) 
+    105c:	8000051e 	bne	r16,zero,1074 <alt_avalon_i2c_master_transmit_using_interrupts+0x68>
+    {
+      /*enable the ip.  The ip is disabled and enabled for each transaction.*/
+      status = alt_avalon_i2c_enable(i2c_dev);
+    1060:	00002740 	call	274 <alt_avalon_i2c_enable>
+      if (status != ALT_AVALON_I2C_SUCCESS)
+    1064:	10003b1e 	bne	r2,zero,1154 <alt_avalon_i2c_master_transmit_using_interrupts+0x148>
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+    1068:	88800317 	ldw	r2,12(r17)
+    106c:	00c00704 	movi	r3,28
+    1070:	10c00435 	stwio	r3,16(r2)
+      /*Clear the ISR reg*/
+      alt_avalon_i2c_int_clear(i2c_dev,ALT_AVALON_I2C_ISR_ALL_CLEARABLE_INTS_MSK);
+    }
+
+    /*Start Write, transmit address. */
+    status = alt_avalon_i2c_send_address(i2c_dev,ALT_AVALON_I2C_WRITE,issue_restart);
+    1074:	800d883a 	mov	r6,r16
+    1078:	000b883a 	mov	r5,zero
+    107c:	8809883a 	mov	r4,r17
+    1080:	00006280 	call	628 <alt_avalon_i2c_send_address>
+    1084:	1021883a 	mov	r16,r2
+        
+    if (status == ALT_AVALON_I2C_SUCCESS)
+    1088:	1000151e 	bne	r2,zero,10e0 <alt_avalon_i2c_master_transmit_using_interrupts+0xd4>
+    108c:	95bfffc4 	addi	r22,r18,-1
+    1090:	9dad883a 	add	r22,r19,r22
+    {
+        while ((size > 1) && (status == ALT_AVALON_I2C_SUCCESS))
+    1094:	9d800926 	beq	r19,r22,10bc <alt_avalon_i2c_master_transmit_using_interrupts+0xb0>
+    1098:	8000111e 	bne	r16,zero,10e0 <alt_avalon_i2c_master_transmit_using_interrupts+0xd4>
+        {
+            status = alt_avalon_i2c_cmd_write(i2c_dev, *buffer, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_NO_STOP);
+    109c:	99400003 	ldbu	r5,0(r19)
+    10a0:	000f883a 	mov	r7,zero
+    10a4:	000d883a 	mov	r6,zero
+    10a8:	8809883a 	mov	r4,r17
+    10ac:	00005600 	call	560 <alt_avalon_i2c_cmd_write>
+    10b0:	1021883a 	mov	r16,r2
+            
+            ++buffer;
+    10b4:	9cc00044 	addi	r19,r19,1
+    10b8:	003ff606 	br	1094 <__alt_data_end+0xff801094>
+            --size;
+        }
+
+        /* Last byte */
+        if (status == ALT_AVALON_I2C_SUCCESS)
+    10bc:	8000081e 	bne	r16,zero,10e0 <alt_avalon_i2c_master_transmit_using_interrupts+0xd4>
+        {
+            status = alt_avalon_i2c_cmd_write(i2c_dev, *buffer, ALT_AVALON_I2C_NO_RESTART, issue_stop);
+    10c0:	99400003 	ldbu	r5,0(r19)
+    10c4:	a5003fcc 	andi	r20,r20,255
+    10c8:	a00f883a 	mov	r7,r20
+    10cc:	000d883a 	mov	r6,zero
+    10d0:	8809883a 	mov	r4,r17
+    10d4:	00005600 	call	560 <alt_avalon_i2c_cmd_write>
+    10d8:	1021883a 	mov	r16,r2
+            --size;
+        }
+    }
+    
+    /*if error, wait until the ip is idle then disable the ip*/
+    if (status != ALT_AVALON_I2C_SUCCESS) 
+    10dc:	10000f26 	beq	r2,zero,111c <alt_avalon_i2c_master_transmit_using_interrupts+0x110>
+                                        alt_u32 size,
+                                        const alt_u8 issue_restart,
+                                        const alt_u8 issue_stop)
+{
+    ALT_AVALON_I2C_STATUS_CODE status = ALT_AVALON_I2C_SUCCESS;
+    alt_u32 timeout=size*10000;
+    10e0:	9489c424 	muli	r18,r18,10000
+    if (status != ALT_AVALON_I2C_SUCCESS) 
+    {
+
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+        {
+            if (timeout<10) alt_busy_sleep(10000);        
+    10e4:	04c00244 	movi	r19,9
+    
+    /*if error, wait until the ip is idle then disable the ip*/
+    if (status != ALT_AVALON_I2C_SUCCESS) 
+    {
+
+        while (alt_avalon_i2c_is_busy(i2c_dev))
+    10e8:	8809883a 	mov	r4,r17
+    10ec:	000044c0 	call	44c <alt_avalon_i2c_is_busy>
+    10f0:	10000626 	beq	r2,zero,110c <alt_avalon_i2c_master_transmit_using_interrupts+0x100>
+        {
+            if (timeout<10) alt_busy_sleep(10000);        
+    10f4:	9c800236 	bltu	r19,r18,1100 <alt_avalon_i2c_master_transmit_using_interrupts+0xf4>
+    10f8:	0109c404 	movi	r4,10000
+    10fc:	000152c0 	call	152c <alt_busy_sleep>
+            if (--timeout == 0)
+    1100:	94bfffc4 	addi	r18,r18,-1
+    1104:	903ff81e 	bne	r18,zero,10e8 <__alt_data_end+0xff8010e8>
+            {
+               status = ALT_AVALON_I2C_TIMEOUT;
+    1108:	043fff84 	movi	r16,-2
+               break;
+            }
+        }
+     
+        /*disable the ip.  The ip is disabled and enabled for each transaction.*/
+        alt_avalon_i2c_disable(i2c_dev);
+    110c:	8809883a 	mov	r4,r17
+    1110:	00002bc0 	call	2bc <alt_avalon_i2c_disable>
+    1114:	8005883a 	mov	r2,r16
+    1118:	00000e06 	br	1154 <alt_avalon_i2c_master_transmit_using_interrupts+0x148>
+    }
+    else
+    {
+       if (issue_stop)
+    111c:	a0000a26 	beq	r20,zero,1148 <alt_avalon_i2c_master_transmit_using_interrupts+0x13c>
+
+/*Clears the specified I2C controller interrupt status conditions identified
+ * in the mask. */
+void alt_avalon_i2c_int_clear(ALT_AVALON_I2C_DEV_t *i2c_dev, const alt_u32 mask)
+{
+    IOWR_ALT_AVALON_I2C_ISR(i2c_dev->i2c_base,mask);
+    1120:	88800317 	ldw	r2,12(r17)
+    1124:	00c00704 	movi	r3,28
+    1128:	10c00435 	stwio	r3,16(r2)
+       if (issue_stop)
+       {
+         /* clear ISR register content */
+         alt_avalon_i2c_int_clear(i2c_dev,ALT_AVALON_I2C_ISR_ALL_CLEARABLE_INTS_MSK);
+         /* set the cmd fifo threshold */
+         alt_avalon_i2c_tfr_cmd_fifo_threshold_set(i2c_dev,ALT_AVALON_I2C_TFR_CMD_FIFO_EMPTY);
+    112c:	000b883a 	mov	r5,zero
+    1130:	8809883a 	mov	r4,r17
+    1134:	0000f300 	call	f30 <alt_avalon_i2c_tfr_cmd_fifo_threshold_set>
+         /* set the interrupt transaction busy bit */
+         irq_data->irq_busy=1;
+    1138:	01400044 	movi	r5,1
+    113c:	a9400215 	stw	r5,8(r21)
+         /* enable the TX_READY interrupt */
+         alt_avalon_i2c_int_enable(i2c_dev,ALT_AVALON_I2C_ISER_TX_READY_EN_MSK);
+    1140:	8809883a 	mov	r4,r17
+    1144:	0000a8c0 	call	a8c <alt_avalon_i2c_int_enable>
+    1148:	0005883a 	mov	r2,zero
+    114c:	00000106 	br	1154 <alt_avalon_i2c_master_transmit_using_interrupts+0x148>
+    }
+    
+    /*IS the optional interrupt handler registered??*/
+    if (i2c_dev->callback != optional_irq_callback)
+    {
+       return ALT_AVALON_I2C_BAD_ARG;    
+    1150:	00bfff44 	movi	r2,-3
+         alt_avalon_i2c_int_enable(i2c_dev,ALT_AVALON_I2C_ISER_TX_READY_EN_MSK);
+       }
+    }
+    
+    return status;
+}
+    1154:	dfc00717 	ldw	ra,28(sp)
+    1158:	dd800617 	ldw	r22,24(sp)
+    115c:	dd400517 	ldw	r21,20(sp)
+    1160:	dd000417 	ldw	r20,16(sp)
+    1164:	dcc00317 	ldw	r19,12(sp)
+    1168:	dc800217 	ldw	r18,8(sp)
+    116c:	dc400117 	ldw	r17,4(sp)
+    1170:	dc000017 	ldw	r16,0(sp)
+    1174:	dec00804 	addi	sp,sp,32
+    1178:	f800283a 	ret
+
+0000117c <alt_avalon_i2c_master_tx>:
+/*transmit function with retry and optionally interrupts*/
+ALT_AVALON_I2C_STATUS_CODE alt_avalon_i2c_master_tx(ALT_AVALON_I2C_DEV_t *i2c_dev,
+                                       const alt_u8 * buffer,
+                                       const alt_u32 size,
+                                       const alt_u8 use_interrupts)
+{
+    117c:	defff504 	addi	sp,sp,-44
+    1180:	df000915 	stw	fp,36(sp)
+    1184:	ddc00815 	stw	r23,32(sp)
+    1188:	dd800715 	stw	r22,28(sp)
+    118c:	dd400615 	stw	r21,24(sp)
+    1190:	dd000515 	stw	r20,20(sp)
+    1194:	dcc00415 	stw	r19,16(sp)
+    1198:	dc800315 	stw	r18,12(sp)
+    119c:	dc400215 	stw	r17,8(sp)
+    11a0:	dc000115 	stw	r16,4(sp)
+    11a4:	dfc00a15 	stw	ra,40(sp)
+    11a8:	2023883a 	mov	r17,r4
+    11ac:	2825883a 	mov	r18,r5
+    11b0:	3027883a 	mov	r19,r6
+    11b4:	382d883a 	mov	r22,r7
+    ALT_AVALON_I2C_STATUS_CODE status;
+    alt_u32 retry=10000;  
+    11b8:	0409c404 	movi	r16,10000
+    
+    while (retry--)
+    11bc:	057fffc4 	movi	r21,-1
+    {
+      if (retry<10) alt_busy_sleep(10000);
+    11c0:	05c00244 	movi	r23,9
+    11c4:	05000044 	movi	r20,1
+      }
+      else
+      {
+         status = alt_avalon_i2c_master_transmit(i2c_dev, buffer, size, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_STOP);
+      }
+      if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+    11c8:	07000084 	movi	fp,2
+                                       const alt_u8 use_interrupts)
+{
+    ALT_AVALON_I2C_STATUS_CODE status;
+    alt_u32 retry=10000;  
+    
+    while (retry--)
+    11cc:	843fffc4 	addi	r16,r16,-1
+    11d0:	85400f26 	beq	r16,r21,1210 <alt_avalon_i2c_master_tx+0x94>
+    {
+      if (retry<10) alt_busy_sleep(10000);
+    11d4:	bc000236 	bltu	r23,r16,11e0 <alt_avalon_i2c_master_tx+0x64>
+    11d8:	0109c404 	movi	r4,10000
+    11dc:	000152c0 	call	152c <alt_busy_sleep>
+      if (use_interrupts)
+    11e0:	b0803fcc 	andi	r2,r22,255
+      {
+         status = alt_avalon_i2c_master_transmit_using_interrupts(i2c_dev, buffer, size, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_STOP); 
+    11e4:	dd000015 	stw	r20,0(sp)
+    11e8:	000f883a 	mov	r7,zero
+    11ec:	980d883a 	mov	r6,r19
+    11f0:	900b883a 	mov	r5,r18
+    11f4:	8809883a 	mov	r4,r17
+    alt_u32 retry=10000;  
+    
+    while (retry--)
+    {
+      if (retry<10) alt_busy_sleep(10000);
+      if (use_interrupts)
+    11f8:	10000226 	beq	r2,zero,1204 <alt_avalon_i2c_master_tx+0x88>
+      {
+         status = alt_avalon_i2c_master_transmit_using_interrupts(i2c_dev, buffer, size, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_STOP); 
+    11fc:	000100c0 	call	100c <alt_avalon_i2c_master_transmit_using_interrupts>
+    1200:	00000106 	br	1208 <alt_avalon_i2c_master_tx+0x8c>
+      }
+      else
+      {
+         status = alt_avalon_i2c_master_transmit(i2c_dev, buffer, size, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_STOP);
+    1204:	00006a00 	call	6a0 <alt_avalon_i2c_master_transmit>
+      }
+      if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+    1208:	10c001c4 	addi	r3,r2,7
+    120c:	e0ffef2e 	bgeu	fp,r3,11cc <__alt_data_end+0xff8011cc>
+      break;
+    }
+
+    return status;
+}        
+    1210:	dfc00a17 	ldw	ra,40(sp)
+    1214:	df000917 	ldw	fp,36(sp)
+    1218:	ddc00817 	ldw	r23,32(sp)
+    121c:	dd800717 	ldw	r22,28(sp)
+    1220:	dd400617 	ldw	r21,24(sp)
+    1224:	dd000517 	ldw	r20,20(sp)
+    1228:	dcc00417 	ldw	r19,16(sp)
+    122c:	dc800317 	ldw	r18,12(sp)
+    1230:	dc400217 	ldw	r17,8(sp)
+    1234:	dc000117 	ldw	r16,4(sp)
+    1238:	dec00b04 	addi	sp,sp,44
+    123c:	f800283a 	ret
+
+00001240 <alt_avalon_i2c_master_tx_rx>:
+                                       const alt_u8 * txbuffer,
+                                       const alt_u32 txsize,
+                                       alt_u8 * rxbuffer,
+                                       const alt_u32 rxsize,
+                                       const alt_u8 use_interrupts)                                       
+{
+    1240:	defff504 	addi	sp,sp,-44
+    ALT_AVALON_I2C_STATUS_CODE status;
+    alt_u32 retry=10000;  
+    
+    if (use_interrupts)
+    1244:	d8c00c03 	ldbu	r3,48(sp)
+                                       const alt_u8 * txbuffer,
+                                       const alt_u32 txsize,
+                                       alt_u8 * rxbuffer,
+                                       const alt_u32 rxsize,
+                                       const alt_u8 use_interrupts)                                       
+{
+    1248:	df000915 	stw	fp,36(sp)
+    124c:	ddc00815 	stw	r23,32(sp)
+    1250:	dd800715 	stw	r22,28(sp)
+    1254:	dd400615 	stw	r21,24(sp)
+    1258:	dd000515 	stw	r20,20(sp)
+    125c:	dcc00415 	stw	r19,16(sp)
+    1260:	dc800315 	stw	r18,12(sp)
+    1264:	dc400215 	stw	r17,8(sp)
+    1268:	dc000115 	stw	r16,4(sp)
+    126c:	dfc00a15 	stw	ra,40(sp)
+    1270:	2023883a 	mov	r17,r4
+    1274:	2825883a 	mov	r18,r5
+    1278:	3027883a 	mov	r19,r6
+    127c:	3829883a 	mov	r20,r7
+    1280:	0409c404 	movi	r16,10000
+    ALT_AVALON_I2C_STATUS_CODE status;
+    alt_u32 retry=10000;  
+    
+    if (use_interrupts)
+    {
+      while (retry--) 
+    1284:	05bfffc4 	movi	r22,-1
+      {
+        if (retry<10) alt_busy_sleep(10000);      
+    1288:	05c00244 	movi	r23,9
+        status = alt_avalon_i2c_master_transmit_using_interrupts(i2c_dev, txbuffer, txsize, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_NO_STOP);     
+        if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+    128c:	05400084 	movi	r21,2
+  
+        status = alt_avalon_i2c_master_receive_using_interrupts(i2c_dev, rxbuffer, rxsize, ALT_AVALON_I2C_RESTART, ALT_AVALON_I2C_STOP);     
+    1290:	07000044 	movi	fp,1
+                                       const alt_u8 use_interrupts)                                       
+{
+    ALT_AVALON_I2C_STATUS_CODE status;
+    alt_u32 retry=10000;  
+    
+    if (use_interrupts)
+    1294:	18002126 	beq	r3,zero,131c <alt_avalon_i2c_master_tx_rx+0xdc>
+    {
+      while (retry--) 
+    1298:	843fffc4 	addi	r16,r16,-1
+    129c:	85802a26 	beq	r16,r22,1348 <alt_avalon_i2c_master_tx_rx+0x108>
+      {
+        if (retry<10) alt_busy_sleep(10000);      
+    12a0:	bc000236 	bltu	r23,r16,12ac <alt_avalon_i2c_master_tx_rx+0x6c>
+    12a4:	0109c404 	movi	r4,10000
+    12a8:	000152c0 	call	152c <alt_busy_sleep>
+        status = alt_avalon_i2c_master_transmit_using_interrupts(i2c_dev, txbuffer, txsize, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_NO_STOP);     
+    12ac:	d8000015 	stw	zero,0(sp)
+    12b0:	000f883a 	mov	r7,zero
+    12b4:	980d883a 	mov	r6,r19
+    12b8:	900b883a 	mov	r5,r18
+    12bc:	8809883a 	mov	r4,r17
+    12c0:	000100c0 	call	100c <alt_avalon_i2c_master_transmit_using_interrupts>
+        if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+    12c4:	10c001c4 	addi	r3,r2,7
+    12c8:	a8fff32e 	bgeu	r21,r3,1298 <__alt_data_end+0xff801298>
+  
+        status = alt_avalon_i2c_master_receive_using_interrupts(i2c_dev, rxbuffer, rxsize, ALT_AVALON_I2C_RESTART, ALT_AVALON_I2C_STOP);     
+    12cc:	d9800b17 	ldw	r6,44(sp)
+    12d0:	df000015 	stw	fp,0(sp)
+    12d4:	01c00044 	movi	r7,1
+    12d8:	a00b883a 	mov	r5,r20
+    12dc:	8809883a 	mov	r4,r17
+    12e0:	0000cb00 	call	cb0 <alt_avalon_i2c_master_receive_using_interrupts>
+        if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+    12e4:	10c001c4 	addi	r3,r2,7
+    12e8:	a8ffeb2e 	bgeu	r21,r3,1298 <__alt_data_end+0xff801298>
+    12ec:	00001606 	br	1348 <alt_avalon_i2c_master_tx_rx+0x108>
+    }
+    else 
+    {
+      while (retry--) 
+      {
+        if (retry<10) alt_busy_sleep(10000);      
+    12f0:	bc000236 	bltu	r23,r16,12fc <alt_avalon_i2c_master_tx_rx+0xbc>
+    12f4:	0109c404 	movi	r4,10000
+    12f8:	000152c0 	call	152c <alt_busy_sleep>
+        status = alt_avalon_i2c_master_transmit(i2c_dev, txbuffer, txsize, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_NO_STOP);     
+    12fc:	d8000015 	stw	zero,0(sp)
+    1300:	000f883a 	mov	r7,zero
+    1304:	980d883a 	mov	r6,r19
+    1308:	900b883a 	mov	r5,r18
+    130c:	8809883a 	mov	r4,r17
+    1310:	00006a00 	call	6a0 <alt_avalon_i2c_master_transmit>
+        if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+    1314:	10c001c4 	addi	r3,r2,7
+    1318:	a8c00336 	bltu	r21,r3,1328 <alt_avalon_i2c_master_tx_rx+0xe8>
+        break;
+      }
+    }
+    else 
+    {
+      while (retry--) 
+    131c:	843fffc4 	addi	r16,r16,-1
+    1320:	85bff31e 	bne	r16,r22,12f0 <__alt_data_end+0xff8012f0>
+    1324:	00000806 	br	1348 <alt_avalon_i2c_master_tx_rx+0x108>
+      {
+        if (retry<10) alt_busy_sleep(10000);      
+        status = alt_avalon_i2c_master_transmit(i2c_dev, txbuffer, txsize, ALT_AVALON_I2C_NO_RESTART, ALT_AVALON_I2C_NO_STOP);     
+        if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+
+        status = alt_avalon_i2c_master_receive(i2c_dev, rxbuffer, rxsize, ALT_AVALON_I2C_RESTART, ALT_AVALON_I2C_STOP);     
+    1328:	d9800b17 	ldw	r6,44(sp)
+    132c:	df000015 	stw	fp,0(sp)
+    1330:	01c00044 	movi	r7,1
+    1334:	a00b883a 	mov	r5,r20
+    1338:	8809883a 	mov	r4,r17
+    133c:	00007d80 	call	7d8 <alt_avalon_i2c_master_receive>
+        if ((status==ALT_AVALON_I2C_ARB_LOST_ERR) || (status==ALT_AVALON_I2C_NACK_ERR) || (status==ALT_AVALON_I2C_BUSY)) continue;
+    1340:	10c001c4 	addi	r3,r2,7
+    1344:	a8fff52e 	bgeu	r21,r3,131c <__alt_data_end+0xff80131c>
+        break;
+      }
+    }
+    
+    return status;
+}                                       
+    1348:	dfc00a17 	ldw	ra,40(sp)
+    134c:	df000917 	ldw	fp,36(sp)
+    1350:	ddc00817 	ldw	r23,32(sp)
+    1354:	dd800717 	ldw	r22,28(sp)
+    1358:	dd400617 	ldw	r21,24(sp)
+    135c:	dd000517 	ldw	r20,20(sp)
+    1360:	dcc00417 	ldw	r19,16(sp)
+    1364:	dc800317 	ldw	r18,12(sp)
+    1368:	dc400217 	ldw	r17,8(sp)
+    136c:	dc000117 	ldw	r16,4(sp)
+    1370:	dec00b04 	addi	sp,sp,44
+    1374:	f800283a 	ret
+
+00001378 <altera_avalon_jtag_uart_write>:
+ */
+
+int altera_avalon_jtag_uart_write(altera_avalon_jtag_uart_state* sp, 
+  const char * ptr, int count, int flags)
+{
+  unsigned int base = sp->base;
+    1378:	21000017 	ldw	r4,0(r4)
+ * one FIFOs worth of data.  But you said you didn't want to use interrupts :-)
+ */
+
+int altera_avalon_jtag_uart_write(altera_avalon_jtag_uart_state* sp, 
+  const char * ptr, int count, int flags)
+{
+    137c:	3005883a 	mov	r2,r6
+  unsigned int base = sp->base;
+
+  const char * end = ptr + count;
+    1380:	298d883a 	add	r6,r5,r6
+
+  while (ptr < end)
+    if ((IORD_ALTERA_AVALON_JTAG_UART_CONTROL(base) & ALTERA_AVALON_JTAG_UART_CONTROL_WSPACE_MSK) != 0)
+    1384:	21c00104 	addi	r7,r4,4
+{
+  unsigned int base = sp->base;
+
+  const char * end = ptr + count;
+
+  while (ptr < end)
+    1388:	2980072e 	bgeu	r5,r6,13a8 <altera_avalon_jtag_uart_write+0x30>
+    if ((IORD_ALTERA_AVALON_JTAG_UART_CONTROL(base) & ALTERA_AVALON_JTAG_UART_CONTROL_WSPACE_MSK) != 0)
+    138c:	38c00037 	ldwio	r3,0(r7)
+    1390:	18ffffec 	andhi	r3,r3,65535
+    1394:	183ffc26 	beq	r3,zero,1388 <__alt_data_end+0xff801388>
+      IOWR_ALTERA_AVALON_JTAG_UART_DATA(base, *ptr++);
+    1398:	28c00007 	ldb	r3,0(r5)
+    139c:	20c00035 	stwio	r3,0(r4)
+    13a0:	29400044 	addi	r5,r5,1
+    13a4:	003ff806 	br	1388 <__alt_data_end+0xff801388>
+
+  return count;
+}
+    13a8:	f800283a 	ret
+
+000013ac <VIC_0_VECTOR_TABLE>:
+
+    .section .text, "xa"
+    .align 2
+    .globl VIC_0_VECTOR_TABLE
+VIC_0_VECTOR_TABLE:
+     ALT_SHADOW_NON_PREEMPTIVE_INTERRUPT    16
+    13ac:	0030e03a 	nextpc	et
+    13b0:	00013ec1 	jmpi	13ec <alt_shadow_non_preemptive_interrupt>
+	...
+     ALT_SHADOW_NON_PREEMPTIVE_INTERRUPT    16
+    13bc:	0030e03a 	nextpc	et
+    13c0:	00013ec1 	jmpi	13ec <alt_shadow_non_preemptive_interrupt>
+	...
+     ALT_SHADOW_NON_PREEMPTIVE_INTERRUPT    16
+    13cc:	0030e03a 	nextpc	et
+    13d0:	00013ec1 	jmpi	13ec <alt_shadow_non_preemptive_interrupt>
+	...
+     ALT_SHADOW_NON_PREEMPTIVE_INTERRUPT    16
+    13dc:	0030e03a 	nextpc	et
+    13e0:	00013ec1 	jmpi	13ec <alt_shadow_non_preemptive_interrupt>
+	...
+
+000013ec <alt_shadow_non_preemptive_interrupt>:
+    .section ALTERA_VIC_DRIVER_LINKER_SECTION
+    .set nobreak
+    .globl alt_shadow_non_preemptive_interrupt
+alt_shadow_non_preemptive_interrupt:
+
+    ldw r16, 4(et)               /* load ISR pointer */
+    13ec:	c4000117 	ldw	r16,4(et)
+
+     /*
+      * Get SP from previous register set.
+      */
+
+    rdprs sp, sp, 0
+    13f0:	dec00038 	rdprs	sp,sp,0
+    rdctl r5, status
+    ori   r5, r5, NIOS2_STATUS_PIE_MSK
+    wrctl status, r5
+#endif
+
+    ldw r4, 8(et)               /* load isr_context */
+    13f4:	c1000217 	ldw	r4,8(et)
+    callr r16                   /* call ISR */
+    13f8:	803ee83a 	callr	r16
+    /*
+     * Notify the operating system that interrupt processing is complete.
+     */
+    ALT_OS_INT_EXIT_ASM
+
+    addi ea, ea, -4             /* instruction that caused exception */
+    13fc:	ef7fff04 	addi	ea,ea,-4
+    eret
+    1400:	ef80083a 	eret
+
+00001404 <alt_vic_irq_init>:
+{
+    alt_u32 i;
+    static const int VEC_SIZE_ARRAY[]={4, 8, 16, 32, 64, 128, 256, 512};
+
+    /* Stores the VIC instance to list */
+    alt_vic_dev_list[pdev->intr_controller_id] = pdev;
+    1404:	20800117 	ldw	r2,4(r4)
+    1408:	d0e04004 	addi	r3,gp,-32512
+    140c:	1085883a 	add	r2,r2,r2
+    1410:	1085883a 	add	r2,r2,r2
+    1414:	1885883a 	add	r2,r3,r2
+    1418:	11000015 	stw	r4,0(r2)
+
+    /* Disables all interrupts */
+    IOWR_ALTERA_VIC_INT_ENABLE_CLR(pdev->base, 0xFFFFFFFF);
+    141c:	20800017 	ldw	r2,0(r4)
+    1420:	00ffffc4 	movi	r3,-1
+    1424:	10c02235 	stwio	r3,136(r2)
+    1428:	21400704 	addi	r5,r4,28
+
+    /* Initialize INT_CONFIG for all interrupts in this VIC */
+    for(i = 0; i < pdev->num_of_intr_ports; i++)
+    142c:	0007883a 	mov	r3,zero
+    1430:	20800217 	ldw	r2,8(r4)
+    1434:	1880092e 	bgeu	r3,r2,145c <alt_vic_irq_init+0x58>
+    {
+        IOWR_ALTERA_VIC_INT_CONFIG(pdev->base, i, pdev->int_config[i]);
+    1438:	21800017 	ldw	r6,0(r4)
+    143c:	18c5883a 	add	r2,r3,r3
+    1440:	1085883a 	add	r2,r2,r2
+    1444:	3085883a 	add	r2,r6,r2
+    1448:	29800017 	ldw	r6,0(r5)
+    144c:	11800035 	stwio	r6,0(r2)
+
+    /* Disables all interrupts */
+    IOWR_ALTERA_VIC_INT_ENABLE_CLR(pdev->base, 0xFFFFFFFF);
+
+    /* Initialize INT_CONFIG for all interrupts in this VIC */
+    for(i = 0; i < pdev->num_of_intr_ports; i++)
+    1450:	18c00044 	addi	r3,r3,1
+    1454:	29400104 	addi	r5,r5,4
+    1458:	003ff506 	br	1430 <__alt_data_end+0xff801430>
+    }
+
+    /* Set vector size and disable/enable daisy-chained input */
+    for(i = 0; i < sizeof(VEC_SIZE_ARRAY)/sizeof(VEC_SIZE_ARRAY[0]); i++)
+    {
+        if(VEC_SIZE_ARRAY[i] == pdev->vec_size)
+    145c:	21800517 	ldw	r6,20(r4)
+    1460:	01c00034 	movhi	r7,0
+    1464:	0005883a 	mov	r2,zero
+    1468:	39c64104 	addi	r7,r7,6404
+    {
+        IOWR_ALTERA_VIC_INT_CONFIG(pdev->base, i, pdev->int_config[i]);
+    }
+
+    /* Set vector size and disable/enable daisy-chained input */
+    for(i = 0; i < sizeof(VEC_SIZE_ARRAY)/sizeof(VEC_SIZE_ARRAY[0]); i++)
+    146c:	01400204 	movi	r5,8
+    {
+        if(VEC_SIZE_ARRAY[i] == pdev->vec_size)
+    1470:	1087883a 	add	r3,r2,r2
+    1474:	18c7883a 	add	r3,r3,r3
+    1478:	19c7883a 	add	r3,r3,r7
+    147c:	18c00017 	ldw	r3,0(r3)
+    1480:	1980061e 	bne	r3,r6,149c <alt_vic_irq_init+0x98>
+        {
+            IOWR_ALTERA_VIC_CONFIG(pdev->base,
+    1484:	20c00417 	ldw	r3,16(r4)
+    1488:	21400017 	ldw	r5,0(r4)
+    148c:	180690fa 	slli	r3,r3,3
+    1490:	1884b03a 	or	r2,r3,r2
+    1494:	28802835 	stwio	r2,160(r5)
+                (i | (pdev->daisy_chain_present << ALTERA_VIC_CONFIG_DC_OFST)));
+            break;
+    1498:	00000206 	br	14a4 <alt_vic_irq_init+0xa0>
+    {
+        IOWR_ALTERA_VIC_INT_CONFIG(pdev->base, i, pdev->int_config[i]);
+    }
+
+    /* Set vector size and disable/enable daisy-chained input */
+    for(i = 0; i < sizeof(VEC_SIZE_ARRAY)/sizeof(VEC_SIZE_ARRAY[0]); i++)
+    149c:	10800044 	addi	r2,r2,1
+    14a0:	117ff31e 	bne	r2,r5,1470 <__alt_data_end+0xff801470>
+            break;
+        }
+    }
+
+    /* Set vector table base address */
+    IOWR_ALTERA_VIC_VEC_TBL_BASE(pdev->base,((alt_u32)pdev->vec_addr));
+    14a4:	20800017 	ldw	r2,0(r4)
+    14a8:	20c00617 	ldw	r3,24(r4)
+    14ac:	10c02a35 	stwio	r3,168(r2)
+    14b0:	f800283a 	ret
+
+000014b4 <alt_ic_isr_register>:
+{
+    alt_vic_dev *pdev;
+    alt_u32 *offset;
+    alt_irq_context status;
+
+    if(ic_id >= ALT_NUM_EXTERNAL_INTERRUPT_CONTROLLERS)
+    14b4:	20001b1e 	bne	r4,zero,1524 <alt_ic_isr_register+0x70>
+        return -1;
+
+    /* Get VIC handle */
+    pdev = alt_vic_dev_list[ic_id];
+    14b8:	d0e04017 	ldw	r3,-32512(gp)
+
+    if(irq < pdev->num_of_intr_ports)
+    14bc:	18800217 	ldw	r2,8(r3)
+    14c0:	2880182e 	bgeu	r5,r2,1524 <alt_ic_isr_register+0x70>
+static ALT_INLINE alt_irq_context ALT_ALWAYS_INLINE 
+       alt_irq_disable_all (void)
+{
+  alt_irq_context context;
+
+  NIOS2_READ_STATUS (context);
+    14c4:	0011303a 	rdctl	r8,status
+
+  NIOS2_WRITE_STATUS (context & ~NIOS2_STATUS_PIE_MSK);
+    14c8:	00bfff84 	movi	r2,-2
+    14cc:	4088703a 	and	r4,r8,r2
+    14d0:	2001703a 	wrctl	status,r4
+    {
+        /* Disable all interrupts */
+        status = alt_irq_disable_all ();
+
+        /* Get table offset */
+        offset = pdev->vec_addr + (irq * pdev->vec_size);
+    14d4:	19000517 	ldw	r4,20(r3)
+    14d8:	1a400617 	ldw	r9,24(r3)
+    14dc:	2909383a 	mul	r4,r5,r4
+    14e0:	4909883a 	add	r4,r9,r4
+
+        /* Write ISR and ISR context to vector table */
+        ALT_VECTOR_TABLE_WRITE(offset+2, isr);
+    14e4:	21800215 	stw	r6,8(r4)
+        ALT_VECTOR_TABLE_WRITE(offset+3, isr_context);
+    14e8:	21c00315 	stw	r7,12(r4)
+    14ec:	19000017 	ldw	r4,0(r3)
+    14f0:	00c00044 	movi	r3,1
+
+        if(isr)
+        {
+            /* Enable this IRQ on the VIC */
+            IOWR_ALTERA_VIC_INT_ENABLE_SET(pdev->base, 1 << irq);
+    14f4:	1946983a 	sll	r3,r3,r5
+
+        /* Write ISR and ISR context to vector table */
+        ALT_VECTOR_TABLE_WRITE(offset+2, isr);
+        ALT_VECTOR_TABLE_WRITE(offset+3, isr_context);
+
+        if(isr)
+    14f8:	30000226 	beq	r6,zero,1504 <alt_ic_isr_register+0x50>
+        {
+            /* Enable this IRQ on the VIC */
+            IOWR_ALTERA_VIC_INT_ENABLE_SET(pdev->base, 1 << irq);
+    14fc:	20c02135 	stwio	r3,132(r4)
+    1500:	00000106 	br	1508 <alt_ic_isr_register+0x54>
+        }
+        else
+        {
+            /* Disable this IRQ on the VIC */
+            IOWR_ALTERA_VIC_INT_ENABLE_CLR(pdev->base, 1 << irq);
+    1504:	20c02235 	stwio	r3,136(r4)
+{
+#if (NIOS2_NUM_OF_SHADOW_REG_SETS > 0) || (defined NIOS2_EIC_PRESENT) || \
+    (defined NIOS2_MMU_PRESENT) || (defined NIOS2_MPU_PRESENT)
+  alt_irq_context status;
+  
+  NIOS2_READ_STATUS (status);
+    1508:	0007303a 	rdctl	r3,status
+  
+  status &= ~NIOS2_STATUS_PIE_MSK;
+    150c:	1884703a 	and	r2,r3,r2
+  status |= (context & NIOS2_STATUS_PIE_MSK);
+  
+  NIOS2_WRITE_STATUS (status);
+    1510:	4200004c 	andi	r8,r8,1
+    1514:	4084b03a 	or	r2,r8,r2
+    1518:	1001703a 	wrctl	status,r2
+        }
+
+        /* Re-enable all interrupts */
+        alt_irq_enable_all(status);
+
+        return 0;
+    151c:	0005883a 	mov	r2,zero
+    1520:	f800283a 	ret
+    alt_vic_dev *pdev;
+    alt_u32 *offset;
+    alt_irq_context status;
+
+    if(ic_id >= ALT_NUM_EXTERNAL_INTERRUPT_CONTROLLERS)
+        return -1;
+    1524:	00bfffc4 	movi	r2,-1
+
+        return 0;
+    }
+
+    return -1;
+}
+    1528:	f800283a 	ret
+
+0000152c <alt_busy_sleep>:
+  {
+    cycles_per_loop = 3;
+  }
+  
+
+  big_loops = us / (INT_MAX/
+    152c:	01420034 	movhi	r5,2048
+#include "alt_types.h"
+
+#include "priv/alt_busy_sleep.h"
+
+unsigned int alt_busy_sleep (unsigned int us)
+{
+    1530:	defffe04 	addi	sp,sp,-8
+  {
+    cycles_per_loop = 3;
+  }
+  
+
+  big_loops = us / (INT_MAX/
+    1534:	297fffc4 	addi	r5,r5,-1
+#include "alt_types.h"
+
+#include "priv/alt_busy_sleep.h"
+
+unsigned int alt_busy_sleep (unsigned int us)
+{
+    1538:	dc000015 	stw	r16,0(sp)
+    153c:	dfc00115 	stw	ra,4(sp)
+    1540:	2021883a 	mov	r16,r4
+  {
+    cycles_per_loop = 3;
+  }
+  
+
+  big_loops = us / (INT_MAX/
+    1544:	00018240 	call	1824 <__udivsi3>
+  (ALT_CPU_FREQ/(cycles_per_loop * 1000000)));
+
+  if (big_loops)
+    1548:	10000e26 	beq	r2,zero,1584 <alt_busy_sleep+0x58>
+      /*
+      * Do NOT Try to single step the asm statement below 
+      * (single step will never return)
+      * Step out of this function or set a breakpoint after the asm statements
+      */
+      __asm__ volatile (
+    154c:	01600034 	movhi	r5,32768
+        "\n1:"
+        "\n\t.pushsection .debug_alt_sim_info"
+        "\n\t.int 4, 0, 0b, 1b"
+        "\n\t.popsection"
+        :: "r" (INT_MAX));
+      us -= (INT_MAX/(ALT_CPU_FREQ/
+    1550:	013e0034 	movhi	r4,63488
+    1554:	0007883a 	mov	r3,zero
+      /*
+      * Do NOT Try to single step the asm statement below 
+      * (single step will never return)
+      * Step out of this function or set a breakpoint after the asm statements
+      */
+      __asm__ volatile (
+    1558:	297fffc4 	addi	r5,r5,-1
+        "\n1:"
+        "\n\t.pushsection .debug_alt_sim_info"
+        "\n\t.int 4, 0, 0b, 1b"
+        "\n\t.popsection"
+        :: "r" (INT_MAX));
+      us -= (INT_MAX/(ALT_CPU_FREQ/
+    155c:	21000044 	addi	r4,r4,1
+      /*
+      * Do NOT Try to single step the asm statement below 
+      * (single step will never return)
+      * Step out of this function or set a breakpoint after the asm statements
+      */
+      __asm__ volatile (
+    1560:	297fffc4 	addi	r5,r5,-1
+    1564:	283ffe1e 	bne	r5,zero,1560 <__alt_data_end+0xff801560>
+  big_loops = us / (INT_MAX/
+  (ALT_CPU_FREQ/(cycles_per_loop * 1000000)));
+
+  if (big_loops)
+  {
+    for(i=0;i<big_loops;i++)
+    1568:	18c00044 	addi	r3,r3,1
+        "\n1:"
+        "\n\t.pushsection .debug_alt_sim_info"
+        "\n\t.int 4, 0, 0b, 1b"
+        "\n\t.popsection"
+        :: "r" (INT_MAX));
+      us -= (INT_MAX/(ALT_CPU_FREQ/
+    156c:	8121883a 	add	r16,r16,r4
+  big_loops = us / (INT_MAX/
+  (ALT_CPU_FREQ/(cycles_per_loop * 1000000)));
+
+  if (big_loops)
+  {
+    for(i=0;i<big_loops;i++)
+    1570:	18bffb16 	blt	r3,r2,1560 <__alt_data_end+0xff801560>
+    /*
+    * Do NOT Try to single step the asm statement below 
+    * (single step will never return)
+    * Step out of this function or set a breakpoint after the asm statements
+    */
+    __asm__ volatile (
+    1574:	8020913a 	slli	r16,r16,4
+    1578:	843fffc4 	addi	r16,r16,-1
+    157c:	803ffe1e 	bne	r16,zero,1578 <__alt_data_end+0xff801578>
+    1580:	00000306 	br	1590 <alt_busy_sleep+0x64>
+    /*
+    * Do NOT Try to single step the asm statement below 
+    * (single step will never return)
+    * Step out of this function or set a breakpoint after the asm statements
+    */
+    __asm__ volatile (
+    1584:	8020913a 	slli	r16,r16,4
+    1588:	843fffc4 	addi	r16,r16,-1
+    158c:	043ffe16 	blt	zero,r16,1588 <__alt_data_end+0xff801588>
+      "\n\t.popsection"
+      :: "r" (us*(ALT_CPU_FREQ/(cycles_per_loop * 1000000))));
+  }
+#endif /* #ifndef ALT_SIM_OPTIMIZE */
+  return 0;
+}
+    1590:	0005883a 	mov	r2,zero
+    1594:	dfc00117 	ldw	ra,4(sp)
+    1598:	dc000017 	ldw	r16,0(sp)
+    159c:	dec00204 	addi	sp,sp,8
+    15a0:	f800283a 	ret
+
+000015a4 <alt_dcache_flush_all>:
+void alt_dcache_flush_all (void)
+{
+#if NIOS2_DCACHE_SIZE > 0
+  char* i;
+  
+  for (i = (char*) 0; i < (char*) NIOS2_DCACHE_SIZE; i+= NIOS2_DCACHE_LINE_SIZE)
+    15a4:	0005883a 	mov	r2,zero
+    15a8:	00c20004 	movi	r3,2048
+  { 
+    __asm__ volatile ("flushd (%0)" :: "r" (i));
+    15ac:	1000003b 	flushd	0(r2)
+void alt_dcache_flush_all (void)
+{
+#if NIOS2_DCACHE_SIZE > 0
+  char* i;
+  
+  for (i = (char*) 0; i < (char*) NIOS2_DCACHE_SIZE; i+= NIOS2_DCACHE_LINE_SIZE)
+    15b0:	10800804 	addi	r2,r2,32
+    15b4:	10fffd1e 	bne	r2,r3,15ac <__alt_data_end+0xff8015ac>
+  { 
+    __asm__ volatile ("flushd (%0)" :: "r" (i));
+  }
+#endif /* NIOS2_DCACHE_SIZE > 0 */
+}
+    15b8:	f800283a 	ret
+
+000015bc <alt_dev_llist_insert>:
+{
+  /*
+   * check that the device exists, and that it has a valid name.
+   */
+
+  if (!dev || !dev->name)
+    15bc:	20000226 	beq	r4,zero,15c8 <alt_dev_llist_insert+0xc>
+    15c0:	20800217 	ldw	r2,8(r4)
+    15c4:	1000101e 	bne	r2,zero,1608 <alt_dev_llist_insert+0x4c>
+
+extern int errno;
+
+static ALT_INLINE int* alt_get_errno(void)
+{
+  return ((alt_errno) ? alt_errno() : &errno);
+    15c8:	d0a00317 	ldw	r2,-32756(gp)
+    15cc:	10000926 	beq	r2,zero,15f4 <alt_dev_llist_insert+0x38>
+/*
+ *
+ */
+
+int alt_dev_llist_insert (alt_dev_llist* dev, alt_llist* list)
+{
+    15d0:	deffff04 	addi	sp,sp,-4
+    15d4:	dfc00015 	stw	ra,0(sp)
+    15d8:	103ee83a 	callr	r2
+   * check that the device exists, and that it has a valid name.
+   */
+
+  if (!dev || !dev->name)
+  {
+    ALT_ERRNO = EINVAL;
+    15dc:	00c00584 	movi	r3,22
+    15e0:	10c00015 	stw	r3,0(r2)
+    return -EINVAL;
+    15e4:	00bffa84 	movi	r2,-22
+   */
+  
+  alt_llist_insert(list, &dev->llist);
+
+  return 0;  
+}
+    15e8:	dfc00017 	ldw	ra,0(sp)
+    15ec:	dec00104 	addi	sp,sp,4
+    15f0:	f800283a 	ret
+    15f4:	d0a04104 	addi	r2,gp,-32508
+   * check that the device exists, and that it has a valid name.
+   */
+
+  if (!dev || !dev->name)
+  {
+    ALT_ERRNO = EINVAL;
+    15f8:	00c00584 	movi	r3,22
+    15fc:	10c00015 	stw	r3,0(r2)
+    return -EINVAL;
+    1600:	00bffa84 	movi	r2,-22
+   */
+  
+  alt_llist_insert(list, &dev->llist);
+
+  return 0;  
+}
+    1604:	f800283a 	ret
+
+static ALT_INLINE void ALT_ALWAYS_INLINE alt_llist_insert(alt_llist* list, 
+                alt_llist* entry)
+{
+  entry->previous = list;
+  entry->next     = list->next;
+    1608:	28800017 	ldw	r2,0(r5)
+ */
+
+static ALT_INLINE void ALT_ALWAYS_INLINE alt_llist_insert(alt_llist* list, 
+                alt_llist* entry)
+{
+  entry->previous = list;
+    160c:	21400115 	stw	r5,4(r4)
+  entry->next     = list->next;
+    1610:	20800015 	stw	r2,0(r4)
+
+  list->next->previous = entry;
+    1614:	28800017 	ldw	r2,0(r5)
+    1618:	11000115 	stw	r4,4(r2)
+  list->next           = entry;
+    161c:	29000015 	stw	r4,0(r5)
+   * register the device.
+   */
+  
+  alt_llist_insert(list, &dev->llist);
+
+  return 0;  
+    1620:	0005883a 	mov	r2,zero
+    1624:	f800283a 	ret
+
+00001628 <alt_find_dev>:
+ * "name" must be an exact match for the devices registered name for a match to
+ * be found.
+ */
+ 
+alt_dev* alt_find_dev(const char* name, alt_llist* llist)
+{
+    1628:	defffb04 	addi	sp,sp,-20
+    162c:	dcc00315 	stw	r19,12(sp)
+    1630:	dc800215 	stw	r18,8(sp)
+    1634:	dc400115 	stw	r17,4(sp)
+    1638:	dc000015 	stw	r16,0(sp)
+    163c:	dfc00415 	stw	ra,16(sp)
+    1640:	2027883a 	mov	r19,r4
+    1644:	2823883a 	mov	r17,r5
+  alt_dev* next = (alt_dev*) llist->next;
+    1648:	2c000017 	ldw	r16,0(r5)
+  alt_32 len;
+
+  len  = strlen(name) + 1;
+    164c:	00017100 	call	1710 <strlen>
+    1650:	14800044 	addi	r18,r2,1
+  /*
+   * Check each list entry in turn, until a match is found, or we reach the
+   * end of the list (i.e. next winds up pointing back to the list head).
+   */ 
+
+  while (next != (alt_dev*) llist)
+    1654:	84400726 	beq	r16,r17,1674 <alt_find_dev+0x4c>
+    /* 
+     * memcmp() is used here rather than strcmp() in order to reduce the size
+     * of the executable.
+     */
+
+    if (!memcmp (next->name, name, len))
+    1658:	81000217 	ldw	r4,8(r16)
+    165c:	900d883a 	mov	r6,r18
+    1660:	980b883a 	mov	r5,r19
+    1664:	00016e00 	call	16e0 <memcmp>
+    1668:	10000426 	beq	r2,zero,167c <alt_find_dev+0x54>
+    {
+      /* match found */
+
+      return next;
+    }
+    next = (alt_dev*) next->llist.next;
+    166c:	84000017 	ldw	r16,0(r16)
+    1670:	003ff806 	br	1654 <__alt_data_end+0xff801654>
+  }
+  
+  /* No match found */
+  
+  return NULL;
+    1674:	0005883a 	mov	r2,zero
+    1678:	00000106 	br	1680 <alt_find_dev+0x58>
+    167c:	8005883a 	mov	r2,r16
+}
+    1680:	dfc00417 	ldw	ra,16(sp)
+    1684:	dcc00317 	ldw	r19,12(sp)
+    1688:	dc800217 	ldw	r18,8(sp)
+    168c:	dc400117 	ldw	r17,4(sp)
+    1690:	dc000017 	ldw	r16,0(sp)
+    1694:	dec00504 	addi	sp,sp,20
+    1698:	f800283a 	ret
+
+0000169c <alt_icache_flush_all>:
+ */
+
+void alt_icache_flush_all (void)
+{
+#if NIOS2_ICACHE_SIZE > 0
+  alt_icache_flush (0, NIOS2_ICACHE_SIZE);
+    169c:	01440004 	movi	r5,4096
+    16a0:	0009883a 	mov	r4,zero
+    16a4:	00016a81 	jmpi	16a8 <alt_icache_flush>
+
+000016a8 <alt_icache_flush>:
+  if (len > NIOS2_ICACHE_SIZE)
+  {
+    len = NIOS2_ICACHE_SIZE;
+  }
+
+  end = ((char*) start) + len;
+    16a8:	00840004 	movi	r2,4096
+    16ac:	1140012e 	bgeu	r2,r5,16b4 <alt_icache_flush+0xc>
+    16b0:	100b883a 	mov	r5,r2
+    16b4:	214b883a 	add	r5,r4,r5
+
+  for (i = start; i < end; i+= NIOS2_ICACHE_LINE_SIZE)
+    16b8:	2005883a 	mov	r2,r4
+    16bc:	1140032e 	bgeu	r2,r5,16cc <alt_icache_flush+0x24>
+  { 
+    __asm__ volatile ("flushi %0" :: "r" (i)); 
+    16c0:	1000603a 	flushi	r2
+    len = NIOS2_ICACHE_SIZE;
+  }
+
+  end = ((char*) start) + len;
+
+  for (i = start; i < end; i+= NIOS2_ICACHE_LINE_SIZE)
+    16c4:	10800804 	addi	r2,r2,32
+    16c8:	003ffc06 	br	16bc <__alt_data_end+0xff8016bc>
+   * For an unaligned flush request, we've got one more line left.
+   * Note that this is dependent on NIOS2_ICACHE_LINE_SIZE to be a 
+   * multiple of 2 (which it always is).
+   */
+
+  if (((alt_u32) start) & (NIOS2_ICACHE_LINE_SIZE - 1))
+    16cc:	210007cc 	andi	r4,r4,31
+    16d0:	20000126 	beq	r4,zero,16d8 <alt_icache_flush+0x30>
+  {
+    __asm__ volatile ("flushi %0" :: "r" (i));
+    16d4:	1000603a 	flushi	r2
+  /* 
+   * Having flushed the cache, flush any stale instructions in the 
+   * pipeline 
+   */
+
+  __asm__ volatile ("flushp");
+    16d8:	0000203a 	flushp
+    16dc:	f800283a 	ret
+
+000016e0 <memcmp>:
+    16e0:	218d883a 	add	r6,r4,r6
+    16e4:	21800826 	beq	r4,r6,1708 <memcmp+0x28>
+    16e8:	20800003 	ldbu	r2,0(r4)
+    16ec:	28c00003 	ldbu	r3,0(r5)
+    16f0:	10c00226 	beq	r2,r3,16fc <memcmp+0x1c>
+    16f4:	10c5c83a 	sub	r2,r2,r3
+    16f8:	f800283a 	ret
+    16fc:	21000044 	addi	r4,r4,1
+    1700:	29400044 	addi	r5,r5,1
+    1704:	003ff706 	br	16e4 <__alt_data_end+0xff8016e4>
+    1708:	0005883a 	mov	r2,zero
+    170c:	f800283a 	ret
+
+00001710 <strlen>:
+    1710:	2005883a 	mov	r2,r4
+    1714:	10c00007 	ldb	r3,0(r2)
+    1718:	18000226 	beq	r3,zero,1724 <strlen+0x14>
+    171c:	10800044 	addi	r2,r2,1
+    1720:	003ffc06 	br	1714 <__alt_data_end+0xff801714>
+    1724:	1105c83a 	sub	r2,r2,r4
+    1728:	f800283a 	ret
+
+0000172c <__divsi3>:
+    172c:	20001b16 	blt	r4,zero,179c <__divsi3+0x70>
+    1730:	000f883a 	mov	r7,zero
+    1734:	28001616 	blt	r5,zero,1790 <__divsi3+0x64>
+    1738:	200d883a 	mov	r6,r4
+    173c:	29001a2e 	bgeu	r5,r4,17a8 <__divsi3+0x7c>
+    1740:	00800804 	movi	r2,32
+    1744:	00c00044 	movi	r3,1
+    1748:	00000106 	br	1750 <__divsi3+0x24>
+    174c:	10000d26 	beq	r2,zero,1784 <__divsi3+0x58>
+    1750:	294b883a 	add	r5,r5,r5
+    1754:	10bfffc4 	addi	r2,r2,-1
+    1758:	18c7883a 	add	r3,r3,r3
+    175c:	293ffb36 	bltu	r5,r4,174c <__alt_data_end+0xff80174c>
+    1760:	0005883a 	mov	r2,zero
+    1764:	18000726 	beq	r3,zero,1784 <__divsi3+0x58>
+    1768:	0005883a 	mov	r2,zero
+    176c:	31400236 	bltu	r6,r5,1778 <__divsi3+0x4c>
+    1770:	314dc83a 	sub	r6,r6,r5
+    1774:	10c4b03a 	or	r2,r2,r3
+    1778:	1806d07a 	srli	r3,r3,1
+    177c:	280ad07a 	srli	r5,r5,1
+    1780:	183ffa1e 	bne	r3,zero,176c <__alt_data_end+0xff80176c>
+    1784:	38000126 	beq	r7,zero,178c <__divsi3+0x60>
+    1788:	0085c83a 	sub	r2,zero,r2
+    178c:	f800283a 	ret
+    1790:	014bc83a 	sub	r5,zero,r5
+    1794:	39c0005c 	xori	r7,r7,1
+    1798:	003fe706 	br	1738 <__alt_data_end+0xff801738>
+    179c:	0109c83a 	sub	r4,zero,r4
+    17a0:	01c00044 	movi	r7,1
+    17a4:	003fe306 	br	1734 <__alt_data_end+0xff801734>
+    17a8:	00c00044 	movi	r3,1
+    17ac:	003fee06 	br	1768 <__alt_data_end+0xff801768>
+
+000017b0 <__modsi3>:
+    17b0:	20001716 	blt	r4,zero,1810 <__modsi3+0x60>
+    17b4:	000f883a 	mov	r7,zero
+    17b8:	2005883a 	mov	r2,r4
+    17bc:	28001216 	blt	r5,zero,1808 <__modsi3+0x58>
+    17c0:	2900162e 	bgeu	r5,r4,181c <__modsi3+0x6c>
+    17c4:	01800804 	movi	r6,32
+    17c8:	00c00044 	movi	r3,1
+    17cc:	00000106 	br	17d4 <__modsi3+0x24>
+    17d0:	30000a26 	beq	r6,zero,17fc <__modsi3+0x4c>
+    17d4:	294b883a 	add	r5,r5,r5
+    17d8:	31bfffc4 	addi	r6,r6,-1
+    17dc:	18c7883a 	add	r3,r3,r3
+    17e0:	293ffb36 	bltu	r5,r4,17d0 <__alt_data_end+0xff8017d0>
+    17e4:	18000526 	beq	r3,zero,17fc <__modsi3+0x4c>
+    17e8:	1806d07a 	srli	r3,r3,1
+    17ec:	11400136 	bltu	r2,r5,17f4 <__modsi3+0x44>
+    17f0:	1145c83a 	sub	r2,r2,r5
+    17f4:	280ad07a 	srli	r5,r5,1
+    17f8:	183ffb1e 	bne	r3,zero,17e8 <__alt_data_end+0xff8017e8>
+    17fc:	38000126 	beq	r7,zero,1804 <__modsi3+0x54>
+    1800:	0085c83a 	sub	r2,zero,r2
+    1804:	f800283a 	ret
+    1808:	014bc83a 	sub	r5,zero,r5
+    180c:	003fec06 	br	17c0 <__alt_data_end+0xff8017c0>
+    1810:	0109c83a 	sub	r4,zero,r4
+    1814:	01c00044 	movi	r7,1
+    1818:	003fe706 	br	17b8 <__alt_data_end+0xff8017b8>
+    181c:	00c00044 	movi	r3,1
+    1820:	003ff106 	br	17e8 <__alt_data_end+0xff8017e8>
+
+00001824 <__udivsi3>:
+    1824:	200d883a 	mov	r6,r4
+    1828:	2900152e 	bgeu	r5,r4,1880 <__udivsi3+0x5c>
+    182c:	28001416 	blt	r5,zero,1880 <__udivsi3+0x5c>
+    1830:	00800804 	movi	r2,32
+    1834:	00c00044 	movi	r3,1
+    1838:	00000206 	br	1844 <__udivsi3+0x20>
+    183c:	10000e26 	beq	r2,zero,1878 <__udivsi3+0x54>
+    1840:	28000516 	blt	r5,zero,1858 <__udivsi3+0x34>
+    1844:	294b883a 	add	r5,r5,r5
+    1848:	10bfffc4 	addi	r2,r2,-1
+    184c:	18c7883a 	add	r3,r3,r3
+    1850:	293ffa36 	bltu	r5,r4,183c <__alt_data_end+0xff80183c>
+    1854:	18000826 	beq	r3,zero,1878 <__udivsi3+0x54>
+    1858:	0005883a 	mov	r2,zero
+    185c:	31400236 	bltu	r6,r5,1868 <__udivsi3+0x44>
+    1860:	314dc83a 	sub	r6,r6,r5
+    1864:	10c4b03a 	or	r2,r2,r3
+    1868:	1806d07a 	srli	r3,r3,1
+    186c:	280ad07a 	srli	r5,r5,1
+    1870:	183ffa1e 	bne	r3,zero,185c <__alt_data_end+0xff80185c>
+    1874:	f800283a 	ret
+    1878:	0005883a 	mov	r2,zero
+    187c:	f800283a 	ret
+    1880:	00c00044 	movi	r3,1
+    1884:	003ff406 	br	1858 <__alt_data_end+0xff801858>
+
+00001888 <__umodsi3>:
+    1888:	2005883a 	mov	r2,r4
+    188c:	2900122e 	bgeu	r5,r4,18d8 <__umodsi3+0x50>
+    1890:	28001116 	blt	r5,zero,18d8 <__umodsi3+0x50>
+    1894:	01800804 	movi	r6,32
+    1898:	00c00044 	movi	r3,1
+    189c:	00000206 	br	18a8 <__umodsi3+0x20>
+    18a0:	30000c26 	beq	r6,zero,18d4 <__umodsi3+0x4c>
+    18a4:	28000516 	blt	r5,zero,18bc <__umodsi3+0x34>
+    18a8:	294b883a 	add	r5,r5,r5
+    18ac:	31bfffc4 	addi	r6,r6,-1
+    18b0:	18c7883a 	add	r3,r3,r3
+    18b4:	293ffa36 	bltu	r5,r4,18a0 <__alt_data_end+0xff8018a0>
+    18b8:	18000626 	beq	r3,zero,18d4 <__umodsi3+0x4c>
+    18bc:	1806d07a 	srli	r3,r3,1
+    18c0:	11400136 	bltu	r2,r5,18c8 <__umodsi3+0x40>
+    18c4:	1145c83a 	sub	r2,r2,r5
+    18c8:	280ad07a 	srli	r5,r5,1
+    18cc:	183ffb1e 	bne	r3,zero,18bc <__alt_data_end+0xff8018bc>
+    18d0:	f800283a 	ret
+    18d4:	f800283a 	ret
+    18d8:	00c00044 	movi	r3,1
+    18dc:	003ff706 	br	18bc <__alt_data_end+0xff8018bc>

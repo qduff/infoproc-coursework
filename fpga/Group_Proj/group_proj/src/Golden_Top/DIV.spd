@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="DIV_sim/DIV_memoryC0_uid146_invTables_lutmem.hex" type="HEX" />
+ <file path="DIV_sim/DIV_memoryC0_uid147_invTables_lutmem.hex" type="HEX" />
+ <file path="DIV_sim/DIV_memoryC1_uid150_invTables_lutmem.hex" type="HEX" />
+ <file path="DIV_sim/DIV_memoryC1_uid151_invTables_lutmem.hex" type="HEX" />
+ <file path="DIV_sim/DIV_memoryC2_uid154_invTables_lutmem.hex" type="HEX" />
+ <file path="DIV_sim/DIV.vo" type="VERILOG" />
+ <topLevel name="DIV" />
+ <deviceFamily name="max10" />
+</simPackage>

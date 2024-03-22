@@ -1,0 +1,24 @@
+module fir (
+    input signed [31:0] sample,
+    output reg [31:0] out_h,
+	 output reg [31:0] out_l,
+    input [7:0] index  
+
+    );
+
+    parameter TAPS = 49;
+
+    localparam signed coeffs [31:0] [TAPS-1:0] = {19,30,-10,-29,13,0,-38,16,18,-55,12,47,-73,-4,91,-92,-45,162,-108,-138,308,-118,-493,1179,2609,1179,-493,-118,308,-138,-108,162,-45,-92,91,-4,-73,47,12,-55,18,16,-38,0,13,-29,-10,30,19};
+    wire signed [32:0] mem [TAPS];
+    reg [63:0] out;
+
+    initial begin
+        out = 0;
+    end
+
+    always_comb  begin
+        
+         
+    end
+	 
+ endmodule

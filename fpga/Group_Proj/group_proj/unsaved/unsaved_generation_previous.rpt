@@ -1,0 +1,162 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate D:\Uni\Year-2\InfoProc\Group_Proj\group_proj\unsaved.qsys --block-symbol-file --output-directory=D:\Uni\Year-2\InfoProc\Group_Proj\group_proj\unsaved --family="MAX 10" --part=10M50DAF484C6GES
+Progress: Loading group_proj/unsaved.qsys
+Progress: Reading input file
+Progress: Adding atan2_a [altera_avalon_pio 18.1]
+Progress: Parameterizing module atan2_a
+Progress: Adding atan2_b [altera_avalon_pio 18.1]
+Progress: Parameterizing module atan2_b
+Progress: Adding atan2_q [altera_avalon_pio 18.1]
+Progress: Parameterizing module atan2_q
+Progress: Adding btn [altera_avalon_pio 18.1]
+Progress: Parameterizing module btn
+Progress: Adding clk [clock_source 18.1]
+Progress: Parameterizing module clk
+Progress: Adding cpu [altera_nios2_gen2 18.1]
+Progress: Parameterizing module cpu
+Progress: Adding hex_0 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_0
+Progress: Adding hex_1 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_1
+Progress: Adding hex_2 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_2
+Progress: Adding hex_3 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_3
+Progress: Adding hex_4 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_4
+Progress: Adding hex_5 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_5
+Progress: Adding i2c_busy [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_busy
+Progress: Adding i2c_dev_addr [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_dev_addr
+Progress: Adding i2c_en [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_en
+Progress: Adding i2c_miso [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_miso
+Progress: Adding i2c_mosi [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_mosi
+Progress: Adding i2c_reg_addr [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_reg_addr
+Progress: Adding i2c_rst [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_rst
+Progress: Adding i2c_rw [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_rw
+Progress: Adding in_H [altera_avalon_pio 18.1]
+Progress: Parameterizing module in_H
+Progress: Adding in_L [altera_avalon_pio 18.1]
+Progress: Parameterizing module in_L
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 18.1]
+Progress: Parameterizing module jtag_uart
+Progress: Adding led [altera_avalon_pio 18.1]
+Progress: Parameterizing module led
+Progress: Adding nios_custom_instr_floating_point_0 [altera_nios_custom_instr_floating_point 18.1]
+Progress: Parameterizing module nios_custom_instr_floating_point_0
+Progress: Adding onchip_memory [altera_avalon_onchip_memory2 18.1]
+Progress: Parameterizing module onchip_memory
+Progress: Adding out0 [altera_avalon_pio 18.1]
+Progress: Parameterizing module out0
+Progress: Adding out1 [altera_avalon_pio 18.1]
+Progress: Parameterizing module out1
+Progress: Adding sample_clk [altera_avalon_pio 18.1]
+Progress: Parameterizing module sample_clk
+Progress: Adding sw [altera_avalon_pio 18.1]
+Progress: Parameterizing module sw
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: unsaved.atan2_q: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.btn: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.i2c_busy: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.i2c_miso: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.in_H: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.in_L: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.jtag_uart: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
+Info: unsaved.sw: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: unsaved.in_H: in_H.external_connection must be exported, or connected to a matching conduit.
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate D:\Uni\Year-2\InfoProc\Group_Proj\group_proj\unsaved.qsys --synthesis=VERILOG --output-directory=D:\Uni\Year-2\InfoProc\Group_Proj\group_proj\unsaved\synthesis --family="MAX 10" --part=10M50DAF484C6GES
+Progress: Loading group_proj/unsaved.qsys
+Progress: Reading input file
+Progress: Adding atan2_a [altera_avalon_pio 18.1]
+Progress: Parameterizing module atan2_a
+Progress: Adding atan2_b [altera_avalon_pio 18.1]
+Progress: Parameterizing module atan2_b
+Progress: Adding atan2_q [altera_avalon_pio 18.1]
+Progress: Parameterizing module atan2_q
+Progress: Adding btn [altera_avalon_pio 18.1]
+Progress: Parameterizing module btn
+Progress: Adding clk [clock_source 18.1]
+Progress: Parameterizing module clk
+Progress: Adding cpu [altera_nios2_gen2 18.1]
+Progress: Parameterizing module cpu
+Progress: Adding hex_0 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_0
+Progress: Adding hex_1 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_1
+Progress: Adding hex_2 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_2
+Progress: Adding hex_3 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_3
+Progress: Adding hex_4 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_4
+Progress: Adding hex_5 [altera_avalon_pio 18.1]
+Progress: Parameterizing module hex_5
+Progress: Adding i2c_busy [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_busy
+Progress: Adding i2c_dev_addr [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_dev_addr
+Progress: Adding i2c_en [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_en
+Progress: Adding i2c_miso [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_miso
+Progress: Adding i2c_mosi [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_mosi
+Progress: Adding i2c_reg_addr [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_reg_addr
+Progress: Adding i2c_rst [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_rst
+Progress: Adding i2c_rw [altera_avalon_pio 18.1]
+Progress: Parameterizing module i2c_rw
+Progress: Adding in_H [altera_avalon_pio 18.1]
+Progress: Parameterizing module in_H
+Progress: Adding in_L [altera_avalon_pio 18.1]
+Progress: Parameterizing module in_L
+Progress: Adding jtag_uart [altera_avalon_jtag_uart 18.1]
+Progress: Parameterizing module jtag_uart
+Progress: Adding led [altera_avalon_pio 18.1]
+Progress: Parameterizing module led
+Progress: Adding nios_custom_instr_floating_point_0 [altera_nios_custom_instr_floating_point 18.1]
+Progress: Parameterizing module nios_custom_instr_floating_point_0
+Progress: Adding onchip_memory [altera_avalon_onchip_memory2 18.1]
+Progress: Parameterizing module onchip_memory
+Progress: Adding out0 [altera_avalon_pio 18.1]
+Progress: Parameterizing module out0
+Progress: Adding out1 [altera_avalon_pio 18.1]
+Progress: Parameterizing module out1
+Progress: Adding sample_clk [altera_avalon_pio 18.1]
+Progress: Parameterizing module sample_clk
+Progress: Adding sw [altera_avalon_pio 18.1]
+Progress: Parameterizing module sw
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: unsaved.atan2_q: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.btn: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.i2c_busy: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.i2c_miso: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.in_H: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.in_L: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Info: unsaved.jtag_uart: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
+Info: unsaved.sw: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: unsaved.in_H: in_H.external_connection must be exported, or connected to a matching conduit.
+Info: unsaved: Generating unsaved "unsaved" for QUARTUS_SYNTH
+Error: Generation stopped, 31 or more modules remaining
+Info: unsaved: Done "unsaved" with 16 modules, 1 files
+Error: qsys-generate failed with exit code 1: 1 Error, 1 Warning
+Info: Stopping: Create HDL design files for synthesis

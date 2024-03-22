@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file
+   path="CORDIC_sim/CORDIC_memoryC0_uid353_atan2Tables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC0_uid380_invTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC0_uid381_invTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC0_uid492_inverseTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC1_uid356_atan2Tables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC1_uid384_invTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC1_uid385_invTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC1_uid495_inverseTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC2_uid359_atan2Tables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC2_uid388_invTables_lutmem.hex"
+   type="HEX" />
+ <file
+   path="CORDIC_sim/CORDIC_memoryC2_uid498_inverseTables_lutmem.hex"
+   type="HEX" />
+ <file path="CORDIC_sim/CORDIC.vo" type="VERILOG" />
+ <topLevel name="CORDIC" />
+ <deviceFamily name="max10" />
+</simPackage>

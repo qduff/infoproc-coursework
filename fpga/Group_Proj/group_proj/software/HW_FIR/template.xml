@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template_settings>
+	<template
+		name="Hello World Small"
+		description="Prints 'Hello from Nios II' from a small footprint program"
+		file_to_open="hello_world_small.c"
+		default_build_configuration="Release"
+		details="Hello World Small prints 'Hello from Nios II' to STDOUT.  The project occupies the smallest memory footprint possible for a hello world application. 
+			\n
+			\nThis example runs with or without the MicroC/OS-II RTOS and requires an STDOUT device in your system's hardware.
+			\n
+			\nFor details, click Finish to create the project and refer to the readme.txt file in the project directory.
+			\n
+			\nThe BSP for this template is based on the Altera HAL operating system with reduced code footprint.
+			\n
+			\nFor information about how this software example relates to Nios II hardware design examples,
+			\nrefer to the Design Examples page of the Nios II documentation available with your installation at:
+			\n&lt;installation_directory&gt;/nios2eds/documents/index.htm.
+			">
+	</template>
+	<stf>
+	    	<os_spec name="none (single-threaded)"
+	                 no_exit="yes"
+	                 clean_exit="no"
+	                 no_c_plus_plus="yes"
+	                 small_footprint="yes"
+	                 direct_drivers="yes"
+	                 sopc_component_dir="altera_hal">
+	        <sys_defines>
+	            <define name="alt_max_fd" quote="no" value="4"/>
+	            <define name="alt_sys_clk" quote="no" value="none"/>
+	            <define name="alt_timestamp_clk" quote="no" value="none"/>
+	        </sys_defines>
+					<ldflags>
+						<flag name="-msmallc"/>
+					</ldflags>
+					<make_macros>
+	            <macro name="alt_sim_optimize" quote="no" value="0"/>
+	        </make_macros>
+	    </os_spec>
+	</stf>
+	<create-this>
+		<app 	name="hello_world_small"
+			nios2-app-generate-makefile-args="--set APP_CFLAGS_OPTIMIZATION -Os --set OBJDUMP_INCLUDE_SOURCE 1 --src-files hello_world_small.c"
+			bsp="hal_reduced_footprint">
+		</app>
+		<bsp 	name="hal_reduced_footprint" 
+			type="hal"
+			nios2-bsp-args="--set hal.max_file_descriptors 4 --set hal.enable_small_c_library true --set hal.sys_clk_timer none
+--set hal.timestamp_timer none --set hal.enable_exit false --set hal.enable_c_plus_plus false --set hal.enable_lightweight_device_driver_api true
+--set hal.enable_clean_exit false --set hal.enable_sim_optimize false --set hal.enable_reduced_device_drivers true 
+--set hal.make.bsp_cflags_optimization '-Os'">
+		</bsp>
+	</create-this>
+
+</template_settings>

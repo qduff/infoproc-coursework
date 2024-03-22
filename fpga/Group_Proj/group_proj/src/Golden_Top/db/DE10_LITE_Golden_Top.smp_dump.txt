@@ -1,0 +1,16 @@
+
+State Machine - |DE10_LITE_Golden_Top|I2C:i2c_master|process_counter
+Name process_counter.11 process_counter.10 process_counter.01 process_counter.00 
+process_counter.00 0 0 0 0 
+process_counter.01 0 0 1 1 
+process_counter.10 0 1 0 1 
+process_counter.11 1 0 0 1 
+
+State Machine - |DE10_LITE_Golden_Top|unsaved:u0|unsaved_cpu:cpu|unsaved_cpu_cpu:cpu|unsaved_cpu_cpu_nios2_oci:the_unsaved_cpu_cpu_nios2_oci|unsaved_cpu_cpu_debug_slave_wrapper:the_unsaved_cpu_cpu_debug_slave_wrapper|unsaved_cpu_cpu_debug_slave_tck:the_unsaved_cpu_cpu_debug_slave_tck|DRsize
+Name DRsize.101 DRsize.100 DRsize.011 DRsize.010 DRsize.001 DRsize.000 
+DRsize.000 0 0 0 0 0 0 
+DRsize.001 0 0 0 0 1 1 
+DRsize.010 0 0 0 1 0 1 
+DRsize.011 0 0 1 0 0 1 
+DRsize.100 0 1 0 0 0 1 
+DRsize.101 1 0 0 0 0 1 
